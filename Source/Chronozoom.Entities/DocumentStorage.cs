@@ -39,20 +39,11 @@ namespace Chronozoom.Entities
             }
             else 
             {
-                Warn("database");
+                // Warn("database");
             }
 
             // Check to verify a document with the id
         }
 
     }
-
-    internal sealed class Timeline
-    {
-        public String name { get; set; }
-        public Guid id { get; set; }
-
-    }
-
-
 }
