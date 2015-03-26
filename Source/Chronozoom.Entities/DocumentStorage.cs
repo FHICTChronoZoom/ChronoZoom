@@ -69,6 +69,14 @@ namespace Chronozoom.Entities
             return documentCollection;
         }
 
+        private dynamic getDocumentFromCollection(String collectionName, String query)
+        {
+            DocumentCollection documentCollection = getDocumentCollection(collectionName);
+            var documents = client.CreateDocumentQuery(documentCollection.SelfLink, query);
+
+            return documents;
+
+        }
 
         public void createDocument() {
 
@@ -88,7 +96,7 @@ namespace Chronozoom.Entities
 
             DocumentCollection documentCollection = getDocumentCollection(CollectionTimelineName);
 
-            var featuredTimelines = client.CreateDocumentQuery(documentCollection.SelfLink, query);
+            var featuredTimelines = getDocumentFromCollection(documentCollection.SelfLink, query);
 
             foreach (var timeline in featuredTimelines)
             {
@@ -107,7 +115,7 @@ namespace Chronozoom.Entities
 
             try
             {
-               var ballTimelines = client.CreateDocumentQuery(documentCollection.SelfLink, query).GetEnumerator();
+                var ballTimelines = getDocumentFromCollection(documentCollection.SelfLink, query);
             }
             catch (Exception e)
             {
@@ -134,7 +142,7 @@ namespace Chronozoom.Entities
 
             //IEnumerable<ExhibitRaw> exhibitsRaw = new ExhibitRaw[0];
             DocumentCollection exhibitCollection = getDocumentCollection(CollectionExhibitName);
-            var exhibitsRaw = client.CreateDocumentQuery(exhibitCollection.SelfLink, exhibitsQuery).ToArray();
+            var exhibitsRaw = getDocumentFromCollection(exhibitCollection.SelfLink, exhibitsQuery).ToArray();
             
 
             Dictionary<Guid, Exhibit> exhibits = new Dictionary<Guid, Exhibit>();
@@ -165,7 +173,7 @@ namespace Chronozoom.Entities
 
                 //IEnumerable<ContentItemRaw> contentItemsRaw = new ContentItemRaw[0];
                 DocumentCollection contentItemCollection = getDocumentCollection(CollectionContentItemName);
-                var contentItemsRaw = client.CreateDocumentQuery(contentItemCollection.SelfLink, contentItemsQuery).ToArray();
+                var contentItemsRaw = getDocumentFromCollection(contentItemCollection.SelfLink, contentItemsQuery).ToArray();
 
 
                 foreach (ContentItemRaw contentItemRaw in contentItemsRaw)
