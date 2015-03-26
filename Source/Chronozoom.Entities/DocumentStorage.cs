@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,13 @@ namespace Chronozoom.Entities
         private static readonly string EndpointUrl = "https://fhict-chronozoom.documents.azure.com:443/";
         private static readonly string AuthorizationKey = "vdGlYrsL1r7FZEqte4yDhWhBTxm8SUdwF7+EfkOh3mU+AINP30T6BihDCayNlJ3opI9GqzqobKnIGoeJwtuBJQ==";
         private static readonly string DatabaseName = "ChronoZoom";
+
+
         private static readonly string CollectionTimelineName = "Timeline";
+        private static readonly string CollectionExhibitName = "Exhibit";
+        private static readonly string CollectionContentItemName = "ContentItem";
+
+
         private static readonly string baseCollectionsUserName = "ChronoZoom";
         private DocumentClient client;
         private Database database;
@@ -107,17 +114,16 @@ namespace Chronozoom.Entities
                 throw e;
             }
 
-            IEnumerable<Timeline> rootTimelines = FillTimelinesFromFlatList(allTimelines, timelinesMap, null, ref maxAllElements);
+            IEnumerable<Timeline> rootTimelines = FillTimelinesFromFlatList(documentCollection.SelfLink, allTimelines, timelinesMap, null, ref maxAllElements);
             FillTimelineRelations(timelinesMap, int.MaxValue);
 
             return rootTimelines;
         }
 
-        private void FillTimelineRelations(Dictionary<Guid, Timeline> timelinesMap, int maxElements)
+        private void FillTimelineRelations( Dictionary<Guid, Timeline> timelinesMap, int maxElements)
         {
             if (!timelinesMap.Keys.Any())
                 return;
-
 
             // Populate Exhibits
             string exhibitsQuery = string.Format(
@@ -126,21 +132,10 @@ namespace Chronozoom.Entities
                 maxElements,
                 string.Join("', '", timelinesMap.Keys.ToArray()));
 
-            IEnumerable<ExhibitRaw> exhibitsRaw = new ExhibitRaw[0];
-
-            try
-            {
-                retryPolicy.ExecuteAction(
-                  () =>
-                  {
-                      exhibitsRaw = Database.SqlQuery<ExhibitRaw>(exhibitsQuery);
-                  });
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-
+            //IEnumerable<ExhibitRaw> exhibitsRaw = new ExhibitRaw[0];
+            DocumentCollection exhibitCollection = getDocumentCollection(CollectionExhibitName);
+            var exhibitsRaw = client.CreateDocumentQuery(exhibitCollection.SelfLink, exhibitsQuery).ToArray();
+            
 
             Dictionary<Guid, Exhibit> exhibits = new Dictionary<Guid, Exhibit>();
             foreach (ExhibitRaw exhibitRaw in exhibitsRaw)
@@ -168,19 +163,9 @@ namespace Chronozoom.Entities
                     ",
                     string.Join("', '", exhibits.Keys.ToArray()));
 
-                IEnumerable<ContentItemRaw> contentItemsRaw = new ContentItemRaw[0];
-                try
-                {
-                    retryPolicy.ExecuteAction(
-                      () =>
-                      {
-                          contentItemsRaw = Database.SqlQuery<ContentItemRaw>(contentItemsQuery);
-                      });
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                //IEnumerable<ContentItemRaw> contentItemsRaw = new ContentItemRaw[0];
+                DocumentCollection contentItemCollection = getDocumentCollection(CollectionContentItemName);
+                var contentItemsRaw = client.CreateDocumentQuery(contentItemCollection.SelfLink, contentItemsQuery).ToArray();
 
 
                 foreach (ContentItemRaw contentItemRaw in contentItemsRaw)
@@ -193,7 +178,7 @@ namespace Chronozoom.Entities
             }
         }
 
-        private static List<Timeline> FillTimelinesFromFlatList(IEnumerable<TimelineRaw> timelinesRaw, Dictionary<Guid, Timeline> timelinesMap, Guid? commonAncestor, ref int maxElements)
+        private static List<Timeline> FillTimelinesFromFlatList(String documentLink, IEnumerable<TimelineRaw> timelinesRaw, Dictionary<Guid, Timeline> timelinesMap, Guid? commonAncestor, ref int maxElements)
         {
             List<Timeline> timelines = new List<Timeline>();
             Dictionary<Guid, Guid?> timelinesParents = new Dictionary<Guid, Guid?>();
