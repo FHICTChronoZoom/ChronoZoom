@@ -18,12 +18,19 @@ namespace Chronozoom.Entities
         private static readonly string EndpointUrl = "DocumentDB endpoint";
         private static readonly string AuthorizationKey = "DocumentDB Authorization key";
         private static readonly string DatabaseName = "ChronoZoom";
+        private static readonly string CollectionTimelineName = "Timeline";
+        private DocumentClient client;
 
         public DocumentStorage() 
         {
             // Create a new instance of the DocumentClient
-            var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);
+            client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);
 
+            connectToDatabase();
+            getDocumentCollection(CollectionTimelineName);
+        }
+
+        private Database connectToDatabase() {
             // Check to verify a database with the id=ChronoZoom does not exist
             Database database = client.CreateDatabaseQuery().Where(db => db.Id == DatabaseName).AsEnumerable().FirstOrDefault();
 
@@ -37,13 +44,42 @@ namespace Chronozoom.Entities
                         Id = DatabaseName
                     });
             }
-            else 
+            else
             {
-                // Warn("database");
+                // Something went wrong. Warn the user.
+                throw new NotImplementedException();
             }
 
-            // Check to verify a document with the id
+            return database;
         }
 
+        /***
+         * Check to see if a Document collection exists and if not, create one. 
+         **/
+        private DocumentCollection getDocumentCollection(String collectionName)
+        {
+            // Check to verify a document with the id
+            DocumentCollection documentCollection = await client.CreateDocumentCollectionAsync(database.CollectionsLink,
+                new DocumentCollection
+                {
+                    Id = collectionName
+                });
+            return documentCollection;
+        }
+
+
+        public List<dynamic> getFeaturedContent()
+        {
+            const string query = @"SELECT * FROM Timeline WHERE Featured = true";
+            DocumentCollection documentCollection = getDocumentCollection(CollectionTimelineName);
+            var featuredTimelines = client.CreateDocumentQuery(documentCollection.DocumentsLink, query);
+
+            foreach (var timeline in featuredTimelines)
+            {
+                Console.WriteLine("\tRead {0} from SQL", timeline);
+            }
+
+            return featuredTimelines.ToList();
+        }
     }
 }
