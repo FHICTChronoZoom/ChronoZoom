@@ -13,13 +13,16 @@ using Newtonsoft.Json;
 
 namespace Chronozoom.Entities
 {
-    class DocumentStorage
+    public class DocumentStorage
     {
-        private static readonly string EndpointUrl = "DocumentDB endpoint";
-        private static readonly string AuthorizationKey = "DocumentDB Authorization key";
+        private static readonly string EndpointUrl = "https://fhict-chronozoom.documents.azure.com:443/";
+        private static readonly string AuthorizationKey = "vdGlYrsL1r7FZEqte4yDhWhBTxm8SUdwF7+EfkOh3mU+AINP30T6BihDCayNlJ3opI9GqzqobKnIGoeJwtuBJQ==";
         private static readonly string DatabaseName = "ChronoZoom";
         private static readonly string CollectionTimelineName = "Timeline";
+        private static readonly string baseCollectionsUserName = "ChronoZoom";
         private DocumentClient client;
+        private Database database;
+        private DocumentCollection currentCollection;
 
         public DocumentStorage() 
         {
@@ -28,11 +31,12 @@ namespace Chronozoom.Entities
 
             connectToDatabase();
             getDocumentCollection(CollectionTimelineName);
+            createDocument();
         }
 
-        private Database connectToDatabase() {
+        private async void connectToDatabase() {
             // Check to verify a database with the id=ChronoZoom does not exist
-            Database database = client.CreateDatabaseQuery().Where(db => db.Id == DatabaseName).AsEnumerable().FirstOrDefault();
+            database = client.CreateDatabaseQuery().Where(db => db.Id == DatabaseName).AsEnumerable().FirstOrDefault();
 
             // If there is no database, create one.
             if (database == null)
@@ -44,13 +48,6 @@ namespace Chronozoom.Entities
                         Id = DatabaseName
                     });
             }
-            else
-            {
-                // Something went wrong. Warn the user.
-                throw new NotImplementedException();
-            }
-
-            return database;
         }
 
         /***
@@ -58,28 +55,37 @@ namespace Chronozoom.Entities
          **/
         private DocumentCollection getDocumentCollection(String collectionName)
         {
-            // Check to verify a document with the id
-            DocumentCollection documentCollection = await client.CreateDocumentCollectionAsync(database.CollectionsLink,
-                new DocumentCollection
-                {
-                    Id = collectionName
-                });
+            DocumentCollection documentCollection = client.CreateDocumentCollectionQuery(database.SelfLink)
+                .Where(c => c.Id == CollectionTimelineName).ToArray().FirstOrDefault();
+
             return documentCollection;
         }
 
 
-        public List<dynamic> getFeaturedContent()
-        {
-            const string query = @"SELECT * FROM Timeline WHERE Featured = true";
+        public void createDocument() {
+
             DocumentCollection documentCollection = getDocumentCollection(CollectionTimelineName);
-            var featuredTimelines = client.CreateDocumentQuery(documentCollection.DocumentsLink, query);
+
+            Timeline timeline = new Timeline()
+            {
+                Title = "Super Title!"
+            };
+
+            client.CreateDocumentAsync(documentCollection.SelfLink, timeline);
+        }
+
+        public async void getFeaturedContent()
+        {
+            const string query = @"SELECT * FROM Timeline";
+
+            DocumentCollection documentCollection = getDocumentCollection(CollectionTimelineName);
+
+            var featuredTimelines = client.CreateDocumentQuery(documentCollection.SelfLink, query);
 
             foreach (var timeline in featuredTimelines)
             {
                 Console.WriteLine("\tRead {0} from SQL", timeline);
             }
-
-            return featuredTimelines.ToList();
         }
     }
 }

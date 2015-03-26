@@ -1173,5 +1173,10 @@ namespace Chronozoom.UI
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json)]
         BaseJsonResult<IEnumerable<Bing.WebResult>> GetDocuments(string query, string doctype, string top, string skip);
+
+        [OperationContract]
+        [WebGet(ResponseFormat = WebMessageFormat.Json)]
+        String getDocumentDB();
+
     }
 }

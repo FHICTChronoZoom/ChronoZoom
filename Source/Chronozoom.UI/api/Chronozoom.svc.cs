@@ -3229,5 +3229,12 @@ namespace Chronozoom.UI
 
             return contentType;
         }
+
+        public String getDocumentDB()
+        {
+            DocumentStorage ds = new DocumentStorage();
+            ds.getFeaturedContent();
+            return "hoi";
+        }
     }
 }
