@@ -22,9 +22,13 @@ namespace Chronozoom.Entities
         private static readonly string DatabaseName = "ChronoZoom";
 
 
-        private static readonly string CollectionTimelineName = "Timeline";
-        private static readonly string CollectionExhibitName = "Exhibit";
-        private static readonly string CollectionContentItemName = "ContentItem";
+        private static readonly string COLLECTION_TIMELINE_NAME = "Timeline";
+        private static readonly string COLLECTINO_EXHIBIT_NAME = "Exhibit";
+        private static readonly string COLLECTION_CONTENT_ITEM_NAME = "ContentItem";
+        private static readonly string COLLECTION_COLLECTION_NAME = "Collection";
+        private static readonly string COLLECTION_USER_NAME = "User";
+        //private static readonly string COLLECTION_
+
 
 
         private static readonly string baseCollectionsUserName = "ChronoZoom";
@@ -38,7 +42,7 @@ namespace Chronozoom.Entities
             client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);
 
             connectToDatabase();
-            getDocumentCollection(CollectionTimelineName);
+            getDocumentCollection(COLLECTION_TIMELINE_NAME);
             createDocument();
         }
 
@@ -64,7 +68,7 @@ namespace Chronozoom.Entities
         private DocumentCollection getDocumentCollection(String collectionName)
         {
             DocumentCollection documentCollection = client.CreateDocumentCollectionQuery(database.SelfLink)
-                .Where(c => c.Id == CollectionTimelineName).ToArray().FirstOrDefault();
+                .Where(c => c.Id == COLLECTION_TIMELINE_NAME).ToArray().FirstOrDefault();
 
             return documentCollection;
         }
@@ -80,7 +84,7 @@ namespace Chronozoom.Entities
 
         public void createDocument() {
 
-            DocumentCollection documentCollection = getDocumentCollection(CollectionTimelineName);
+            DocumentCollection documentCollection = getDocumentCollection(COLLECTION_TIMELINE_NAME);
 
             Timeline timeline = new Timeline()
             {
@@ -90,11 +94,20 @@ namespace Chronozoom.Entities
             client.CreateDocumentAsync(documentCollection.SelfLink, timeline);
         }
 
+        public rCollection getCollection(Guid collectionId)
+        {
+            rCollection rv = client.CreateDocumentQuery<rCollection>(COLLECTION_COLLECTION_NAME).Where(c => c.Id == collectionId).FirstOrDefault();
+            rUser user = client.CreateDocumentQuery<rUser>(COLLECTION_USER_NAME).Where(u => u.Id == rv.UserId).FirstOrDefault();
+            rv.User = user;
+            return rv;
+        }
+
+
         public void getFeaturedContent()
         {
             const string query = @"SELECT * FROM Timeline";
 
-            DocumentCollection documentCollection = getDocumentCollection(CollectionTimelineName);
+            DocumentCollection documentCollection = getDocumentCollection(COLLECTION_TIMELINE_NAME);
 
             var featuredTimelines = getDocumentFromCollection(documentCollection.SelfLink, query);
 

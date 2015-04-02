@@ -28,6 +28,14 @@ namespace Chronozoom.Entities
         public Guid UserId { get; set; }
 
         /// <summary>
+        /// User Object reference.
+        /// This is included because the front-end requires a user object when retreiving
+        /// timelines. This could and probably should be handled in a better way, but
+        /// it works for now.
+        /// </summary>
+        public rUser User { get; set; }
+
+        /// <summary>
         /// The Guid of the super collection of which this collection is part of
         /// </summary>
         public Guid superCollectionId { get; set; }
