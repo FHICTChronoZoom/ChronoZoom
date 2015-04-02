@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Chronozoom.Entities
 {
-    class rUser
+    public class rUser
     {
         public rUser() 
         {
@@ -36,6 +36,5 @@ namespace Chronozoom.Entities
         /// Name identifier of the user.
         /// </summary>
         public string NameIdentifier { get; set; }
-    }
     }
 }

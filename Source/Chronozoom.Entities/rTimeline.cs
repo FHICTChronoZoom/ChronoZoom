@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Chronozoom.Entities
 {
-    class rTimeline
+    public class rTimeline
     {
         public rTimeline()
         {

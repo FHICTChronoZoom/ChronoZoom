@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Chronozoom.Entities
 {
-    class rCollection
+    public class rCollection
     {
         public rCollection()
         {
@@ -78,25 +78,25 @@ namespace Chronozoom.Entities
         /// <summary>
         /// Theme of the collection
         /// </summary>
-        public string Theme { get; set; }
+        public string rTheme { get; set; }
 
         /// <summary>
         /// A list of timelines which are part of this collection
         /// </summary>
         public List<rTimeline> timelines { get; set; }
+    }
 
-        /// <summary>
-        /// The Collection.Theme text field is actually a compressed JSON object comprising of the following.
-        /// </summary>
-        public class Theme
-        {
-            public string backgroundUrl { get; set; }
-            public string backgroundColor { get; set; }
-            public string timelineColor { get; set; }
-            public string timelineStrokeStyle { get; set; }
-            public string infoDotfillColor { get; set; }
-            public string infoDotBorderColor { get; set; }
-            public Boolean kioskMode { get; set; }
-        }
+    /// <summary>
+    /// The Collection.Theme text field is actually a compressed JSON object comprising of the following.
+    /// </summary>
+    public class rTheme
+    {
+        public string backgroundUrl { get; set; }
+        public string backgroundColor { get; set; }
+        public string timelineColor { get; set; }
+        public string timelineStrokeStyle { get; set; }
+        public string infoDotfillColor { get; set; }
+        public string infoDotBorderColor { get; set; }
+        public Boolean kioskMode { get; set; }
     }
 }

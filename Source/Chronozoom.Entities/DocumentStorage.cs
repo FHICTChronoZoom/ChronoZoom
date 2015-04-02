@@ -23,7 +23,7 @@ namespace Chronozoom.Entities
 
 
         private static readonly string COLLECTION_TIMELINE_NAME = "Timeline";
-        private static readonly string COLLECTINO_EXHIBIT_NAME = "Exhibit";
+        private static readonly string COLLECTION_EXHIBIT_NAME = "Exhibit";
         private static readonly string COLLECTION_CONTENT_ITEM_NAME = "ContentItem";
         private static readonly string COLLECTION_COLLECTION_NAME = "Collection";
         private static readonly string COLLECTION_USER_NAME = "User";
@@ -122,7 +122,7 @@ namespace Chronozoom.Entities
             int maxAllElements = 0;
             IEnumerable<TimelineRaw> allTimelines = new TimelineRaw[0];
             Dictionary<Guid, Timeline> timelinesMap = new Dictionary<Guid, Timeline>();
-            DocumentCollection documentCollection = getDocumentCollection(CollectionTimelineName);
+            DocumentCollection documentCollection = getDocumentCollection(COLLECTION_TIMELINE_NAME);
 
             string query = string.Format(@"SELECT * FROM Timelines WHERE Collection_ID = {0}", collectionId).ToString();
 
@@ -154,7 +154,7 @@ namespace Chronozoom.Entities
                 string.Join("', '", timelinesMap.Keys.ToArray()));
 
             //IEnumerable<ExhibitRaw> exhibitsRaw = new ExhibitRaw[0];
-            DocumentCollection exhibitCollection = getDocumentCollection(CollectionExhibitName);
+            DocumentCollection exhibitCollection = getDocumentCollection(COLLECTION_EXHIBIT_NAME);
             var exhibitsRaw = getDocumentFromCollection(exhibitCollection.SelfLink, exhibitsQuery).ToArray();
             
 
@@ -185,7 +185,7 @@ namespace Chronozoom.Entities
                     string.Join("', '", exhibits.Keys.ToArray()));
 
                 //IEnumerable<ContentItemRaw> contentItemsRaw = new ContentItemRaw[0];
-                DocumentCollection contentItemCollection = getDocumentCollection(CollectionContentItemName);
+                DocumentCollection contentItemCollection = getDocumentCollection(COLLECTION_CONTENT_ITEM_NAME);
                 var contentItemsRaw = getDocumentFromCollection(contentItemCollection.SelfLink, contentItemsQuery).ToArray();
 
 
