@@ -22,11 +22,11 @@ namespace Chronozoom.Entities
         private static readonly string DatabaseName = "ChronoZoom";
 
 
-        private static readonly string COLLECTION_TIMELINE_NAME = "Timeline";
-        private static readonly string COLLECTION_EXHIBIT_NAME = "Exhibit";
-        private static readonly string COLLECTION_CONTENT_ITEM_NAME = "ContentItem";
-        private static readonly string COLLECTION_COLLECTION_NAME = "Collection";
-        private static readonly string COLLECTION_USER_NAME = "User";
+        public static readonly string COLLECTION_TIMELINE_NAME = "Timeline";
+        public static readonly string COLLECTION_EXHIBIT_NAME = "Exhibit";
+        public static readonly string COLLECTION_CONTENT_ITEM_NAME = "ContentItem";
+        public static readonly string COLLECTION_COLLECTION_NAME = "Collection";
+        public static readonly string COLLECTION_USER_NAME = "User";
         //private static readonly string COLLECTION_
 
 
@@ -61,6 +61,8 @@ namespace Chronozoom.Entities
                     });
             }
         }
+
+        public DocumentClient Client { get { return client; }  }
 
         /***
          * Check to see if a Document collection exists and if not, create one. 
@@ -99,6 +101,15 @@ namespace Chronozoom.Entities
             rCollection rv = client.CreateDocumentQuery<rCollection>(COLLECTION_COLLECTION_NAME).Where(c => c.Id == collectionId).FirstOrDefault();
             rUser user = client.CreateDocumentQuery<rUser>(COLLECTION_USER_NAME).Where(u => u.Id == rv.UserId).FirstOrDefault();
             rv.User = user;
+            return rv;
+        }
+
+        public rCollection getDefaultCollection(String superColletionName)
+        {
+
+            rCollection rv = client.CreateDocumentQuery<rCollection>(COLLECTION_COLLECTION_NAME)
+                .Where(c => c.SuperCollection.Title == superColletionName &&
+                        c.Default == true).FirstOrDefault();
             return rv;
         }
 

@@ -40,6 +40,8 @@ namespace Chronozoom.Entities
         /// </summary>
         public Guid superCollectionId { get; set; }
 
+        public rSuperCollection SuperCollection { get; set }
+
         /// <summary>
         /// Boolean which states if this is the default collection within a super collection.
         /// Only one collection should be default within a super collection.
