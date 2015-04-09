@@ -26,6 +26,13 @@ using System.ComponentModel;
 using System.Data.Entity.Validation;
 using EntityFramework.Extensions;
 
+// Add DocumentDB references
+//using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
+using Microsoft.Azure.Documents.Linq;
+using Microsoft.Azure.Documents.Services;
+using Newtonsoft.Json;
+
 namespace Chronozoom.UI
 {
     [DataContract]
@@ -161,6 +168,7 @@ namespace Chronozoom.UI
         private const   decimal                 _maxYear                    = 9999;
         private const   int                     _defaultDepth               = 30;
         private const   int                     _maxSearchLimit             = 25;   // max # elements retured per section of a search (searches have 3 sections)
+        private         DocumentStorage         dStorage                    = new DocumentStorage();
 
         // The default number of max elements returned by the API
         private static Lazy<int> _maxElements = new Lazy<int>(() =>
@@ -1165,6 +1173,68 @@ namespace Chronozoom.UI
                 ),
                 UriKind.Relative
             );
+        }
+
+        public Guid CollectionIdOrDefault(string superCollectionName, string collectionPath)
+        {
+            rCollection collection = null;
+
+            if (string.IsNullOrEmpty(superCollectionName))
+            {
+                // no supercollection specified so use default supercollection's default collection
+                superCollectionName = _defaultSuperCollectionName;
+                collectionPath = "";
+            }
+
+            if (superCollectionName == _defaultSuperCollectionName && collectionPath == "" && _defaultCollectionId != Guid.Empty)
+            {
+                // we're looking up the default supercollection's default collection and that info is cached already
+                return _defaultCollectionId;
+            }
+
+            if (string.IsNullOrEmpty(collectionPath))
+            {
+
+                collection = dStorage.Client.CreateDocumentQuery<rCollection>(DocumentStorage.COLLECTION_COLLECTION_NAME)
+                .Where(c => c.SuperCollection.Title == superCollectionName &&
+                        c.Default == true).FirstOrDefault();
+            }
+            else
+            {
+
+                // collection specified so look it up within the specified supercollection
+                collection =
+                    dStorage.Client.CreateDocumentQuery<rCollection>(DocumentStorage.COLLECTION_COLLECTION_NAME)
+                    .Where(c =>
+                        c.SuperCollection.Title == superCollectionName &&
+                        c.Path == collectionPath).FirstOrDefault();
+            }
+
+            if (collection == null)
+            {
+                // we were unable to find the requested collection
+
+                if (superCollectionName == _defaultSuperCollectionName && collectionPath == "")
+                {
+                    // the collection we could not find is the default supercollection's collection
+                    // this should not occur unless the database has an issue or web.config is not set up correctly
+                    throw new ConfigurationErrorsException("Unable to locate the default supercollection's default collection.");
+                }
+
+                //// so return the default supercollection's default collection
+                //return CollectionIdOrDefault(storage, _defaultSuperCollectionName, "");
+
+                // indicate that collection could not be found
+                return Guid.Empty;
+            }
+
+            if (superCollectionName == _defaultSuperCollectionName && collection.Default)
+            {
+                // we were looking up the default supercollection's collection so lets cache it for future use
+                _defaultCollectionId = collection.Id;
+            }
+
+            return collection.Id;
         }
 
         public Guid CollectionIdOrDefault(Storage storage, string superCollectionName, string collectionPath)
@@ -2753,6 +2823,14 @@ namespace Chronozoom.UI
         /// <summary>
         /// Documented under IChronozoomSVC
         /// </summary>
+        public rCollection GetrCollection(string superCollection)
+        {
+            return GetrCollection(superCollection, "");
+        }
+
+        /// <summary>
+        /// Documented under IChronozoomSVC
+        /// </summary>
         public Collection GetCollection(string superCollection, string collection)
         {
             return ApiOperation(delegate(User user, Storage storage)
@@ -2761,6 +2839,13 @@ namespace Chronozoom.UI
                 Collection rv = storage.Collections.Include("User").Where(c => c.Id == collectionId).FirstOrDefault();
                 return rv;
             });
+        }
+
+        public rCollection GetrCollection(string superCollection, string collection)
+        {
+            Guid collectionId = CollectionIdOrDefault(superCollection, collection);
+            rCollection rv = dStorage.getCollection(collectionId);
+            return rv;
         }
 
         /// <summary>Documented under IChronozoomSVC</summary>

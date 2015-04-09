@@ -878,12 +878,31 @@ namespace Chronozoom.UI
         /// <summary>
         /// Returns core data for a single collection, including owner and theme. Members and timelines are not included.
         /// </summary>
+        /// <param name="superCollection">Name of the super collection. The super collection's default collection will be used.</param>
+        /// <returns></returns>
+        [OperationContract(Name = "GetCollection_DefaultCollection")]
+        [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "/{supercollection}/rdata")]
+        rCollection GetrCollection(string superCollection);
+
+        /// <summary>
+        /// Returns core data for a single collection, including owner and theme. Members and timelines are not included.
+        /// </summary>
+        /// <param name="superCollection">Name of the super collection.</param>
+        /// <param name="collection">Name of the collection.</param>
+        /// <returns></returns>
+        [OperationContract(Name = "GetCollection_NamedCollection")]
+        [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "/{supercollection}/{collection}/rdata")]
+        Collection GetCollection(string superCollection, string collection);
+
+        /// <summary>
+        /// Returns core data for a single collection, including owner and theme. Members and timelines are not included.
+        /// </summary>
         /// <param name="superCollection">Name of the super collection.</param>
         /// <param name="collection">Name of the collection.</param>
         /// <returns></returns>
         [OperationContract(Name = "GetCollection_NamedCollection")]
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "/{supercollection}/{collection}/data")]
-        Collection GetCollection(string superCollection, string collection);
+        rCollection GetrCollection(string superCollection, string collection);
 
         /// <summary>
         /// Checks if a proposed collection name and path are unique within the specified supercollection.

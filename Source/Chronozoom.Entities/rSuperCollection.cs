@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Chronozoom.Entities
 {
-    class rSuperCollection
+    public class rSuperCollection
     {
          /// <summary>
         /// Constructor used to set default values.
