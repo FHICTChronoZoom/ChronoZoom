@@ -9,6 +9,7 @@ namespace Chronozoom.Library.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        Task<User> FindByUsernameAsync(String username);
+        Task<User> FindByUsernameAsync(string username);
+        Task<User> FindByEmailAsync(string email);
     }
 }
