@@ -31,12 +31,14 @@ namespace ChronoZoom.Mongo.Models
         /// <summary>
         /// The name/title of the collection
         /// </summary>
+        [BsonElement("title")]
         public string Title { get; set; }
 
         /// <summary>
         /// URL-sanitized version of title, which will be used as part of a URL path.
         /// Only a-z, 0-9 and hyphen are allowed. This should be unique for all collections from a user.
         /// </summary>
+        [BsonElement("path")]
         public string Path { get; set; }
 
 
@@ -47,6 +49,7 @@ namespace ChronoZoom.Mongo.Models
         /// Default is false.
         /// </summary>
         [BsonIgnoreIfDefault]
+        [BsonElement("default")]
         public Boolean Default { get; set; }
 
         /// <summary>
@@ -56,6 +59,7 @@ namespace ChronoZoom.Mongo.Models
         /// Default is false.
         /// </summary>
         [BsonIgnoreIfDefault]
+        [BsonElement("membersAllowed")]
         public Boolean MembersAllowed { get; set; }
 
         /// <summary>
@@ -64,6 +68,7 @@ namespace ChronoZoom.Mongo.Models
         /// Default is false.
         /// </summary>
         [BsonIgnoreIfDefault]
+        [BsonElement("publicllySearchable")]
         public Boolean PubliclySearchable { get; set; }
     }
 }

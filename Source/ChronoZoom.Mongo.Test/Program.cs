@@ -19,6 +19,8 @@ namespace ChronoZoom.Mongo.Test
             User user = uf.findById(ObjectId.Parse("55437512f67ce7a253751fa0")).Result;
 
             Console.WriteLine(user.Name);
+            Console.WriteLine(user.Email);
+            Console.WriteLine(user.Collections);
 
             User newUser = new User("Max de Bruijn", "max.de.bruijn@gmail.com");
 

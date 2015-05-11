@@ -20,5 +20,13 @@ namespace ChronoZoom.Mongo.PersistencyEngine
 
             return chronoCollection;
         }
+
+        public static async Task<List<Collection>> findMultipleById(List<ObjectId> collectionIds)
+        {
+            var collection = MongoFactory.database.GetCollection<Collection>("collection");
+            var chronoCollections = await collection.Find<Collection>(x => collectionIds.Contains(x.Id)).ToListAsync();
+
+            return chronoCollections;
+        }
     }
 }

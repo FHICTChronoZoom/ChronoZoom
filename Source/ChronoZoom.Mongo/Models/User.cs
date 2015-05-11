@@ -38,8 +38,14 @@ namespace ChronoZoom.Mongo.Models
         /// <summary>
         /// List of collections from the user.
         /// </summary>
+        [BsonIgnore]
+        public List<Collection> Collections { get; set; }
+
+        /// <summary>
+        /// List of ObjectId's from collections
+        /// </summary>
         [BsonElement("collections")]
         [BsonIgnoreIfNull]
-        public List<ObjectId> Collections { get; set; }
+        public List<ObjectId> _Collections { get; set; }
     }
 }
