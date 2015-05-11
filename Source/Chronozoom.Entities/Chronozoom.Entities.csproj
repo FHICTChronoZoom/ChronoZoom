@@ -104,7 +104,6 @@
     <Compile Include="Member.cs" />
     <Compile Include="ContentItem.cs" />
     <Compile Include="Exhibit.cs" />
-    <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TimelineShortcut.cs" />
     <Compile Include="GlobalSuppressions.cs" />
