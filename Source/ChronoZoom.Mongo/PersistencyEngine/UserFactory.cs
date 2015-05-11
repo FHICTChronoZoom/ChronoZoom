@@ -28,6 +28,12 @@ namespace ChronoZoom.Mongo.PersistencyEngine
             return user;
         }
 
+        public async Task<Boolean> create(User user) {
+            var collection = MongoFactory.database.GetCollection<User>("user");
+            await collection.InsertOneAsync(user);
+
+            return true;
+        }
 
     }
 }

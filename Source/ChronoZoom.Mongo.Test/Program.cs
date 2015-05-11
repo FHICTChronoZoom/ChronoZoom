@@ -20,6 +20,10 @@ namespace ChronoZoom.Mongo.Test
 
             Console.WriteLine(user.Name);
 
+            User newUser = new User("Max de Bruijn", "max.de.bruijn@gmail.com");
+
+            Boolean created = uf.create(newUser).Result;
+
             Console.Read();
         }
     }

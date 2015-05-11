@@ -12,6 +12,11 @@ namespace ChronoZoom.Mongo.Models
     {
         public User() { }
 
+        public User(String name, String email) {
+            this.Name = name;
+            this.Email = email;
+        }
+
         /// <summary>
         /// Unique identifier for the user
         /// </summary>
@@ -34,6 +39,7 @@ namespace ChronoZoom.Mongo.Models
         /// List of collections from the user.
         /// </summary>
         [BsonElement("collections")]
+        [BsonIgnoreIfNull]
         public List<ObjectId> Collections { get; set; }
     }
 }
