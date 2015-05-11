@@ -16,11 +16,14 @@ namespace ChronoZoom.Mongo.PersistencyEngine
             
         }
 
-        public async Task<User> findById(String userId) {
-            var id = ObjectId.Parse(userId);
+        /// <summary>
+        /// Finds a user by his unique identifier
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user</param>
+        /// <returns>The user object or a default</returns>
+        public async Task<User> findById(ObjectId userId) {
             var collection = MongoFactory.database.GetCollection<User>("user");
-            
-            var user = await collection.Find<User>(x => x.Id == id).FirstOrDefaultAsync();
+            var user = await collection.Find<User>(x => x.Id == userId).FirstOrDefaultAsync();
 
             return user;
         }
