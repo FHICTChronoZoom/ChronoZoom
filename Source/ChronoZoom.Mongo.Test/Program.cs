@@ -15,8 +15,11 @@ namespace ChronoZoom.Mongo.Test
         {
             MongoFactory mf = new MongoFactory();
             UserFactory uf = new UserFactory();
+            CollectionFactory cf = new CollectionFactory();
 
             User user = uf.findById(ObjectId.Parse("55437512f67ce7a253751fa0")).Result;
+            List<Collection> collections = CollectionFactory.findByUserId(ObjectId.Parse("55437512f67ce7a253751fa0")).Result;
+            user.Collections = collections;
 
             Console.WriteLine(user.Name);
             Console.WriteLine(user.Email);

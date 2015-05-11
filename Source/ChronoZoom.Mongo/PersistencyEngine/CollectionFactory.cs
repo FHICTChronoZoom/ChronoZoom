@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace ChronoZoom.Mongo.PersistencyEngine
 {
-    class CollectionFactory
+    public class CollectionFactory
     {
         public CollectionFactory() { }
 
@@ -19,6 +19,19 @@ namespace ChronoZoom.Mongo.PersistencyEngine
             var chronoCollection = await collection.Find<Collection>(x => x.Id == collectionId).FirstOrDefaultAsync();
 
             return chronoCollection;
+        }
+
+        /// <summary>
+        /// Find all the collection of a specific user
+        /// </summary>
+        /// <param name="userId">The Id of the user to find all the collections from</param>
+        /// <returns>A list of collections</returns>
+        public static async Task<List<Collection>> findByUserId(ObjectId userId)
+        {
+            var collection = MongoFactory.database.GetCollection<Collection>("collection");
+            var userCollections = await collection.Find<Collection>(x => x.OwnerId.Equals(userId)).ToListAsync();
+
+            return userCollections;
         }
 
         public static async Task<List<Collection>> findMultipleById(List<ObjectId> collectionIds)

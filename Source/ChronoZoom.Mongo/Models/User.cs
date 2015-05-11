@@ -39,6 +39,8 @@ namespace ChronoZoom.Mongo.Models
         /// List of collections from the user.
         /// </summary>
         [BsonIgnore]
+        //[BsonElement("collections")]
+        //[BsonRepresentation(BsonType.Document)]
         public List<Collection> Collections { get; set; }
 
         /// <summary>

@@ -26,8 +26,8 @@ namespace ChronoZoom.Mongo.PersistencyEngine
             var collection = MongoFactory.database.GetCollection<User>("user");
             var user = await collection.Find<User>(x => x.Id == userId).FirstOrDefaultAsync();
 
-            var collections = CollectionFactory.findMultipleById(user._Collections);
-            user.Collections = collections.Result;
+            //var collections = CollectionFactory.findMultipleById(user.Collections);
+            //user.Collections = collections.Result;
             return user;
         }
 
