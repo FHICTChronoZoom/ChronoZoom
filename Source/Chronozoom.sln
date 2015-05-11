@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chronozoom.Library", "Chron
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Mongo", "ChronoZoom.Mongo\ChronoZoom.Mongo.csproj", "{C3A94D52-091C-4A4C-BD08-DE5CC5F754F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Mongo.Test", "ChronoZoom.Mongo.Test\ChronoZoom.Mongo.Test.csproj", "{29710667-B8AB-4814-A390-3325D349005F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,13 +61,17 @@ Global
 		{C3A94D52-091C-4A4C-BD08-DE5CC5F754F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3A94D52-091C-4A4C-BD08-DE5CC5F754F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3A94D52-091C-4A4C-BD08-DE5CC5F754F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29710667-B8AB-4814-A390-3325D349005F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29710667-B8AB-4814-A390-3325D349005F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29710667-B8AB-4814-A390-3325D349005F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29710667-B8AB-4814-A390-3325D349005F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4;packages\EnterpriseLibrary.WindowsAzure.TransientFaultHandling.5.1.1212.0\lib\NET4;packages\EnterpriseLibrary.WindowsAzure.TransientFaultHandling.5.1.1212.0\DesignTime
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Chronozoom.vsmdi
