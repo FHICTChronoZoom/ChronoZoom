@@ -16,8 +16,7 @@ namespace Chronozoom.Library.Models
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
-        [BsonId]
-        public ObjectId Id { get; set; }
+        public Guid Id { get; set; }
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
@@ -60,6 +59,7 @@ namespace Chronozoom.Library.Models
         /// </summary>
         public Timeline()
         {
+            this.Id = new Guid();
         }
     }
 }

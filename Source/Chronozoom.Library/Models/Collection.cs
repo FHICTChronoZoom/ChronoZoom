@@ -10,8 +10,8 @@ namespace Chronozoom.Library.Models
 {
     public class Collection
     {
-        [BsonId]
-        public ObjectId Id { get; set; }
+       
+        public Guid Id { get; set; }
         public bool Default { get; set; }
         public string Title { get; set; }
         public string Theme { get; set; }
@@ -19,6 +19,7 @@ namespace Chronozoom.Library.Models
 
         public Collection()
         {
+            this.Id = new Guid();
         }
     }
 }
