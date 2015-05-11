@@ -54,9 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Collection.cs" />
-	<Compile Include="Models\ContentItem.cs" />		
+    <Compile Include="Models\ContentItem.cs" />
     <Compile Include="Models\Exhibit.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="PersistencyEngine\CollectionFactory.cs" />
     <Compile Include="PersistencyEngine\MongoFactory.cs" />
     <Compile Include="PersistencyEngine\UserFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
