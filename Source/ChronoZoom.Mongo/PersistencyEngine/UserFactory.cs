@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ChronoZoom.Mongo.PersistencyEngine
 {
-    class UserFactory
+    public class UserFactory
     {
 
         public UserFactory() { 
@@ -27,5 +27,7 @@ namespace ChronoZoom.Mongo.PersistencyEngine
 
             return user;
         }
+
+
     }
 }

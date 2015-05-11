@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ChronoZoom.Mongo.PersistencyEngine
 {
 
-    public static class MongoFactory
+    public class MongoFactory
     {
 
         public MongoFactory() {
@@ -18,7 +18,7 @@ namespace ChronoZoom.Mongo.PersistencyEngine
             database = client.GetDatabase("ChronoZoom");
         }
 
-        public MongoClient client { private get; private set; }
+        public MongoClient client { get; private set; }
 
         public static IMongoDatabase database { get; private set; }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChronoZoom.Mongo.Models
 {
-    class User
+    public class User
     {
         public User() { }
 

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ChronoZoom.Mongo.Models
 {
-    class Collection
+    public class Collection
     {
         public Collection() 
         {
