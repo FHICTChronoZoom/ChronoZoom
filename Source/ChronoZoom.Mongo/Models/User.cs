@@ -21,16 +21,19 @@ namespace ChronoZoom.Mongo.Models
         /// <summary>
         /// Full name of the user
         /// </summary>
+        [BsonElement("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Email address of the user
         /// </summary>
+        [BsonElement("email")]
         public string Email { get; set; }
 
         /// <summary>
         /// List of collections from the user.
         /// </summary>
-        public List<Collection> Collections { get; set; }
+        [BsonElement("collections")]
+        public List<ObjectId> Collections { get; set; }
     }
 }
