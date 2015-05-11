@@ -28,6 +28,11 @@ namespace ChronoZoom.Mongo.PersistencyEngine
             return user;
         }
 
+        /// <summary>
+        /// Creates a User in the database
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<Boolean> create(User user) {
             var collection = MongoFactory.database.GetCollection<User>("user");
             await collection.InsertOneAsync(user);

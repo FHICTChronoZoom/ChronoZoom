@@ -20,12 +20,13 @@ namespace ChronoZoom.Mongo.Models
         /// Unique identifier of the collection
         /// </summary>
         [BsonId]
-        public ObjectId id { get; set; }
+        public ObjectId Id { get; set; }
 
         /// <summary>
         /// Unique identifier of the user who owns this collection
         /// </summary>
-        public ObjectId ownerId { get; set; }
+        [BsonElement("ownerId")]
+        public ObjectId OwnerId { get; set; }
 
         /// <summary>
         /// The name/title of the collection
@@ -41,20 +42,28 @@ namespace ChronoZoom.Mongo.Models
 
         /// <summary>
         /// Boolean determining if this is the default collection for the user.
-        /// There should only be only default collection. Default is false.
+        /// There should only be only default collection. 
+        /// If this field is not true, it will not be persisted.
+        /// Default is false.
         /// </summary>
+        [BsonIgnoreIfDefault]
         public Boolean Default { get; set; }
 
         /// <summary>
         /// Boolean determining if this collection allows other users to edit
-        /// or maintain the collection. Default is false.
+        /// or maintain the collection. 
+        /// If this field is not true, it will not be persisted.
+        /// Default is false.
         /// </summary>
+        [BsonIgnoreIfDefault]
         public Boolean MembersAllowed { get; set; }
 
         /// <summary>
         /// Boolean determining if this collection is visible to other users.
+        /// If this field is not true, it will not be persisted.
         /// Default is false.
         /// </summary>
+        [BsonIgnoreIfDefault]
         public Boolean PubliclySearchable { get; set; }
     }
 }
