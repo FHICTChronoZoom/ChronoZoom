@@ -8,8 +8,20 @@ using System.Threading.Tasks;
 namespace ChronoZoom.Mongo.PersistencyEngine
 {
 
-    class MongoFactory
+    public static class MongoFactory
     {
-        var client = new MongoClient();
+
+        public MongoFactory() {
+            // Connection string for using remote connections/Replica sets
+            // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+            this.client = new MongoClient("mongodb://localhost");
+            database = client.GetDatabase("ChronoZoom");
+        }
+
+        public MongoClient client { private get; private set; }
+
+        public static IMongoDatabase database { get; private set; }
+
+
     }
 }

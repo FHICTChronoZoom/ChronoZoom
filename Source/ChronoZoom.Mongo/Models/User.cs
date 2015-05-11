@@ -16,21 +16,21 @@ namespace ChronoZoom.Mongo.Models
         /// Unique identifier for the user
         /// </summary>
         [BsonId]
-        public ObjectId id { get; set; }
+        public ObjectId Id { get; set; }
 
         /// <summary>
         /// Full name of the user
         /// </summary>
-        public string name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Email address of the user
         /// </summary>
-        public string email { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         /// List of collections from the user.
         /// </summary>
-        public List<Collection> collections { get; set; }
+        public List<Collection> Collections { get; set; }
     }
 }
