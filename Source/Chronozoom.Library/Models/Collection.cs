@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +10,8 @@ namespace Chronozoom.Library.Models
 {
     public class Collection
     {
-        public Guid Id { get; set; }
+        [BsonId]
+        public ObjectId Id { get; set; }
         public bool Default { get; set; }
         public string Title { get; set; }
         public string Theme { get; set; }
@@ -16,7 +19,6 @@ namespace Chronozoom.Library.Models
 
         public Collection()
         {
-            this.Id = Guid.NewGuid();
         }
     }
 }
