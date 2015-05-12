@@ -34,12 +34,29 @@ namespace ChronoZoom.Mongo.PersistencyEngine
             return userCollections;
         }
 
+        /// <summary>
+        /// Finds a list of collections by their id's
+        /// </summary>
+        /// <param name="collectionIds">A list of ObjectId's</param>
+        /// <returns>A list of ObjectId's</returns>
         public static async Task<List<Collection>> findMultipleById(List<ObjectId> collectionIds)
         {
             var collection = MongoFactory.database.GetCollection<Collection>("collection");
             var chronoCollections = await collection.Find<Collection>(x => collectionIds.Contains(x.Id)).ToListAsync();
 
             return chronoCollections;
+        }
+
+        /// <summary>
+        /// Find all public collections.
+        /// </summary>
+        /// <returns>A list of public collections</returns>
+        public static async Task<List<Collection>> findPublicCollections()
+        {
+            var collection = MongoFactory.database.GetCollection<Collection>("collection");
+            var publicCollections = await collection.Find<Collection>(x => x.PubliclySearchable == true).ToListAsync();
+
+            return publicCollections;
         }
     }
 }
