@@ -58,5 +58,18 @@ namespace ChronoZoom.Mongo.PersistencyEngine
 
             return publicCollections;
         }
+
+        /// <summary>
+        /// Find the public collection of a specific user
+        /// </summary>
+        /// <param name="userId">The userId of the user to find the default collection from</param>
+        /// <returns>The default collection or null</returns>
+        public static async Task<Collection> findUserDefaultCollection(ObjectId userId)
+        {
+            var collection = MongoFactory.database.GetCollection<Collection>("collection");
+            var defaultCollection = await collection.Find<Collection>(x => x.Default == true && x.OwnerId.Equals(userId)).FirstOrDefaultAsync();
+
+            return defaultCollection;
+        }
     }
 }
