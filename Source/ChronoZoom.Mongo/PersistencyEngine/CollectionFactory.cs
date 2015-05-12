@@ -79,7 +79,7 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// <param name="userId">The user to be checked if he has member privilages</param>
         /// <param name="collectionId">The collection to check it on</param>
         /// <returns>True if the user has member priviliges, otherwise false.</returns>
-        public static async Task<Boolean> isMemberCollection(ObjectId userId, ObjectId collectionId)
+        public static async Task<Boolean> isMemberOfCollection(ObjectId userId, ObjectId collectionId)
         {
             var collection = MongoFactory.database.GetCollection<Collection>("collection");
             var memberCollection = await collection.Find<Collection>(x => x.Id.Equals(collectionId)  && x.MembersAllowed == true && x.Members.Contains(userId)).FirstOrDefaultAsync();
