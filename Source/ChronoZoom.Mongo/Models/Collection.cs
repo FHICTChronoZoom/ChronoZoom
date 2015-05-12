@@ -63,6 +63,14 @@ namespace ChronoZoom.Mongo.Models
         public Boolean MembersAllowed { get; set; }
 
         /// <summary>
+        /// List of members in the collection.
+        /// Members can edit and maintain the collection
+        /// </summary>
+        [BsonIgnoreIfDefault]
+        [BsonElement("members")]
+        public List<ObjectId> Members { get; set; }
+
+        /// <summary>
         /// Boolean determining if this collection is visible to other users.
         /// If this field is not true, it will not be persisted.
         /// Default is false.

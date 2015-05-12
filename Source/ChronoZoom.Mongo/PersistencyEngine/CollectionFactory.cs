@@ -71,5 +71,20 @@ namespace ChronoZoom.Mongo.PersistencyEngine
 
             return defaultCollection;
         }
+
+        /// <summary>
+        /// Checks if a user is a member inside a collection.
+        /// This can only be true if the collection allows members and the user is part of the member array
+        /// </summary>
+        /// <param name="userId">The user to be checked if he has member privilages</param>
+        /// <param name="collectionId">The collection to check it on</param>
+        /// <returns>True if the user has member priviliges, otherwise false.</returns>
+        public static async Task<Boolean> isMemberCollection(ObjectId userId, ObjectId collectionId)
+        {
+            var collection = MongoFactory.database.GetCollection<Collection>("collection");
+            var memberCollection = await collection.Find<Collection>(x => x.Id.Equals(collectionId)  && x.MembersAllowed == true && x.Members.Contains(userId)).FirstOrDefaultAsync();
+
+            return memberCollection != null;
+        }
     }
 }
