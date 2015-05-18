@@ -13,6 +13,8 @@ namespace ChronoZoom.Mongo.PersistencyEngine
     public class UserFactory : IUserRepository
     {
 
+        private static final string COLLECTION_NAME = "User";
+
         private UserFactory() { }
 
         /// <summary>

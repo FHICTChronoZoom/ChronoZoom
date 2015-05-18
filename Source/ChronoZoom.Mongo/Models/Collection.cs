@@ -9,6 +9,11 @@ namespace ChronoZoom.Mongo.Models
 {
     public class Collection
     {
+        /// <summary>
+        /// Constructor of the collection.
+        /// By default, The Default, MembersAllowed and PubliclySearchable properties
+        /// are false.
+        /// </summary>
         public Collection() 
         {
             this.Default = false;
@@ -78,5 +83,12 @@ namespace ChronoZoom.Mongo.Models
         [BsonIgnoreIfDefault]
         [BsonElement("publicllySearchable")]
         public Boolean PubliclySearchable { get; set; }
+
+        /// <summary>
+        /// List of timelines which are part of this collection.
+        /// </summary>
+        [BsonIgnoreIfDefault]
+        [BsonElement("timelines")]
+        public List<Timeline> Timelines { get; set; }
     }
 }
