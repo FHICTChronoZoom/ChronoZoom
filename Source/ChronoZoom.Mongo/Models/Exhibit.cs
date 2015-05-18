@@ -12,62 +12,69 @@ namespace ChronoZoom.Mongo.Models
 
     public class Exhibit
     {
-        public Exhibit() { }
+        public Exhibit() 
+        { 
+            this.IsCirca = false;
+        }
 
         /// <summary>
-        /// 
+        /// Unique identifier of the exhibit
         /// </summary>
         [BsonId]
-        public ObjectId id { get; set; }
+        public ObjectId Id { get; set; }
 
         /// <summary>
-        /// 
+        /// The depth of the exhibit in the timeline tree.
+        /// Inherited from the pre-Fontys version of ChronoZoom.
         /// </summary>
-        public int depth { get; set; }
+        [BsonElement("depth")]
+        public int Depth { get; set; }
 
         /// <summary>
         /// The title of the exhibit
         /// </summary>
-        public string title { get; set; }
+        [BsonElement("title")]
+        public string Title { get; set; }
 
         /// <summary>
-        /// Contains the information about the date the exhibit occurs
+        /// The timestamp of the exhibit. This is the point in time
+        /// where the exhibit should be placed. Decimal because it can then be
+        /// placed on a specific day/month/year
         /// </summary>
-        public int year { get; set; }
+        [BsonElement("year")]
+        public decimal Year { get; set; }
 
         /// <summary>
-        /// Determines if the exhibit is on an exact date or circa
+        /// Boolean determining if the `Year` property is an estimation.
+        /// If this is false, it will not be persisted.
+        /// The default is false.
         /// </summary>
-        public bool isCirca { get; set; }
+        [BsonElement("isCirca")]
+        [BsonIgnoreIfDefault]
+        public bool IsCirca { get; set; }
 
         /// <summary>
-        /// Contains the information about edits in the exhibit
+        /// Identifier of the user who last updated this exhibit
+        /// If this is not available, it will not be persisted.
         /// </summary>
-        //public Updated updated { get; set; }
+        [BsonElement("updated.userId")]
+        [BsonIgnoreIfDefault]
+        public ObjectId UpdatedByUser { get; set; }
 
         /// <summary>
-        /// Used to store the contentItems which are in the exhibit
+        /// Timestamp of the moment the last edit was mode.
+        /// If this is not available, it will not be persisted.
         /// </summary>
-        public List<ContentItem> contentItems { get; set; } 
-
+        [BsonElement("updated.timestamp")]
+        [BsonIgnoreIfDefault]
+        public DateTime UpdatedAt { get; set; }
 
         /// <summary>
-        /// 
+        /// A list of content items belonging to this exhibit.
+        /// If this is not available, it will not be persisted.
         /// </summary>
-        internal class Updated
-        {
- 
-            public Updated(){}
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public ObjectId id { get; set; }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public string timestamp { get; set; }
-        }
+        [BsonElement("contentItems")]
+        [BsonIgnoreIfDefault]
+        public List<ContentItem> ContentItems { get; set; }
     }
 }

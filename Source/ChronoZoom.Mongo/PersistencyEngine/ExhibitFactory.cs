@@ -2,6 +2,7 @@
 using ChronoZoom.Mongo.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,34 +13,16 @@ namespace ChronoZoom.Mongo.PersistencyEngine
 {
     public class ExhibitFactory : IExhibitRepository
     {
+        private const string COLLECTION_NAME = "exhibit";
+
         private ExhibitFactory() { }
 
-        [BsonId]
-        public ObjectId Id { get; set; }
+        public static async Task<Exhibit> FindByTimelineIdAsync(ObjectId timelineId) 
+        {
+            var collection = MongoFactory.database.GetCollection<Exhibit>(COLLECTION_NAME);
+            var exhibit = await collection.Find<Exhibit>(x => x.Id.Equals(timelineId)).FirstOrDefaultAsync();
 
-        [BsonElement("depth")]
-        public int Depth { get; set; }
-
-        [BsonElement("title")]
-        public string Title { get; set; }
-
-        [BsonElement("year")]
-        public decimal Year { get; set; }
-
-        [BsonElement("isCirca")]
-        [BsonIgnoreIfDefault]
-        public bool IsCirca { get; set; }
-
-        [BsonElement("updated.userId")]
-        [BsonIgnoreIfDefault]
-        public ObjectId UpdatedByUser { get; set; }
-
-        [BsonElement("updated.timestamp")]
-        [BsonIgnoreIfDefault]
-        public DateTime UpdatedAt { get; set; }
-
-        [BsonElement("contentItems")]
-        [BsonIgnoreIfDefault]
-        public List<ContentItem> ContentItems {get; set; }
+            return exhibit;
+        }
     }
 }

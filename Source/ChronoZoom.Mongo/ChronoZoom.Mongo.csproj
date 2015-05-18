@@ -59,6 +59,7 @@
     <Compile Include="Models\Timeline.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="PersistencyEngine\CollectionFactory.cs" />
+    <Compile Include="PersistencyEngine\ExhibitFactory.cs" />
     <Compile Include="PersistencyEngine\MongoFactory.cs" />
     <Compile Include="PersistencyEngine\UserFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

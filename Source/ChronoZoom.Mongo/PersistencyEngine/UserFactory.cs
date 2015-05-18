@@ -13,7 +13,7 @@ namespace ChronoZoom.Mongo.PersistencyEngine
     public class UserFactory : IUserRepository
     {
 
-        private const string COLLECTION_NAME = "User";
+        private const string COLLECTION_NAME = "user";
 
         private UserFactory() { }
 
@@ -24,7 +24,7 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// <returns>The user object or null</returns>
         public static async Task<User> FindByIdAsync(ObjectId userId) 
         {
-            var collection = MongoFactory.database.GetCollection<User>("user");
+            var collection = MongoFactory.database.GetCollection<User>(COLLECTION_NAME);
             var user = await collection.Find<User>(x => x.Id == userId).FirstOrDefaultAsync();
 
             return user;
@@ -37,7 +37,7 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// <returns>The user object or null</returns>
         public static async Task<User> FindByNameAsync(String name) 
         {
-            var collection = MongoFactory.database.GetCollection<User>("user");
+            var collection = MongoFactory.database.GetCollection<User>(COLLECTION_NAME);
             var user = await collection.Find<User>(x => x.Name == name).FirstOrDefaultAsync();
 
             return user;
@@ -50,7 +50,7 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// <returns>The user object or null</returns>
         public static async Task<User> FindByEmailAsync(String email)
         {
-            var collection = MongoFactory.database.GetCollection<User>("user");
+            var collection = MongoFactory.database.GetCollection<User>(COLLECTION_NAME);
             var user = await collection.Find<User>(x => x.Email == email).FirstOrDefaultAsync();
 
             return user;
@@ -63,7 +63,7 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// <returns></returns>
         public static async Task<Boolean> InsertAsync(User user) 
         {
-            var collection = MongoFactory.database.GetCollection<User>("user");
+            var collection = MongoFactory.database.GetCollection<User>(COLLECTION_NAME);
             await collection.InsertOneAsync(user);
 
             return true;
