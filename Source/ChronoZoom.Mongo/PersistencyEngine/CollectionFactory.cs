@@ -51,9 +51,13 @@ namespace ChronoZoom.Mongo.PersistencyEngine
             return chronoCollections;
         }
 
-        public static async Task<Collection> FindByTimelineIdAsync(ObjectId timelineId) {
-            var collection = MongoFactory.database.GetCollection<Collection>(COLLECTION_NAME);
-        }
+        //public static async Task<Collection> FindByTimelineIdAsync(ObjectId timelineId) {
+        //    var collection = MongoFactory.database.GetCollection<Collection>(COLLECTION_NAME);
+            
+        //    //var timelineCollection = await collection.Find<Collection>(x => x.Timelines.Find<Timeline>(y => y.Id == timelineId)).ToListAsync();
+
+        //    return timelineCollection;
+        //}
 
         /// <summary>
         /// Find all public collections.
