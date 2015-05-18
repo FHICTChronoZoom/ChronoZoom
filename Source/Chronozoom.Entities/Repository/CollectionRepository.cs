@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Chronozoom.Library.Repositories;
 using System.Data.Entity;
+using Chronozoom.Library.Models;
 
 namespace Chronozoom.Entities.Repository
 {
@@ -87,6 +88,11 @@ namespace Chronozoom.Entities.Repository
         private Collection ToEntityCollection(Library.Models.Collection col)
         {
             return new Collection { Id = col.Id, Default = col.Default, PubliclySearchable = col.IsPublicSearchable, Theme = col.Theme, Title = col.Title };
+        }
+
+        public Task<Library.Models.Collection> FindByTimelineIdAsync(Guid timelineId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
