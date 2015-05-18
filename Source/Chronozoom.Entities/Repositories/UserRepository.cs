@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Chronozoom.Library.Repositories;
 using System.Data.Entity;
 
-namespace Chronozoom.Entities.Repository
+namespace Chronozoom.Entities.Repositories
 {
     class UserRepository : IUserRepository
     {

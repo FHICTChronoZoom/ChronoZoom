@@ -7,7 +7,7 @@ using Chronozoom.Library.Repositories;
 using System.Data.Entity;
 using Chronozoom.Library.Models;
 
-namespace Chronozoom.Entities.Repository
+namespace Chronozoom.Entities.Repositories
 {
     class CollectionRepository : ICollectionRepository
     {
