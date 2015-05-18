@@ -16,6 +16,10 @@ namespace Chronozoom.Library.Models
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>
+        /// Gets or sets the id of the parent timeline.
+        /// </summary>
+        public Guid? ParentTimeline { get; set; }
+        /// <summary>
         /// Gets or sets the title.
         /// </summary>
         public string Title { get; set; }

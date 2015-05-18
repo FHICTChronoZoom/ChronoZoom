@@ -16,6 +16,10 @@ namespace Chronozoom.Library.Models
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>
+        /// Gets or sets the id of the timeline this exhibit belongs to.
+        /// </summary>
+        public Guid TimelineId { get; set; }
+        /// <summary>
         /// Gets or sets the depth.
         /// </summary>
         public int Depth { get; set; }
