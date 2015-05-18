@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,45 +14,48 @@ namespace ChronoZoom.Mongo.Models
 
         public ContentItem(){ }
 
+        [BsonId]
+        public ObjectId Id { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
-        public int depth { get; set; }
+        public int Depth { get; set; }
 
         /// <summary>
         /// Stores the title of the contentItem
         /// </summary>
-        public string title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Stores the caption of the contentItem (small description)
         /// </summary>
-        public string caption { get; set; }
+        public string Caption { get; set; }
 
         /// <summary>
         /// Stores the year of the contentItem
         /// </summary>
-        public int year { get; set; }
+        public int Year { get; set; }
 
         /// <summary>
         /// Stores the mediatype and url of a contentItem
         /// </summary>
-        public Media media { get; set; }
+        public Media Media { get; set; }
 
         /// <summary>
         /// Stores the link used to find this contentItem
         /// </summary>
-        public string uri { get; set; }
+        public string Uri { get; set; }
 
         /// <summary>
         /// Stores the name of the person who curated the contentItem
         /// </summary>
-        public string attribution { get; set; }
+        public string Attribution { get; set; }
 
         /// <summary>
         /// Ordernumber in the exhibit
         /// </summary>
-        public int order { get; set; }
+        public int Order { get; set; }
 
         /// <summary>
         /// Inner class used to determine which kind of media type it is and where to find the source
