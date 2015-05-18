@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ChronoZoom.Mongo.Models
 {
  
-    class ContentItem
+    public class ContentItem
     {
 
         public ContentItem(){ }
@@ -40,7 +40,7 @@ namespace ChronoZoom.Mongo.Models
         /// <summary>
         /// Stores the mediatype and url of a contentItem
         /// </summary>
-        public Media Media { get; set; }
+        //public Media Media { get; set; }
 
         /// <summary>
         /// Stores the link used to find this contentItem

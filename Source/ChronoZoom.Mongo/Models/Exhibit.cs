@@ -10,7 +10,7 @@ using MongoDB.Driver;
 namespace ChronoZoom.Mongo.Models
 {
 
-    class Exhibit
+    public class Exhibit
     {
         public Exhibit() { }
 
@@ -43,7 +43,7 @@ namespace ChronoZoom.Mongo.Models
         /// <summary>
         /// Contains the information about edits in the exhibit
         /// </summary>
-        public Updated updated { get; set; }
+        //public Updated updated { get; set; }
 
         /// <summary>
         /// Used to store the contentItems which are in the exhibit

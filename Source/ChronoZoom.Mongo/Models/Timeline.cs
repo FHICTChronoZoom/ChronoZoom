@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChronoZoom.Mongo.Models
 {
-    class Timeline
+    public class Timeline
     {
         public Timeline() 
         {
@@ -90,6 +90,6 @@ namespace ChronoZoom.Mongo.Models
         /// </summary>
         [BsonElement("exhibits")]
         [BsonIgnoreIfDefault]
-        public List<Exhibit> Exhibits { get; set; }
+        public List<ObjectId> Exhibits { get; set; }
     }
 }
