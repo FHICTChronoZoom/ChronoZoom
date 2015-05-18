@@ -105,6 +105,8 @@
     <Compile Include="ContentItem.cs" />
     <Compile Include="Exhibit.cs" />
     <Compile Include="Repositories\CollectionRepository.cs" />
+    <Compile Include="Repositories\ExhibitRepository.cs" />
+    <Compile Include="Repositories\TimeLineRepository.cs" />
     <Compile Include="Repositories\TourRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Tile.cs" />
