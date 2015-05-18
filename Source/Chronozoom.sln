@@ -28,6 +28,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chronozoom.Library", "Chronozoom.Library\Chronozoom.Library.csproj", "{6E362311-ADA6-480F-A309-AFA7A29704A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Mongo", "ChronoZoom.Mongo\ChronoZoom.Mongo.csproj", "{C3A94D52-091C-4A4C-BD08-DE5CC5F754F0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6E362311-ADA6-480F-A309-AFA7A29704A7} = {6E362311-ADA6-480F-A309-AFA7A29704A7}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Mongo.Test", "ChronoZoom.Mongo.Test\ChronoZoom.Mongo.Test.csproj", "{29710667-B8AB-4814-A390-3325D349005F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +64,10 @@ Global
 		{C3A94D52-091C-4A4C-BD08-DE5CC5F754F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3A94D52-091C-4A4C-BD08-DE5CC5F754F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3A94D52-091C-4A4C-BD08-DE5CC5F754F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29710667-B8AB-4814-A390-3325D349005F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29710667-B8AB-4814-A390-3325D349005F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29710667-B8AB-4814-A390-3325D349005F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29710667-B8AB-4814-A390-3325D349005F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

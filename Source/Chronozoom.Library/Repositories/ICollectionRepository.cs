@@ -36,5 +36,7 @@ namespace Chronozoom.Library.Repositories
         /// <param name="userId">The id of the user.</param>
         /// <returns>True if the user is a member, else false.</returns>
         Task<bool> IsMemberAsync(Guid collectionId, Guid userId);
+
+        Task<Collection> FindByTimelineIdAsync(Guid timelineId);
     }
 }

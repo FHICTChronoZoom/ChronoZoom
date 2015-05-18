@@ -104,9 +104,12 @@
     <Compile Include="Member.cs" />
     <Compile Include="ContentItem.cs" />
     <Compile Include="Exhibit.cs" />
+<<<<<<< HEAD
     <Compile Include="Repository\CollectionRepository.cs" />
     <Compile Include="Repository\TourRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
+=======
+>>>>>>> 1a05a365ca1182d9b24262c789f28ad6f560b2f9
     <Compile Include="Tile.cs" />
     <Compile Include="TimelineShortcut.cs" />
     <Compile Include="GlobalSuppressions.cs" />

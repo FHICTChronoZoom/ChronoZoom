@@ -8,29 +8,46 @@ using System.Threading.Tasks;
 
 namespace ChronoZoom.Mongo.Models
 {
-    class User
+    public class User
     {
         public User() { }
+
+        public User(String name, String email) {
+            this.Name = name;
+            this.Email = email;
+        }
 
         /// <summary>
         /// Unique identifier for the user
         /// </summary>
         [BsonId]
-        public ObjectId id { get; set; }
+        public ObjectId Id { get; set; }
 
         /// <summary>
         /// Full name of the user
         /// </summary>
-        public string name { get; set; }
+        [BsonElement("name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Email address of the user
         /// </summary>
-        public string email { get; set; }
+        [BsonElement("email")]
+        public string Email { get; set; }
 
         /// <summary>
         /// List of collections from the user.
         /// </summary>
-        public List<Collection> collections { get; set; }
+        [BsonIgnore]
+        //[BsonElement("collections")]
+        //[BsonRepresentation(BsonType.Document)]
+        public List<Collection> Collections { get; set; }
+
+        /// <summary>
+        /// List of ObjectId's from collections
+        /// </summary>
+        [BsonElement("collections")]
+        [BsonIgnoreIfNull]
+        public List<ObjectId> _Collections { get; set; }
     }
 }

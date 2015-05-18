@@ -54,14 +54,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Collection.cs" />
+    <Compile Include="Models\ContentItem.cs" />
+    <Compile Include="Models\Exhibit.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="PersistencyEngine\CollectionFactory.cs" />
+    <Compile Include="PersistencyEngine\MongoFactory.cs" />
+    <Compile Include="PersistencyEngine\UserFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="PersistencyEngine\" />
+    <ProjectReference Include="..\Chronozoom.Library\Chronozoom.Library.csproj">
+      <Project>{6e362311-ada6-480f-a309-afa7a29704a7}</Project>
+      <Name>Chronozoom.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
