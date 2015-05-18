@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using ChronoZoom.Mongo.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Chronozoom.Library.Repositories;
 
 namespace ChronoZoom.Mongo.PersistencyEngine
 {
-    public class CollectionFactory
+    public class CollectionFactory : ICollectionRepository
     {
-        public CollectionFactory() { }
+        private CollectionFactory() { }
 
         public async Task<Collection> FindById(ObjectId collectionId)
         {

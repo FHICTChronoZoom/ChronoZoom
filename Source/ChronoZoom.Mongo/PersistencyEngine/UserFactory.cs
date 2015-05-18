@@ -1,4 +1,5 @@
-﻿using ChronoZoom.Mongo.Models;
+﻿using Chronozoom.Library.Repositories;
+using ChronoZoom.Mongo.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ChronoZoom.Mongo.PersistencyEngine
 {
-    public class UserFactory
+    public class UserFactory : IUserRepository
     {
 
         private UserFactory() { }
