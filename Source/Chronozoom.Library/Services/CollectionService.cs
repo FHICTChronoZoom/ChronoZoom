@@ -23,12 +23,12 @@ namespace Chronozoom.Library.Services
             return collectionRepository.FindAsync(id);
         }
 
-        public Task<IEnumerable<Collection>> GetPublicCollectionAsync()
+        public Task<IEnumerable<Collection>> FindPublicCollectionAsync()
         {
             return collectionRepository.GetPublicCollectionsAsync();
         }
 
-        public Task<IEnumerable<Collection>> GetUserCollectionsAsync(Guid userId)
+        public Task<IEnumerable<Collection>> FindUserCollectionsAsync(Guid userId)
         {
             return collectionRepository.GetByUserAsync(userId);
         }
