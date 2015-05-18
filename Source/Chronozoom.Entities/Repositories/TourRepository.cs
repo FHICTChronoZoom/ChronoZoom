@@ -8,7 +8,7 @@ using System.Data.Entity;
 
 namespace Chronozoom.Entities.Repositories
 {
-    class TourRepository : ITourRepository
+    public class TourRepository : ITourRepository
     {
         private Storage storage;
 

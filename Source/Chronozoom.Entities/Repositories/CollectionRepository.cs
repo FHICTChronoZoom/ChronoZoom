@@ -9,7 +9,7 @@ using Chronozoom.Library.Models;
 
 namespace Chronozoom.Entities.Repositories
 {
-    class CollectionRepository : ICollectionRepository
+    public class CollectionRepository : ICollectionRepository
     {
         private Storage storage;
 
