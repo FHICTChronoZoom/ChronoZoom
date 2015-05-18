@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Collection.cs" />
+    <Compile Include="Models\Compability\FlatTimeline.cs" />
     <Compile Include="Models\ContentItem.cs" />
     <Compile Include="Models\Exhibit.cs" />
     <Compile Include="Models\Timeline.cs" />
@@ -54,6 +55,11 @@
     <Compile Include="Repositories\ITimelineRepository.cs" />
     <Compile Include="Repositories\ITourRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Services\CollectionService.cs" />
+    <Compile Include="Services\ExportService.cs" />
+    <Compile Include="Services\ImportService.cs" />
+    <Compile Include="Services\TimelineService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
