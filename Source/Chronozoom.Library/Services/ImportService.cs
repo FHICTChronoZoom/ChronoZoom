@@ -46,7 +46,7 @@ namespace Chronozoom.Library.Services
             if (timeline == null)
                 throw new Exception("The destination timeline, \"" + intoTimelineId.ToString() + "\", where you want to paste to, does not exist.");
 
-            var collection = await collectionRepository.GetByTimelineAsync(timeline.Id);
+            var collection = await collectionRepository.FindByTimelineIdAsync(timeline.Id);
 
             var isMember = await collectionRepository.IsMemberAsync(collection.Id, user.Id);
             if (!isMember)

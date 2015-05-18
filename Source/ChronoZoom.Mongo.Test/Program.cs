@@ -14,11 +14,9 @@ namespace ChronoZoom.Mongo.Test
         static void Main(string[] args)
         {
             MongoFactory mf = new MongoFactory();
-            UserFactory uf = new UserFactory();
-            CollectionFactory cf = new CollectionFactory();
 
-            User user = uf.findById(ObjectId.Parse("55437512f67ce7a253751fa0")).Result;
-            List<Collection> collections = CollectionFactory.findByUserId(ObjectId.Parse("55437512f67ce7a253751fa0")).Result;
+            User user = UserFactory.FindByIdAsync(ObjectId.Parse("55437512f67ce7a253751fa0")).Result;
+            List<Collection> collections = CollectionFactory.FindByUserIdAsync(ObjectId.Parse("55437512f67ce7a253751fa0")).Result;
             user.Collections = collections;
 
             Console.WriteLine(user.Name);
@@ -27,7 +25,7 @@ namespace ChronoZoom.Mongo.Test
 
             User newUser = new User("Max de Bruijn", "max.de.bruijn@gmail.com");
 
-            Boolean created = uf.create(newUser).Result;
+            Boolean created = UserFactory.InsertAsync(newUser).Result;
 
             Console.Read();
         }

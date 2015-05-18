@@ -48,6 +48,8 @@ namespace ChronoZoom.Mongo.PersistencyEngine
             return chronoCollections;
         }
 
+        public static async Task<Collection> FindByTimelineIdAsync
+
         /// <summary>
         /// Find all public collections.
         /// </summary>
