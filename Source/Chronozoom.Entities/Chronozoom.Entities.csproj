@@ -104,9 +104,9 @@
     <Compile Include="Member.cs" />
     <Compile Include="ContentItem.cs" />
     <Compile Include="Exhibit.cs" />
-    <Compile Include="Repository\CollectionRepository.cs" />
-    <Compile Include="Repository\TourRepository.cs" />
-    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repositories\CollectionRepository.cs" />
+    <Compile Include="Repositories\TourRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TimelineShortcut.cs" />
     <Compile Include="GlobalSuppressions.cs" />
