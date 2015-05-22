@@ -24,6 +24,13 @@ namespace Chronozoom.Library.Repositories
         /// <returns>An enumerable with collections, can be empty.</returns>
         Task<IEnumerable<Collection>> GetByUserAsync(Guid userId);
         /// <summary>
+        /// Gets a user collection by name.
+        /// </summary>
+        /// <param name="userId">The id of the user.</param>
+        /// <param name="collectionName">The name of the collection.</param>
+        /// <returns>The named collection of the user, or null if the user or collection are not found.</returns>
+        Task<Collection> GetByUserAndNameAsync(Guid userId, string collectionName);
+        /// <summary>
         /// Gets the default collection of a user.
         /// </summary>
         /// <param name="userId"></param>

@@ -8,8 +8,8 @@ namespace Chronozoom.Library.Models
 {
     public class Collection
     {
-       
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public bool Default { get; set; }
         public string Title { get; set; }
         public string Theme { get; set; }

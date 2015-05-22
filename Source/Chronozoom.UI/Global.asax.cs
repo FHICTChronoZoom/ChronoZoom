@@ -13,6 +13,7 @@ using System.Web.UI;
 using Chronozoom.Entities;
 using OuterCurve;
 using SharpBrake;
+using System.Web.Http;
 
 namespace Chronozoom.UI
 {
@@ -84,6 +85,14 @@ namespace Chronozoom.UI
 
         public void Application_Start(object sender, EventArgs e)
         {
+            // Register ASP.Net WebApi.
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            // To ignore circular references
+            // http://stackoverflow.com/questions/12641386/failed-to-serialize-the-response-in-web-api
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+
             Trace = new TraceSource("Global", SourceLevels.All);
             Trace.Listeners.Add(SignalRTraceListener);
             Storage.Trace.Listeners.Add(SignalRTraceListener);
