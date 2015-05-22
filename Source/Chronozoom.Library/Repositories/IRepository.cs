@@ -17,7 +17,7 @@ namespace Chronozoom.Library.Repositories
         /// </summary>
         /// <param name="id">The id of the object to find.</param>
         /// <returns>Returns the object if found, else null.</returns>
-        Task<T> FindAsync(Guid id);
+        Task<T> FindByIdAsync(Guid id);
         /// <summary>
         /// Inserts an object into the data store.
         /// </summary>
