@@ -98,7 +98,5 @@ namespace ChronoZoom.Mongo.PersistencyEngine
 
             return memberCollection != null;
         }
-
-        pu
     }
 }

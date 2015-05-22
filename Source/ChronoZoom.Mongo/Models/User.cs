@@ -21,7 +21,7 @@ namespace ChronoZoom.Mongo.Models
         /// Unique identifier for the user
         /// </summary>
         [BsonId]
-        public ObjectId Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Full name of the user
@@ -36,18 +36,10 @@ namespace ChronoZoom.Mongo.Models
         public string Email { get; set; }
 
         /// <summary>
-        /// List of collections from the user.
-        /// </summary>
-        [BsonIgnore]
-        //[BsonElement("collections")]
-        //[BsonRepresentation(BsonType.Document)]
-        public List<Collection> Collections { get; set; }
-
-        /// <summary>
         /// List of ObjectId's from collections
         /// </summary>
         [BsonElement("collections")]
         [BsonIgnoreIfNull]
-        public List<ObjectId> _Collections { get; set; }
+        public List<Guid> Collections { get; set; }
     }
 }

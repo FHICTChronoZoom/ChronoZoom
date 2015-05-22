@@ -20,7 +20,7 @@ namespace ChronoZoom.Mongo.Models
         /// Unique identifier of the timeline
         /// </summary>
         [BsonId]
-        public ObjectId Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// The title of the timeline
@@ -90,6 +90,6 @@ namespace ChronoZoom.Mongo.Models
         /// </summary>
         [BsonElement("exhibits")]
         [BsonIgnoreIfDefault]
-        public List<ObjectId> Exhibits { get; set; }
+        public List<Guid> Exhibits { get; set; }
     }
 }

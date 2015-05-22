@@ -21,7 +21,7 @@ namespace ChronoZoom.Mongo.Models
         /// Unique identifier of the exhibit
         /// </summary>
         [BsonId]
-        public ObjectId Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// The depth of the exhibit in the timeline tree.
@@ -59,7 +59,7 @@ namespace ChronoZoom.Mongo.Models
         /// </summary>
         [BsonElement("updated.userId")]
         [BsonIgnoreIfDefault]
-        public ObjectId UpdatedByUser { get; set; }
+        public Guid UpdatedByUser { get; set; }
 
         /// <summary>
         /// Timestamp of the moment the last edit was mode.
