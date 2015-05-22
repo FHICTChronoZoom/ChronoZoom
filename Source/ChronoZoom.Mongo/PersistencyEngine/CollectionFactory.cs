@@ -76,7 +76,7 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// </summary>
         /// <param name="userId">The userId of the user to find the default collection from</param>
         /// <returns>The default collection or null</returns>
-        public async Task<Collection> FindUserDefaultCollectionAsync(ObjectId userId)
+        public async Task<Collection> FindUserDefaultCollectionAsync(Guid userId)
         {
             var collection = MongoFactory.database.GetCollection<Collection>(COLLECTION_NAME);
             var defaultCollection = await collection.Find<Collection>(x => x.Default == true && x.OwnerId.Equals(userId)).FirstOrDefaultAsync();
@@ -91,7 +91,7 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// <param name="userId">The user to be checked if he has member privilages</param>
         /// <param name="collectionId">The collection to check it on</param>
         /// <returns>True if the user has member priviliges, otherwise false.</returns>
-        public async Task<Boolean> IsMemberAsync(ObjectId userId, ObjectId collectionId)
+        public async Task<Boolean> IsMemberAsync(Guid userId, Guid collectionId)
         {
             var collection = MongoFactory.database.GetCollection<Collection>(COLLECTION_NAME);
             var memberCollection = await collection.Find<Collection>(x => x.Id.Equals(collectionId)  && x.MembersAllowed == true && x.Members.Contains(userId)).FirstOrDefaultAsync();

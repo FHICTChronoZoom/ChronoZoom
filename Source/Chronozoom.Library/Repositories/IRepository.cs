@@ -23,18 +23,18 @@ namespace Chronozoom.Library.Repositories
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <returns></returns>
-        Task InsertAsync(T item);
+        Task<Boolean> InsertAsync(T item);
         /// <summary>
         /// Update an object to the date store.
         /// </summary>
         /// <param name="item">The item to update.</param>
         /// <returns></returns>
-        Task UpdateAsync(T item);
+        Task<Boolean> UpdateAsync(T item);
         /// <summary>
         /// Deleted an object from the data store.
         /// </summary>
         /// <param name="id">The id of the object to delete.</param>
         /// <returns></returns>
-        Task DeleteAsync(Guid id);
+        Task<Boolean> DeleteAsync(Guid id);
     }
 }
