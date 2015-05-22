@@ -90,9 +90,10 @@ namespace Chronozoom.Entities.Repositories
             return new Collection { Id = col.Id, Default = col.Default, PubliclySearchable = col.IsPublicSearchable, Theme = col.Theme, Title = col.Title };
         }
 
-        public Task<Library.Models.Collection> FindByTimelineIdAsync(Guid timelineId)
+        public async Task<Library.Models.Collection> FindByTimelineIdAsync(Guid timelineId)
         {
-            throw new NotImplementedException();
+            var collection = await storage.Collections.FindAsync(timelineId);
+            return ToLibraryCollection(collection);
         }
     }
 }
