@@ -25,13 +25,13 @@ namespace ChronoZoom.Mongo.Models
         /// Unique identifier of the collection
         /// </summary>
         [BsonId]
-        public ObjectId Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Unique identifier of the user who owns this collection
         /// </summary>
         [BsonElement("ownerId")]
-        public ObjectId OwnerId { get; set; }
+        public Guid OwnerId { get; set; }
 
         /// <summary>
         /// The name/title of the collection
@@ -73,7 +73,7 @@ namespace ChronoZoom.Mongo.Models
         /// </summary>
         [BsonIgnoreIfDefault]
         [BsonElement("members")]
-        public List<ObjectId> Members { get; set; }
+        public List<Guid> Members { get; set; }
 
         /// <summary>
         /// Boolean determining if this collection is visible to other users.

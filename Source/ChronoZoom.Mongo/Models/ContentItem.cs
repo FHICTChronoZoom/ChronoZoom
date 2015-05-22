@@ -15,7 +15,7 @@ namespace ChronoZoom.Mongo.Models
         public ContentItem(){ }
 
         [BsonId]
-        public ObjectId Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// 

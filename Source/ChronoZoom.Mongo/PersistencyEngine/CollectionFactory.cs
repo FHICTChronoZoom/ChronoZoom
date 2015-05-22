@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChronoZoom.Mongo.Models;
+using Chronozoom.Library.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Chronozoom.Library.Repositories;
@@ -15,12 +16,12 @@ namespace ChronoZoom.Mongo.PersistencyEngine
 
         private const string COLLECTION_NAME = "collection";
 
-        private CollectionFactory() { }
+        public CollectionFactory() { }
 
-        public async Task<Collection> FindByIdAsync(ObjectId collectionId)
+        public async Task<Mongo.Models.Collection> FindByIdAsync(Guid collectionId)
         {
-            var collection = MongoFactory.database.GetCollection<Collection>(COLLECTION_NAME);
-            var chronoCollection = await collection.Find<Collection>(x => x.Id == collectionId).FirstOrDefaultAsync();
+            var collection = MongoFactory.database.GetCollection<Mongo.Models.Collection>(COLLECTION_NAME);
+            var chronoCollection = await collection.Find<Mongo.Models.Collection>(x => x.Id == collectionId).FirstOrDefaultAsync();
 
             return chronoCollection;
         }
@@ -30,10 +31,10 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// </summary>
         /// <param name="userId">The Id of the user to find all the collections from</param>
         /// <returns>A list of collections</returns>
-        public static async Task<List<Collection>> FindByUserIdAsync(ObjectId userId)
+        public async Task<List<Mongo.Models.Collection>> FindByUserIdAsync(Guid userId)
         {
-            var collection = MongoFactory.database.GetCollection<Collection>(COLLECTION_NAME);
-            var userCollections = await collection.Find<Collection>(x => x.OwnerId.Equals(userId)).ToListAsync();
+            var collection = MongoFactory.database.GetCollection<Mongo.Models.Collection>(COLLECTION_NAME);
+            var userCollections = await collection.Find<Mongo.Models.Collection>(x => x.OwnerId.Equals(userId)).ToListAsync();
 
             return userCollections;
         }
@@ -43,10 +44,10 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// </summary>
         /// <param name="collectionIds">A list of ObjectId's</param>
         /// <returns>A list of ObjectId's</returns>
-        public static async Task<List<Collection>> FindMultipleByIdAsync(List<ObjectId> collectionIds)
+        public async Task<List<Mongo.Models.Collection>> FindMultipleByIdAsync(List<Guid> collectionIds)
         {
-            var collection = MongoFactory.database.GetCollection<Collection>(COLLECTION_NAME);
-            var chronoCollections = await collection.Find<Collection>(x => collectionIds.Contains(x.Id)).ToListAsync();
+            var collection = MongoFactory.database.GetCollection<Mongo.Models.Collection>(COLLECTION_NAME);
+            var chronoCollections = await collection.Find<Mongo.Models.Collection>(x => collectionIds.Contains(x.Id)).ToListAsync();
 
             return chronoCollections;
         }
@@ -63,10 +64,10 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// Find all public collections.
         /// </summary>
         /// <returns>A list of public collections</returns>
-        public static async Task<List<Collection>> FindPublicCollectionsAsync()
+        public async Task<List<Mongo.Models.Collection>> FindPublicCollectionsAsync()
         {
-            var collection = MongoFactory.database.GetCollection<Collection>(COLLECTION_NAME);
-            var publicCollections = await collection.Find<Collection>(x => x.PubliclySearchable == true).ToListAsync();
+            var collection = MongoFactory.database.GetCollection<Mongo.Models.Collection>(COLLECTION_NAME);
+            var publicCollections = await collection.Find<Mongo.Models.Collection>(x => x.PubliclySearchable == true).ToListAsync();
 
             return publicCollections;
         }
@@ -76,10 +77,10 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// </summary>
         /// <param name="userId">The userId of the user to find the default collection from</param>
         /// <returns>The default collection or null</returns>
-        public static async Task<Collection> FindUserDefaultCollectionAsync(ObjectId userId)
+        public async Task<Mongo.Models.Collection> FindUserDefaultCollectionAsync(Guid userId)
         {
-            var collection = MongoFactory.database.GetCollection<Collection>(COLLECTION_NAME);
-            var defaultCollection = await collection.Find<Collection>(x => x.Default == true && x.OwnerId.Equals(userId)).FirstOrDefaultAsync();
+            var collection = MongoFactory.database.GetCollection<Mongo.Models.Collection>(COLLECTION_NAME);
+            var defaultCollection = await collection.Find<Mongo.Models.Collection>(x => x.Default == true && x.OwnerId.Equals(userId)).FirstOrDefaultAsync();
 
             return defaultCollection;
         }
@@ -91,10 +92,10 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// <param name="userId">The user to be checked if he has member privilages</param>
         /// <param name="collectionId">The collection to check it on</param>
         /// <returns>True if the user has member priviliges, otherwise false.</returns>
-        public static async Task<Boolean> IsMemberAsync(ObjectId userId, ObjectId collectionId)
+        public async Task<Boolean> IsMemberAsync(Guid userId, Guid collectionId)
         {
-            var collection = MongoFactory.database.GetCollection<Collection>(COLLECTION_NAME);
-            var memberCollection = await collection.Find<Collection>(x => x.Id.Equals(collectionId)  && x.MembersAllowed == true && x.Members.Contains(userId)).FirstOrDefaultAsync();
+            var collection = MongoFactory.database.GetCollection<Mongo.Models.Collection>(COLLECTION_NAME);
+            var memberCollection = await collection.Find<Mongo.Models.Collection>(x => x.Id.Equals(collectionId) && x.MembersAllowed == true && x.Members.Contains(userId)).FirstOrDefaultAsync();
 
             return memberCollection != null;
         }
