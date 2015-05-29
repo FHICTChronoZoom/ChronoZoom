@@ -11,7 +11,7 @@ using Chronozoom.Library.Repositories;
 
 namespace ChronoZoom.Mongo.PersistencyEngine
 {
-    public class CollectionFactory : ICollectionRepository
+    public class CollectionFactory
     {
 
         private const string COLLECTION_NAME = "collection";
