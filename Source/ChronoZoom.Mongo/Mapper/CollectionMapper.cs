@@ -8,7 +8,7 @@ using ChronoZoom.Mongo.PersistencyEngine;
 
 namespace ChronoZoom.Mongo.Mapper
 {
-    class CollectionMapper : ICollectionRepository
+    public class CollectionMapper : ICollectionRepository
     {
         private CollectionFactory factory;
 
@@ -19,8 +19,12 @@ namespace ChronoZoom.Mongo.Mapper
 
         public async Task<IEnumerable<Chronozoom.Library.Models.Collection>> GetPublicCollectionsAsync()
         {
-            List<Mongo.Models.Collection> collection = await factory.Find
-            Chronozoom.Library.Models.User cUser = new Chronozoom.Library.Models.User
+            List<Mongo.Models.Collection> collection = await factory.FindPublicCollectionsAsync();
+
+            List<Chronozoom.Library.Models.Collection> mappedCollections = mapCollections(collection);
+
+            return mappedCollections;
+
         }
 
         public Task<IEnumerable<Chronozoom.Library.Models.Collection>> GetByUserAsync(Guid userId)
@@ -66,6 +70,35 @@ namespace ChronoZoom.Mongo.Mapper
         public Task<bool> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        private List<Chronozoom.Library.Models.Collection> mapCollections(List<Mongo.Models.Collection> collections)
+        {
+            List<Chronozoom.Library.Models.Collection> mappedCollections = new List<Chronozoom.Library.Models.Collection>();
+
+            foreach (var c in collections)
+            {
+                mappedCollections.Add(mapCollection(c));
+            }
+
+            return mappedCollections;
+        }
+
+        private Chronozoom.Library.Models.Collection mapCollection(Mongo.Models.Collection collection)
+        {
+            Chronozoom.Library.Models.Collection cCollection = new Chronozoom.Library.Models.Collection
+            {
+                Id = collection.Id,
+                UserId = collection.OwnerId,
+                Default = collection.Default,
+                Title = collection.Title,
+                //Path = collection.Path // The Library model doesn't have a path..
+                //MembersAllowed = collection.MembersAllowed,
+                //Members = collection.Members,
+                //Timelines = collection.Timelines
+            };
+
+            return cCollection;
         }
     }
 }

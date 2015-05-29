@@ -46,7 +46,6 @@ namespace ChronoZoom.Mongo.Models
         [BsonElement("path")]
         public string Path { get; set; }
 
-
         /// <summary>
         /// Boolean determining if this is the default collection for the user.
         /// There should only be only default collection. 

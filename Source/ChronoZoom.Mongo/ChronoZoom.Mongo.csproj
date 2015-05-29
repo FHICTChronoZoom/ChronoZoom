@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapper\CollectionMapper.cs" />
     <Compile Include="Mapper\UserMapper.cs" />
     <Compile Include="Models\Collection.cs" />
     <Compile Include="Models\ContentItem.cs" />
