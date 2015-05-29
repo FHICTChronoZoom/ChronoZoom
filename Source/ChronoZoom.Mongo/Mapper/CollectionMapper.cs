@@ -52,7 +52,7 @@ namespace ChronoZoom.Mongo.Mapper
 
         public async Task<bool> IsMemberAsync(Guid collectionId, Guid userId)
         {
-            throw new NotImplementedException();
+            return await factory.IsMemberAsync(userId, collectionId);
         }
 
         public async Task<Chronozoom.Library.Models.Collection> FindByTimelineIdAsync(Guid timelineId)
@@ -62,22 +62,30 @@ namespace ChronoZoom.Mongo.Mapper
 
         public async Task<Chronozoom.Library.Models.Collection> FindByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            Mongo.Models.Collection collection = await factory.FindByIdAsync(id);
+
+            Chronozoom.Library.Models.Collection mappedCollection = mapCollection(collection);
+
+            return mappedCollection;
         }
 
         public async Task<bool> InsertAsync(Chronozoom.Library.Models.Collection item)
         {
-            throw new NotImplementedException();
+            Mongo.Models.Collection collection = mapCollection(item);
+
+            return await factory.InsertAsync(collection);
         }
 
         public async Task<bool> UpdateAsync(Chronozoom.Library.Models.Collection item)
         {
-            throw new NotImplementedException();
+            Mongo.Models.Collection collection = mapCollection(item);
+
+            return await factory.UpdateAsync(collection);
         }
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await factory.DeleteAsync(id);
         }
 
         private List<Chronozoom.Library.Models.Collection> mapCollections(List<Mongo.Models.Collection> collections)
@@ -98,6 +106,23 @@ namespace ChronoZoom.Mongo.Mapper
             {
                 Id = collection.Id,
                 UserId = collection.OwnerId,
+                Default = collection.Default,
+                Title = collection.Title,
+                //Path = collection.Path // The Library model doesn't have a path..
+                //MembersAllowed = collection.MembersAllowed,
+                //Members = collection.Members,
+                //Timelines = collection.Timelines
+            };
+
+            return cCollection;
+        }
+
+        private Mongo.Models.Collection mapCollection(Chronozoom.Library.Models.Collection collection)
+        {
+            Mongo.Models.Collection cCollection = new Mongo.Models.Collection
+            {
+                Id = collection.Id,
+                OwnerId = collection.UserId,
                 Default = collection.Default,
                 Title = collection.Title,
                 //Path = collection.Path // The Library model doesn't have a path..
