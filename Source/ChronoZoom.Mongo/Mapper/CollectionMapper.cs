@@ -55,9 +55,18 @@ namespace ChronoZoom.Mongo.Mapper
             return await factory.IsMemberAsync(userId, collectionId);
         }
 
+        /// <summary>
+        /// NOT WORKING YET. Need to fix the query in the CollectionFactory
+        /// </summary>
+        /// <param name="timelineId"></param>
+        /// <returns></returns>
         public async Task<Chronozoom.Library.Models.Collection> FindByTimelineIdAsync(Guid timelineId)
         {
-            throw new NotImplementedException();
+            Mongo.Models.Collection collection = await factory.FindByTimelineIdAsync(timelineId);
+
+            Chronozoom.Library.Models.Collection mappedCollection = mapCollection(collection);
+
+            return mappedCollection;
         }
 
         public async Task<Chronozoom.Library.Models.Collection> FindByIdAsync(Guid id)
