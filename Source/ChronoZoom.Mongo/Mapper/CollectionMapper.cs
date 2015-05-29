@@ -27,47 +27,55 @@ namespace ChronoZoom.Mongo.Mapper
 
         }
 
-        public Task<IEnumerable<Chronozoom.Library.Models.Collection>> GetByUserAsync(Guid userId)
+        public async Task<IEnumerable<Chronozoom.Library.Models.Collection>> GetByUserAsync(Guid userId)
+        {
+            List<Mongo.Models.Collection> collection = await factory.FindByUserIdAsync(userId);
+
+            List<Chronozoom.Library.Models.Collection> mappedCollections = mapCollections(collection);
+
+            return mappedCollections;
+        }
+
+        public async Task<Chronozoom.Library.Models.Collection> GetByUserAndNameAsync(Guid userId, string collectionName)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Chronozoom.Library.Models.Collection> GetByUserAndNameAsync(Guid userId, string collectionName)
+        public async Task<Chronozoom.Library.Models.Collection> GetUserDefaultAsync(Guid userId)
+        {
+            Mongo.Models.Collection collection = await factory.FindUserDefaultCollectionAsync(userId);
+
+            Chronozoom.Library.Models.Collection mappedCollection = mapCollection(collection);
+
+            return mappedCollection;
+        }
+
+        public async Task<bool> IsMemberAsync(Guid collectionId, Guid userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Chronozoom.Library.Models.Collection> GetUserDefaultAsync(Guid userId)
+        public async Task<Chronozoom.Library.Models.Collection> FindByTimelineIdAsync(Guid timelineId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> IsMemberAsync(Guid collectionId, Guid userId)
+        public async Task<Chronozoom.Library.Models.Collection> FindByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Chronozoom.Library.Models.Collection> FindByTimelineIdAsync(Guid timelineId)
+        public async Task<bool> InsertAsync(Chronozoom.Library.Models.Collection item)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Chronozoom.Library.Models.Collection> FindByIdAsync(Guid id)
+        public async Task<bool> UpdateAsync(Chronozoom.Library.Models.Collection item)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> InsertAsync(Chronozoom.Library.Models.Collection item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateAsync(Chronozoom.Library.Models.Collection item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
