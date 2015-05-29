@@ -34,19 +34,49 @@ namespace ChronoZoom.Mongo.Mapper
             return cUser;
         }
 
-        public Task<Chronozoom.Library.Models.User> FindByEmailAsync(string email)
+        public async Task<Chronozoom.Library.Models.User> FindByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            Mongo.Models.User user = await factory.FindByEmailAsync(email);
+            Chronozoom.Library.Models.User cUser = new Chronozoom.Library.Models.User
+            {
+                Email = user.Email,
+                DisplayName = user.Name,
+                Id = user.Id,
+                IdentityProvider = "none",
+                NameIdentifier = "none"
+            };
+
+            return cUser;
         }
 
-        public Task<Chronozoom.Library.Models.User> FindByIdAsync(Guid id)
+        public async Task<Chronozoom.Library.Models.User> FindByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            Mongo.Models.User user = await factory.FindByIdAsync(id);
+            Chronozoom.Library.Models.User cUser = new Chronozoom.Library.Models.User
+            {
+                Email = user.Email,
+                DisplayName = user.Name,
+                Id = user.Id,
+                IdentityProvider = "none",
+                NameIdentifier = "none"
+            };
+
+            return cUser;
         }
 
-        public Task<bool> InsertAsync(Chronozoom.Library.Models.User item)
+        public async Task<bool> InsertAsync(Chronozoom.Library.Models.User item)
         {
-            throw new NotImplementedException();
+
+            Mongo.Models.User cUser = new Mongo.Models.User
+            {
+                Email = item.Email,
+                Name = item.DisplayName,
+                Id = item.Id,
+            };
+
+            Boolean success = await factory.InsertAsync(cUser);
+
+            return success;
         }
 
         public Task<bool> UpdateAsync(Chronozoom.Library.Models.User item)
