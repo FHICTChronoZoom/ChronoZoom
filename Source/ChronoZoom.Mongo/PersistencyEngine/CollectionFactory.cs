@@ -51,6 +51,19 @@ namespace ChronoZoom.Mongo.PersistencyEngine
             return chronoCollections;
         }
 
+        /// <summary>
+        /// Finds a list of collections by their id's
+        /// </summary>
+        /// <param name="collectionIds">A list of ObjectId's</param>
+        /// <returns>A list of ObjectId's</returns>
+        public async Task<Mongo.Models.Collection> FindByUserIdAndName(Guid userId, string name)
+        {
+            var collection = MongoFactory.database.GetCollection<Mongo.Models.Collection>(COLLECTION_NAME);
+            var chronoCollections = await collection.Find<Mongo.Models.Collection>(x => x.Id.Equals(userId) && x.Title == name).FirstOrDefaultAsync();
+
+            return chronoCollections;
+        }
+
         public async Task<Collection> FindByTimelineIdAsync(Guid timelineId) {
             var collection = MongoFactory.database.GetCollection<Collection>(COLLECTION_NAME);
             

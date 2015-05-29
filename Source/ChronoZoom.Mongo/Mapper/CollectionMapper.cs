@@ -38,7 +38,11 @@ namespace ChronoZoom.Mongo.Mapper
 
         public async Task<Chronozoom.Library.Models.Collection> GetByUserAndNameAsync(Guid userId, string collectionName)
         {
-            throw new NotImplementedException();
+            Mongo.Models.Collection collection = await factory.FindByUserIdAndName(userId, collectionName);
+
+            Chronozoom.Library.Models.Collection mappedCollection = mapCollection(collection);
+
+            return mappedCollection;
         }
 
         public async Task<Chronozoom.Library.Models.Collection> GetUserDefaultAsync(Guid userId)
