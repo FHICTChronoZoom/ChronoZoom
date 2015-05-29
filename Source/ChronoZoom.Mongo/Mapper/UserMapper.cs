@@ -66,7 +66,6 @@ namespace ChronoZoom.Mongo.Mapper
 
         public async Task<bool> InsertAsync(Chronozoom.Library.Models.User item)
         {
-
             Mongo.Models.User cUser = new Mongo.Models.User
             {
                 Email = item.Email,
@@ -79,14 +78,25 @@ namespace ChronoZoom.Mongo.Mapper
             return success;
         }
 
-        public Task<bool> UpdateAsync(Chronozoom.Library.Models.User item)
+        public async Task<bool> UpdateAsync(Chronozoom.Library.Models.User item)  
         {
-            throw new NotImplementedException();
+            Mongo.Models.User cUser = new Mongo.Models.User
+            {
+                Email = item.Email,
+                Name = item.DisplayName,
+                Id = item.Id,
+            };
+
+            Boolean success = await factory.UpdateAsync(cUser);
+
+            return success;
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            Boolean success = await factory.DeleteAsync(id);
+
+            return success;
         }
     }
 }
