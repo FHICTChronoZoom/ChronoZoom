@@ -18,7 +18,7 @@ namespace Chronozoom.UI.Services
             this.userRepository = userRepository;
         }
 
-        public async Task<User> GetUser(IIdentity identity)
+        public async Task<User> GetUserAsync(IIdentity identity)
         {
             Microsoft.IdentityModel.Claims.ClaimsIdentity claimsIdentity = HttpContext.Current.User.Identity as Microsoft.IdentityModel.Claims.ClaimsIdentity;
             if (claimsIdentity == null || !claimsIdentity.IsAuthenticated) { return null; }
