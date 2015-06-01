@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Chronozoom.Library.Repositories;
+using Chronozoom.Business.Repositories;
 using System.Data.Entity;
 
 namespace Chronozoom.Entities.Repositories
@@ -17,32 +17,32 @@ namespace Chronozoom.Entities.Repositories
             this.storage = storage;
         }
 
-        public async Task<Library.Models.User> FindByUsernameAsync(string username)
+        public async Task<Business.Models.User> FindByUsernameAsync(string username)
         {
             var user = await storage.Users.FirstOrDefaultAsync(x => x.DisplayName == username);
             return ToLibraryUser(user);
         }
 
-        public async Task<Library.Models.User> FindByEmailAsync(string email)
+        public async Task<Business.Models.User> FindByEmailAsync(string email)
         {
             var user = await storage.Users.FirstOrDefaultAsync(x => x.Email == email);
             return ToLibraryUser(user);
         }
 
-        public async Task<Library.Models.User> FindAsync(Guid id)
+        public async Task<Business.Models.User> FindAsync(Guid id)
         {
             var user = await storage.Users.FindAsync(id);
             return ToLibraryUser(user);
         }
 
-        public async Task<bool> InsertAsync(Library.Models.User item)
+        public async Task<bool> InsertAsync(Business.Models.User item)
         {
             var user = ToEntityUser(item);
             storage.Users.Add(user);
             return await storage.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> UpdateAsync(Library.Models.User item)
+        public async Task<bool> UpdateAsync(Business.Models.User item)
         {
             var user = await storage.Users.FindAsync(item.Id);
             user.DisplayName = item.DisplayName;
@@ -59,24 +59,24 @@ namespace Chronozoom.Entities.Repositories
             return await storage.SaveChangesAsync() > 0;
         }
 
-        private Library.Models.User ToLibraryUser(User user)
+        private Business.Models.User ToLibraryUser(User user)
         {
-            return new Library.Models.User{Id = user.Id, Email = user.Email, DisplayName = user.DisplayName, NameIdentifier = user.NameIdentifier, IdentityProvider = user.IdentityProvider };
+            return new Business.Models.User{Id = user.Id, Email = user.Email, DisplayName = user.DisplayName, NameIdentifier = user.NameIdentifier, IdentityProvider = user.IdentityProvider };
         }
 
-        private User ToEntityUser(Library.Models.User user)
+        private User ToEntityUser(Business.Models.User user)
         {
             return new User { Id = user.Id, DisplayName = user.DisplayName, Email = user.Email, IdentityProvider = user.IdentityProvider, NameIdentifier = user.NameIdentifier };
         }
 
 
-        public async Task<Library.Models.User> FindByUserIdentifierAsync(string nameIdentifier)
+        public async Task<Business.Models.User> FindByUserIdentifierAsync(string nameIdentifier)
         {
             var user = await storage.Users.FirstOrDefaultAsync(x => x.NameIdentifier == nameIdentifier);
             return ToLibraryUser(user);
         }
 
-        public async Task<Library.Models.User> FindByIdAsync(Guid id)
+        public async Task<Business.Models.User> FindByIdAsync(Guid id)
         {
             var user = await storage.Users.FindAsync(id);
             return ToLibraryUser(user);

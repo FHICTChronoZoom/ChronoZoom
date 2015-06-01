@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chronozoom.Library.Models
+namespace Chronozoom.Business.Models
 {
     public class Collection
     {

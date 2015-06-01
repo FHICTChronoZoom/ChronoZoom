@@ -186,9 +186,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Chronozoom.Library\Chronozoom.Library.csproj">
+    <ProjectReference Include="..\Chronozoom.Library\Chronozoom.Business.csproj">
       <Project>{6e362311-ada6-480f-a309-afa7a29704a7}</Project>
-      <Name>Chronozoom.Library</Name>
+      <Name>Chronozoom.Business</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

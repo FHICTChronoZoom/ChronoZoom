@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Chronozoom.Library.Models;
-using Chronozoom.Library.Models.Compability;
-using Chronozoom.Library.Repositories;
+using Chronozoom.Business.Models;
+using Chronozoom.Business.Models.Compability;
+using Chronozoom.Business.Repositories;
 
-namespace Chronozoom.Library.Services
+namespace Chronozoom.Business.Services
 {
     public class ImportService
     {
@@ -116,7 +116,7 @@ namespace Chronozoom.Library.Services
             if (user == null)
                 throw new Exception("In order to change a timeline, you must first be logged in.");
 
-            var timeline = await timelineRepository.FindAsync(intoTimelineId);
+            var timeline = await timelineRepository.FindByIdAsync(intoTimelineId);
             if (timeline == null)
                 throw new Exception("The destination timeline, \"" + intoTimelineId.ToString() + "\", where you want to paste to, does not exist.");
 
@@ -181,13 +181,13 @@ namespace Chronozoom.Library.Services
             if (user == null)
                 throw new Exception("In order to change a timeline, you first must be logged in.");
 
-            var target = await timelineRepository.FindAsync(intoTimelineId);
+            var target = await timelineRepository.FindByIdAsync(intoTimelineId);
             var timestamp = DateTime.UtcNow;
 
             if (target == null)
                 throw new Exception("The destination timeline, \"" + intoTimelineId.ToString() + "\", where you want to paste to, does not exist.");
 
-            var collection = await collectionRepository.FindAsync(target.Id);
+            var collection = await collectionRepository.FindByIdAsync(target.Id);
             var isMember = await collectionRepository.IsMemberAsync(collection.Id, user.Id);
             if(!isMember)
                 throw new Exception("You do not have permission to alter the \"" + collection.Title + "\" collection.");

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Chronozoom.Library.Repositories;
+using Chronozoom.Business.Repositories;
 using ChronoZoom.Mongo.PersistencyEngine;
 
 namespace ChronoZoom.Mongo.Mapper
@@ -17,39 +17,39 @@ namespace ChronoZoom.Mongo.Mapper
             this.factory = factory;
         }
 
-        public async Task<IEnumerable<Chronozoom.Library.Models.Collection>> GetPublicCollectionsAsync()
+        public async Task<IEnumerable<Chronozoom.Business.Models.Collection>> GetPublicCollectionsAsync()
         {
             List<Mongo.Models.Collection> collection = await factory.FindPublicCollectionsAsync();
 
-            List<Chronozoom.Library.Models.Collection> mappedCollections = mapCollections(collection);
+            List<Chronozoom.Business.Models.Collection> mappedCollections = mapCollections(collection);
 
             return mappedCollections;
 
         }
 
-        public async Task<IEnumerable<Chronozoom.Library.Models.Collection>> GetByUserAsync(Guid userId)
+        public async Task<IEnumerable<Chronozoom.Business.Models.Collection>> GetByUserAsync(Guid userId)
         {
             List<Mongo.Models.Collection> collection = await factory.FindByUserIdAsync(userId);
 
-            List<Chronozoom.Library.Models.Collection> mappedCollections = mapCollections(collection);
+            List<Chronozoom.Business.Models.Collection> mappedCollections = mapCollections(collection);
 
             return mappedCollections;
         }
 
-        public async Task<Chronozoom.Library.Models.Collection> GetByUserAndNameAsync(Guid userId, string collectionName)
+        public async Task<Chronozoom.Business.Models.Collection> GetByUserAndNameAsync(Guid userId, string collectionName)
         {
             Mongo.Models.Collection collection = await factory.FindByUserIdAndName(userId, collectionName);
 
-            Chronozoom.Library.Models.Collection mappedCollection = mapCollection(collection);
+            Chronozoom.Business.Models.Collection mappedCollection = mapCollection(collection);
 
             return mappedCollection;
         }
 
-        public async Task<Chronozoom.Library.Models.Collection> GetUserDefaultAsync(Guid userId)
+        public async Task<Chronozoom.Business.Models.Collection> GetUserDefaultAsync(Guid userId)
         {
             Mongo.Models.Collection collection = await factory.FindUserDefaultCollectionAsync(userId);
 
-            Chronozoom.Library.Models.Collection mappedCollection = mapCollection(collection);
+            Chronozoom.Business.Models.Collection mappedCollection = mapCollection(collection);
 
             return mappedCollection;
         }
@@ -64,32 +64,32 @@ namespace ChronoZoom.Mongo.Mapper
         /// </summary>
         /// <param name="timelineId"></param>
         /// <returns></returns>
-        public async Task<Chronozoom.Library.Models.Collection> FindByTimelineIdAsync(Guid timelineId)
+        public async Task<Chronozoom.Business.Models.Collection> FindByTimelineIdAsync(Guid timelineId)
         {
             Mongo.Models.Collection collection = await factory.FindByTimelineIdAsync(timelineId);
 
-            Chronozoom.Library.Models.Collection mappedCollection = mapCollection(collection);
+            Chronozoom.Business.Models.Collection mappedCollection = mapCollection(collection);
 
             return mappedCollection;
         }
 
-        public async Task<Chronozoom.Library.Models.Collection> FindByIdAsync(Guid id)
+        public async Task<Chronozoom.Business.Models.Collection> FindByIdAsync(Guid id)
         {
             Mongo.Models.Collection collection = await factory.FindByIdAsync(id);
 
-            Chronozoom.Library.Models.Collection mappedCollection = mapCollection(collection);
+            Chronozoom.Business.Models.Collection mappedCollection = mapCollection(collection);
 
             return mappedCollection;
         }
 
-        public async Task<bool> InsertAsync(Chronozoom.Library.Models.Collection item)
+        public async Task<bool> InsertAsync(Chronozoom.Business.Models.Collection item)
         {
             Mongo.Models.Collection collection = mapCollection(item);
 
             return await factory.InsertAsync(collection);
         }
 
-        public async Task<bool> UpdateAsync(Chronozoom.Library.Models.Collection item)
+        public async Task<bool> UpdateAsync(Chronozoom.Business.Models.Collection item)
         {
             Mongo.Models.Collection collection = mapCollection(item);
 
@@ -101,9 +101,9 @@ namespace ChronoZoom.Mongo.Mapper
             return await factory.DeleteAsync(id);
         }
 
-        private List<Chronozoom.Library.Models.Collection> mapCollections(List<Mongo.Models.Collection> collections)
+        private List<Chronozoom.Business.Models.Collection> mapCollections(List<Mongo.Models.Collection> collections)
         {
-            List<Chronozoom.Library.Models.Collection> mappedCollections = new List<Chronozoom.Library.Models.Collection>();
+            List<Chronozoom.Business.Models.Collection> mappedCollections = new List<Chronozoom.Business.Models.Collection>();
 
             foreach (var c in collections)
             {
@@ -113,9 +113,9 @@ namespace ChronoZoom.Mongo.Mapper
             return mappedCollections;
         }
 
-        private Chronozoom.Library.Models.Collection mapCollection(Mongo.Models.Collection collection)
+        private Chronozoom.Business.Models.Collection mapCollection(Mongo.Models.Collection collection)
         {
-            Chronozoom.Library.Models.Collection cCollection = new Chronozoom.Library.Models.Collection
+            Chronozoom.Business.Models.Collection cCollection = new Chronozoom.Business.Models.Collection
             {
                 Id = collection.Id,
                 UserId = collection.OwnerId,
@@ -130,7 +130,7 @@ namespace ChronoZoom.Mongo.Mapper
             return cCollection;
         }
 
-        private Mongo.Models.Collection mapCollection(Chronozoom.Library.Models.Collection collection)
+        private Mongo.Models.Collection mapCollection(Chronozoom.Business.Models.Collection collection)
         {
             Mongo.Models.Collection cCollection = new Mongo.Models.Collection
             {

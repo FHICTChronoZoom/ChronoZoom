@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Chronozoom.Library.Repositories;
-using Chronozoom.Library.Models;
-using Chronozoom.Library.Models.Compability;
+using Chronozoom.Business.Repositories;
+using Chronozoom.Business.Models;
+using Chronozoom.Business.Models.Compability;
 
-namespace Chronozoom.Library.Services
+namespace Chronozoom.Business.Services
 {
     public class TimelineService
     {

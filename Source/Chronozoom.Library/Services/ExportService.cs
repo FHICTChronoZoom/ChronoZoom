@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Chronozoom.Library.Models;
-using Chronozoom.Library.Models.Compability;
-using Chronozoom.Library.Repositories;
+using Chronozoom.Business.Models;
+using Chronozoom.Business.Models.Compability;
+using Chronozoom.Business.Repositories;
 
-namespace Chronozoom.Library.Services
+namespace Chronozoom.Business.Services
 {
     public class ExportService
     {
@@ -24,7 +24,7 @@ namespace Chronozoom.Library.Services
 
         public async Task<IEnumerable<FlatTimeline>> ExportTimeline(Guid topmostTimelineId)
         {
-            var root = await timelineRepository.FindAsync(topmostTimelineId);
+            var root = await timelineRepository.FindByIdAsync(topmostTimelineId);
             if (root == null)
                 throw new Exception("The timeline, \"" + topmostTimelineId.ToString() + "\", you want to export, does not exist.");
 
@@ -35,7 +35,7 @@ namespace Chronozoom.Library.Services
 
         public async Task<Exhibit> ExportExhibit(Guid exhibitId)
         {
-            return await exhibitRepository.FindAsync(exhibitId);
+            return await exhibitRepository.FindByIdAsync(exhibitId);
         }
 
         private async Task IterateTimelineAsync(List<FlatTimeline> timelines, Guid? parentId, Timeline timeline)

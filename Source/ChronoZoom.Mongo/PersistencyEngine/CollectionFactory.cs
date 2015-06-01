@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ChronoZoom.Mongo.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Chronozoom.Library.Repositories;
+using Chronozoom.Business.Repositories;
 
 namespace ChronoZoom.Mongo.PersistencyEngine
 {

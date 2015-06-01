@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Routing;
 using Microsoft.Practices.Unity;
-using Chronozoom.Library.Repositories;
+using Chronozoom.Business.Repositories;
 
 namespace Chronozoom.UI
 {

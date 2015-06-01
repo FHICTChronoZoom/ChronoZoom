@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Chronozoom.Library.Repositories;
-using Chronozoom.Library.Models;
+using Chronozoom.Business.Repositories;
+using Chronozoom.Business.Models;
 using System.Security.Principal;
 using System.Threading.Tasks;
 

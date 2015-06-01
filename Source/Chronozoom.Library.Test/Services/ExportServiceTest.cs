@@ -1,8 +1,8 @@
 ﻿using System;
-using Chronozoom.Library.Services;
+using Chronozoom.Business.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Chronozoom.Library.Test.Services
+namespace Chronozoom.Business.Test.Services
 {
     [TestClass]
     public class ExportServiceTest

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Chronozoom.Library.Repositories;
+using Chronozoom.Business.Repositories;
 using System.Data.Entity;
 
 namespace Chronozoom.Entities.Repositories
@@ -17,39 +17,39 @@ namespace Chronozoom.Entities.Repositories
             this.storage = storage;
         }
 
-        public async Task<Library.Models.Tour> FindAsync(Guid id)
+        public async Task<Business.Models.Tour> FindByIdAsync(Guid id)
         {
             var tour = await storage.Tours.FindAsync(id);
             return ToLibraryTour(tour);
         }
 
-        public async Task InsertAsync(Library.Models.Tour item)
+        public async Task<bool> InsertAsync(Business.Models.Tour item)
         {
             var tour = ToEntityTour(item);
             storage.Tours.Add(tour);
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        public async Task UpdateAsync(Library.Models.Tour item)
+        public async Task<bool> UpdateAsync(Business.Models.Tour item)
         {
             var tour = await storage.Tours.FindAsync(item.Id);
             //TODO: Properties inserten
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var tour = await storage.Tours.FindAsync(id);
             storage.Tours.Remove(tour);
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        private Library.Models.Tour ToLibraryTour(Tour tour)
+        private Business.Models.Tour ToLibraryTour(Tour tour)
         {
-            return new Library.Models.Tour { Id = tour.Id, AudioBlobUrl = tour.AudioBlobUrl, Category = tour.Category, Description = tour.Description, Name = tour.Name, Sequence = (int)tour.Sequence, UniqueId = tour.UniqueId };
+            return new Business.Models.Tour { Id = tour.Id, AudioBlobUrl = tour.AudioBlobUrl, Category = tour.Category, Description = tour.Description, Name = tour.Name, Sequence = (int)tour.Sequence, UniqueId = tour.UniqueId };
         }
 
-        private Tour ToEntityTour(Library.Models.Tour tour)
+        private Tour ToEntityTour(Business.Models.Tour tour)
         {
             return new Tour { Id = tour.Id, AudioBlobUrl = tour.AudioBlobUrl, Category = tour.Category, Description = tour.Description, Name = tour.Name, Sequence = tour.Sequence, UniqueId = tour.UniqueId };
         }

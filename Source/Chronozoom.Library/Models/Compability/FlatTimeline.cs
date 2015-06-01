@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chronozoom.Library.Models.Compability
+namespace Chronozoom.Business.Models.Compability
 {
     public class FlatTimeline
     {

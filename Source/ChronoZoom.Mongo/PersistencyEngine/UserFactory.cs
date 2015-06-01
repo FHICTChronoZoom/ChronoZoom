@@ -1,4 +1,4 @@
-﻿using Chronozoom.Library.Repositories;
+﻿using Chronozoom.Business.Repositories;
 using ChronoZoom.Mongo.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
