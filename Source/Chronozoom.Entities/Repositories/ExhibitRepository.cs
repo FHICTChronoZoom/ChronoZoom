@@ -120,7 +120,16 @@ namespace Chronozoom.Entities.Repositories
 
         private Exhibit ToEntityExhibit(Library.Models.Exhibit exhibit)
         {
-            return new Exhibit { Id = exhibit.Id, ContentItems = exhibit.ContentItems, Depth = exhibit.Depth, IsCirca = exhibit.IsCirca, Title = exhibit.Title, UpdatedTime = exhibit.UpdatedTime, UpdatedBy = exhibit.UpdatedBy, Year = exhibit.Year, TimelineId = timelineId };
+            return new Exhibit { 
+                Id = exhibit.Id, 
+                ContentItems = exhibit.ContentItems,
+                Depth = exhibit.Depth, 
+                IsCirca = exhibit.IsCirca, 
+                Title = exhibit.Title, 
+                UpdatedTime = exhibit.UpdatedTime, 
+                UpdatedBy = exhibit.UpdatedBy, 
+                Year = exhibit.Year, 
+                TimelineId = timelineId };
         }
     }
 }

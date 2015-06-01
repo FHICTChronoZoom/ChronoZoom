@@ -35,28 +35,28 @@ namespace Chronozoom.Entities.Repositories
             return ToLibraryUser(user);
         }
 
-        public async Task InsertAsync(Library.Models.User item)
+        public async Task<bool> InsertAsync(Library.Models.User item)
         {
             var user = ToEntityUser(item);
             storage.Users.Add(user);
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        public async Task UpdateAsync(Library.Models.User item)
+        public async Task<bool> UpdateAsync(Library.Models.User item)
         {
             var user = await storage.Users.FindAsync(item.Id);
             user.DisplayName = item.DisplayName;
             user.Email = item.Email;
             user.IdentityProvider = item.IdentityProvider;
             user.NameIdentifier = item.NameIdentifier;
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var user = await storage.Users.FindAsync(id);
             storage.Users.Remove(user);
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
         private Library.Models.User ToLibraryUser(User user)
@@ -67,6 +67,20 @@ namespace Chronozoom.Entities.Repositories
         private User ToEntityUser(Library.Models.User user)
         {
             return new User { Id = user.Id, DisplayName = user.DisplayName, Email = user.Email, IdentityProvider = user.IdentityProvider, NameIdentifier = user.NameIdentifier };
+        }
+
+
+        public async Task<Library.Models.User> FindByUserIdentifierAsync(string nameIdentifier)
+        {
+            var user = await storage.Users.FirstOrDefaultAsync(x => x.NameIdentifier == nameIdentifier);
+            return ToLibraryUser(user);
+        }
+
+        public async Task<Library.Models.User> FindByIdAsync(Guid id)
+        {
+            var user = await storage.Users.FindAsync(id);
+            return ToLibraryUser(user);
+
         }
     }
 }

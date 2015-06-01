@@ -780,6 +780,7 @@
     <Compile Include="pages\sitemap.aspx.designer.cs">
       <DependentUpon>sitemap.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Services\SecurityService.cs" />
     <Compile Include="UnityDependencyResolver.cs" />
     <Compile Include="utils\ExportImport.cs" />
     <Compile Include="utils\PopulateDbFromJSON.cs" />
