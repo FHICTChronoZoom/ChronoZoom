@@ -28,7 +28,7 @@ namespace Chronozoom.UI
         {
             container.RegisterType<IUserRepository, Chronozoom.Entities.Repositories.UserRepository>();
             container.RegisterType<ICollectionRepository, Chronozoom.Entities.Repositories.CollectionRepository>();
-            container.RegisterType<ITimelineRepository, Chronozoom.Entities.Repositories.TimeLineRepository>();
+            container.RegisterType<ITimelineRepository, Chronozoom.Entities.Repositories.TimelineRepository>();
             container.RegisterType<IExhibitRepository, Chronozoom.Entities.Repositories.ExhibitRepository>();
             container.RegisterType<ITourRepository, Chronozoom.Entities.Repositories.TourRepository>();
         }

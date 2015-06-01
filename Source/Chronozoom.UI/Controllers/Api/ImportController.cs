@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Chronozoom.Business.Services;
 using System.Threading.Tasks;
+using Chronozoom.UI.Services;
 using Chronozoom.Business.Models.Compability;
 using Chronozoom.Business.Models;
 
@@ -14,6 +15,7 @@ namespace Chronozoom.UI.Controllers.Api
     public class ImportController : ApiController
     {
         private ImportService importService;
+        private SecurityService securityService;
         
         public ImportController(ImportService importService)
         {
@@ -24,10 +26,10 @@ namespace Chronozoom.UI.Controllers.Api
         [Route("~/api/v2//import/timeline/{intoTimelineId:Guid}")]
         public async Task<IHttpActionResult> ImportTimelines(Guid intoTimelineId, List<FlatTimeline> importContent)
         {
-            // TODO : Get user
+            var user = await securityService.GetUserAsync(User.Identity);
             try
             {
-                await importService.ImportTimelinesAsync(intoTimelineId, importContent, null);
+                await importService.ImportTimelinesAsync(intoTimelineId, importContent, user);
                 return Ok();
             }
             catch(Exception ex)
@@ -35,16 +37,15 @@ namespace Chronozoom.UI.Controllers.Api
                 return InternalServerError(ex);
             }
         }
-
-        [CLSCompliant(false)]
+        
         [HttpGet]
         [Route("~/api/v2/import/exhibit/{intoTimelineId:Guid}")]
         public async Task<IHttpActionResult> ImportExhibit(Guid intoTimelineId, Exhibit newExhibit)
         {
-            // TODO : Get user
+            var user = await securityService.GetUserAsync(User.Identity);
             try
             {
-                await importService.ImportExhibit(intoTimelineId, newExhibit, null);
+                await importService.ImportExhibit(intoTimelineId, newExhibit, user);
                 return Ok();
             }
             catch (Exception ex)
