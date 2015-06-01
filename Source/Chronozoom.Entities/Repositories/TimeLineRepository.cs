@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Chronozoom.Library.Repositories;
+using Chronozoom.Business.Repositories;
 using System.Data.Entity;
 
 namespace Chronozoom.Entities.Repositories
@@ -17,34 +17,34 @@ namespace Chronozoom.Entities.Repositories
             this.storage = storage;
         }
 
-        public async Task<IEnumerable<Library.Models.Timeline>> GetByCollectionAsync(Guid collectionId)
+        public async Task<IEnumerable<Business.Models.Timeline>> GetByCollectionAsync(Guid collectionId)
         {
             var timelines = await storage.Timelines.Where(x => x.Id == collectionId).ToListAsync();
 
             return await MakeTimlineList(timelines);
         }
 
-        public async Task<IEnumerable<Library.Models.Timeline>> GetByTimelineAsync(Guid timelineId)
+        public async Task<IEnumerable<Business.Models.Timeline>> GetByTimelineAsync(Guid timelineId)
         {
             var timelines = await storage.Timelines.Where(x => x.Id == timelineId).ToListAsync();
 
             return await MakeTimlineList(timelines);
         }
 
-        public async Task<Library.Models.Timeline> FindAsync(Guid id)
+        public async Task<Business.Models.Timeline> FindByIdAsync(Guid id)
         {
             var timeline = await storage.Timelines.FindAsync(id);
             return ToLibraryTimeLine(timeline);
         }
 
-        public async Task InsertAsync(Library.Models.Timeline item)
+        public async Task<bool> InsertAsync(Business.Models.Timeline item)
         {
             var timeline = ToEntityTimeline(item);
             storage.Timelines.Add(timeline);
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        public async Task UpdateAsync(Library.Models.Timeline item)
+        public async Task<bool> UpdateAsync(Business.Models.Timeline item)
         {
             var timeline = await storage.Timelines.FindAsync(item.Id);
 
@@ -59,36 +59,36 @@ namespace Chronozoom.Entities.Repositories
             timeline.BackgroundUrl = item.BackgroundUrl;
             timeline.AspectRatio = item.AspectRatio;
 
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var timeline = await storage.Timelines.FindAsync(id);
             storage.Timelines.Remove(timeline);
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        private Library.Models.Timeline ToLibraryTimeLine(Timeline timeline)
+        private Business.Models.Timeline ToLibraryTimeLine(Timeline timeline)
         {
             // NO PARENTID
-            return new Library.Models.Timeline { Id = timeline.Id, Title = timeline.Title, Regime = timeline.Regime, FromYear = timeline.FromYear, FromIsCirca = timeline.FromIsCirca, ToYear = timeline.ToYear, ToIsCirca = timeline.ToIsCirca, Height = timeline.Height, BackgroundUrl = timeline.BackgroundUrl, AspectRatio = timeline.AspectRatio };
+            return new Business.Models.Timeline { Id = timeline.Id, Title = timeline.Title, Regime = timeline.Regime, FromYear = timeline.FromYear, FromIsCirca = timeline.FromIsCirca, ToYear = timeline.ToYear, ToIsCirca = timeline.ToIsCirca, Height = timeline.Height, BackgroundUrl = timeline.BackgroundUrl, AspectRatio = timeline.AspectRatio };
         }
 
-        private Timeline ToEntityTimeline(Library.Models.Timeline timeline)
+        private Timeline ToEntityTimeline(Business.Models.Timeline timeline)
         {
             return new Timeline { Id = timeline.Id, Title = timeline.Title, Regime = timeline.Regime, FromYear = timeline.FromYear, FromIsCirca = timeline.FromIsCirca, ToYear = timeline.ToYear, ToIsCirca = timeline.ToIsCirca, Height = timeline.Height, BackgroundUrl = timeline.BackgroundUrl, AspectRatio = timeline.AspectRatio };
         }
 
-        private async Task<IEnumerable<Chronozoom.Library.Models.Timeline>> MakeTimlineList(List<Timeline> timelines)
+        private async Task<IEnumerable<Chronozoom.Business.Models.Timeline>> MakeTimlineList(List<Timeline> timelines)
         {
-            var listOfTimelines = new List<Chronozoom.Library.Models.Timeline>();
+            var listOfTimelines = new List<Chronozoom.Business.Models.Timeline>();
 
             foreach (var timeline in timelines)
             {
                 var parent = await storage.Timelines.FirstOrDefaultAsync(x => x.ChildTimelines.Contains(timeline));
 
-                listOfTimelines.Add(new Library.Models.Timeline
+                listOfTimelines.Add(new Business.Models.Timeline
                 {
                     AspectRatio = timeline.AspectRatio,
                     BackgroundUrl = timeline.BackgroundUrl,

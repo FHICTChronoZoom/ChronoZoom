@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Chronozoom.Library.Repositories;
+using Chronozoom.Business.Repositories;
 using System.Threading.Tasks;
 using ChronoZoom.Mongo.PersistencyEngine;
 
@@ -19,10 +19,10 @@ namespace ChronoZoom.Mongo.Mapper
 
 
 
-        public async Task<Chronozoom.Library.Models.User> FindByUsernameAsync(string username)
+        public async Task<Chronozoom.Business.Models.User> FindByUsernameAsync(string username)
         {
             Mongo.Models.User user = await factory.FindByNameAsync(username);
-            Chronozoom.Library.Models.User cUser = new Chronozoom.Library.Models.User
+            Chronozoom.Business.Models.User cUser = new Chronozoom.Business.Models.User
             {
                 Email = user.Email,
                 DisplayName = user.Name,
@@ -34,10 +34,10 @@ namespace ChronoZoom.Mongo.Mapper
             return cUser;
         }
 
-        public async Task<Chronozoom.Library.Models.User> FindByEmailAsync(string email)
+        public async Task<Chronozoom.Business.Models.User> FindByEmailAsync(string email)
         {
             Mongo.Models.User user = await factory.FindByEmailAsync(email);
-            Chronozoom.Library.Models.User cUser = new Chronozoom.Library.Models.User
+            Chronozoom.Business.Models.User cUser = new Chronozoom.Business.Models.User
             {
                 Email = user.Email,
                 DisplayName = user.Name,
@@ -49,10 +49,10 @@ namespace ChronoZoom.Mongo.Mapper
             return cUser;
         }
 
-        public async Task<Chronozoom.Library.Models.User> FindByIdAsync(Guid id)
+        public async Task<Chronozoom.Business.Models.User> FindByIdAsync(Guid id)
         {
             Mongo.Models.User user = await factory.FindByIdAsync(id);
-            Chronozoom.Library.Models.User cUser = new Chronozoom.Library.Models.User
+            Chronozoom.Business.Models.User cUser = new Chronozoom.Business.Models.User
             {
                 Email = user.Email,
                 DisplayName = user.Name,
@@ -64,7 +64,7 @@ namespace ChronoZoom.Mongo.Mapper
             return cUser;
         }
 
-        public async Task<bool> InsertAsync(Chronozoom.Library.Models.User item)
+        public async Task<bool> InsertAsync(Chronozoom.Business.Models.User item)
         {
             Mongo.Models.User cUser = new Mongo.Models.User
             {
@@ -78,7 +78,7 @@ namespace ChronoZoom.Mongo.Mapper
             return success;
         }
 
-        public async Task<bool> UpdateAsync(Chronozoom.Library.Models.User item)  
+        public async Task<bool> UpdateAsync(Chronozoom.Business.Models.User item)  
         {
             Mongo.Models.User cUser = new Mongo.Models.User
             {

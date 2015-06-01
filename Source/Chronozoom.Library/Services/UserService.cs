@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Chronozoom.Library.Models;
-using Chronozoom.Library.Repositories;
+using Chronozoom.Business.Models;
+using Chronozoom.Business.Repositories;
 
-namespace Chronozoom.Library.Services
+namespace Chronozoom.Business.Services
 {
     public class UserService
     {

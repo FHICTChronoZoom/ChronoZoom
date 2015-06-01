@@ -1,12 +1,12 @@
-﻿using Chronozoom.Library.Models;
-using Chronozoom.Library.Repositories;
+﻿using Chronozoom.Business.Models;
+using Chronozoom.Business.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chronozoom.Library.Services
+namespace Chronozoom.Business.Services
 {
     public class CollectionService
     {
@@ -20,7 +20,7 @@ namespace Chronozoom.Library.Services
 
         public Task<Collection> FindCollectionAsync(Guid id)
         {
-            return collectionRepository.FindAsync(id);
+            return collectionRepository.FindByIdAsync(id);
         }
 
         public Task<IEnumerable<Collection>> FindPublicCollectionAsync()

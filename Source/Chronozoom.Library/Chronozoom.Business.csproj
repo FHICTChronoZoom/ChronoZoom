@@ -7,8 +7,8 @@
     <ProjectGuid>{6E362311-ADA6-480F-A309-AFA7A29704A7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Chronozoom.Library</RootNamespace>
-    <AssemblyName>Chronozoom.Library</AssemblyName>
+    <RootNamespace>Chronozoom.Business</RootNamespace>
+    <AssemblyName>Chronozoom.Business</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

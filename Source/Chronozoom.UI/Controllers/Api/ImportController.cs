@@ -4,10 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Chronozoom.Library.Services;
+using Chronozoom.Business.Services;
 using System.Threading.Tasks;
-using Chronozoom.Library.Models.Compability;
-using Chronozoom.Library.Models;
+using Chronozoom.Business.Models.Compability;
+using Chronozoom.Business.Models;
 
 namespace Chronozoom.UI.Controllers.Api
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Chronozoom.Library.Repositories;
+using Chronozoom.Business.Repositories;
 using System.Data.Entity;
 
 namespace Chronozoom.Entities.Repositories
@@ -17,24 +17,24 @@ namespace Chronozoom.Entities.Repositories
             this.storage = storage;
         }
 
-        public async Task<IEnumerable<Library.Models.Exhibit>> GetByTimelineAsync(Guid timelineId)
+        public async Task<IEnumerable<Business.Models.Exhibit>> GetByTimelineAsync(Guid timelineId)
         {
             var exhibits = await storage.Timelines.Where(x => x.Id == timelineId).SelectMany(x => x.Exhibits).ToListAsync();
-            return exhibits.ConvertAll(x => new Library.Models.Exhibit
+            return exhibits.ConvertAll(x => new Business.Models.Exhibit
             {
                 Id = x.Id,
-                ContentItems = x.ContentItems.Select(c => new Library.Models.ContentItem { Id = c.Id, Attribution = c.Attribution, Caption = c.Caption, Depth = c.Depth, MediaSource = c.MediaSource, MediaType = c.MediaType, Order = c.Order, Title = c.Title, Uri = c.Uri, Year = c.Year }).ToList(),
+                ContentItems = x.ContentItems.Select(c => new Business.Models.ContentItem { Id = c.Id, Attribution = c.Attribution, Caption = c.Caption, Depth = c.Depth, MediaSource = c.MediaSource, MediaType = c.MediaType, Order = c.Order, Title = c.Title, Uri = c.Uri, Year = c.Year }).ToList(),
                 Depth = x.Depth,
                 IsCirca = x.IsCirca,
                 Title = x.Title,
                 UpdatedTime = x.UpdatedTime,
-                UpdatedBy = new Library.Models.User { Id = x.UpdatedBy.Id, DisplayName = x.UpdatedBy.DisplayName,  Email = x.UpdatedBy.Email, IdentityProvider = x.UpdatedBy.IdentityProvider, NameIdentifier = x.UpdatedBy.NameIdentifier },
+                UpdatedBy = new Business.Models.User { Id = x.UpdatedBy.Id, DisplayName = x.UpdatedBy.DisplayName,  Email = x.UpdatedBy.Email, IdentityProvider = x.UpdatedBy.IdentityProvider, NameIdentifier = x.UpdatedBy.NameIdentifier },
                 Year = x.Year,
                 TimelineId = timelineId
             });
         }
 
-        public async Task<Library.Models.Exhibit> FindAsync(Guid id)
+        public async Task<Business.Models.Exhibit> FindByIdAsync(Guid id)
         {
             var exhibit = await storage.Exhibits.FindAsync(id);
             if (exhibit != null)
@@ -48,14 +48,14 @@ namespace Chronozoom.Entities.Repositories
             }
         }
 
-        public async Task InsertAsync(Library.Models.Exhibit item)
+        public async Task<bool> InsertAsync(Business.Models.Exhibit item)
         {
             var exhibit = ToEntityExhibit(item);
             storage.Exhibits.Add(exhibit);
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        public async Task UpdateAsync(Library.Models.Exhibit item)
+        public async Task<bool> UpdateAsync(Business.Models.Exhibit item)
         {
             var exhibit = await storage.Exhibits.FindAsync(item.Id);
             var user = await storage.Users.FindAsync(item.UpdatedBy.Id);
@@ -96,29 +96,29 @@ namespace Chronozoom.Entities.Repositories
                 }
             }
 
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var exhibit = await storage.Exhibits.FindAsync(id);
             storage.Exhibits.Remove(exhibit);
-            await storage.SaveChangesAsync();
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        private Library.Models.Exhibit ToLibraryExhibit(Exhibit exhibit, Guid TimelineId)
+        private Business.Models.Exhibit ToLibraryExhibit(Exhibit exhibit, Guid TimelineId)
         {
-            return new Library.Models.Exhibit { Id = exhibit.Id, 
-                ContentItems = exhibit.ContentItems.Select(c => new Library.Models.ContentItem { Id = c.Id, Attribution = c.Attribution, Caption = c.Caption, Depth = c.Depth, MediaSource = c.MediaSource, MediaType = c.MediaType, Order = c.Order, Title = c.Title, Uri = c.Uri, Year = c.Year }).ToList(), 
+            return new Business.Models.Exhibit { Id = exhibit.Id, 
+                ContentItems = exhibit.ContentItems.Select(c => new Business.Models.ContentItem { Id = c.Id, Attribution = c.Attribution, Caption = c.Caption, Depth = c.Depth, MediaSource = c.MediaSource, MediaType = c.MediaType, Order = c.Order, Title = c.Title, Uri = c.Uri, Year = c.Year }).ToList(), 
                 Depth = exhibit.Depth,
                 IsCirca = exhibit.IsCirca, 
                 Title = exhibit.Title, UpdatedTime = exhibit.UpdatedTime, 
-                UpdatedBy = new Library.Models.User { Id = exhibit.UpdatedBy.Id, DisplayName = exhibit.UpdatedBy.DisplayName, Email = exhibit.UpdatedBy.Email, NameIdentifier = exhibit.UpdatedBy.NameIdentifier, IdentityProvider = exhibit.UpdatedBy.IdentityProvider }, 
+                UpdatedBy = new Business.Models.User { Id = exhibit.UpdatedBy.Id, DisplayName = exhibit.UpdatedBy.DisplayName, Email = exhibit.UpdatedBy.Email, NameIdentifier = exhibit.UpdatedBy.NameIdentifier, IdentityProvider = exhibit.UpdatedBy.IdentityProvider }, 
                 Year = exhibit.Year, 
                 TimelineId = TimelineId };
         }
 
-        private Exhibit ToEntityExhibit(Library.Models.Exhibit exhibit)
+        private Exhibit ToEntityExhibit(Business.Models.Exhibit exhibit)
         {
             return new Exhibit { 
                 Id = exhibit.Id, 

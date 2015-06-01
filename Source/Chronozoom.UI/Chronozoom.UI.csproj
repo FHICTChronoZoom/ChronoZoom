@@ -1069,9 +1069,9 @@
       <Project>{B995D3CF-E31F-4986-A7F7-77988EA275D3}</Project>
       <Name>Chronozoom.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Chronozoom.Library\Chronozoom.Library.csproj">
+    <ProjectReference Include="..\Chronozoom.Library\Chronozoom.Business.csproj">
       <Project>{6e362311-ada6-480f-a309-afa7a29704a7}</Project>
-      <Name>Chronozoom.Library</Name>
+      <Name>Chronozoom.Business</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chronozoom.Library.Repositories
+namespace Chronozoom.Business.Repositories
 {
     /// <summary>
     /// Base interface for repositories.

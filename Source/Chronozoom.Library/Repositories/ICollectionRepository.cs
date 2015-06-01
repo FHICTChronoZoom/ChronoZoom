@@ -1,11 +1,11 @@
-﻿using Chronozoom.Library.Models;
+﻿using Chronozoom.Business.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chronozoom.Library.Repositories
+namespace Chronozoom.Business.Repositories
 {
     /// <summary>
     /// Repository interface for collections.
