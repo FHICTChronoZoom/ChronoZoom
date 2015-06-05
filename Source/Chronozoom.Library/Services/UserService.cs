@@ -21,7 +21,7 @@ namespace Chronozoom.Business.Services
             this.collectionRepository = collectionRepository;
         }
 
-        public async Task CreateUser(User user)
+        public async Task CreateUserAsync(User user)
         {
             await userRepository.InsertAsync(user);
 
@@ -35,12 +35,12 @@ namespace Chronozoom.Business.Services
             await collectionRepository.InsertAsync(defaultCollection);
         }
 
-        public async Task UpdateUser(User user)
+        public async Task UpdateUserAsync(User user)
         {
             await userRepository.UpdateAsync(user);
         }
 
-        public async Task DeleteUser(User user)
+        public async Task DeleteUserAsync(User user)
         {
             var collections = await collectionRepository.GetByUserAsync(user.Id);
             foreach (var collection in collections)

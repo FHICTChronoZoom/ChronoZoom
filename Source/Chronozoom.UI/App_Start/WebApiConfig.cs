@@ -7,6 +7,8 @@ using System.Web.Http;
 using System.Web.Routing;
 using Microsoft.Practices.Unity;
 using Chronozoom.Business.Repositories;
+using Chronozoom.Business;
+using System.Configuration;
 
 namespace Chronozoom.UI
 {
@@ -22,6 +24,16 @@ namespace Chronozoom.UI
 
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute("Default API", "api/v2/{controller}/{id}", new { id = RouteParameter.Optional });
+        }
+
+        private static void RegisterOptions(IUnityContainer container)
+        {
+            var applicationSettings = new ApplicationSettings();
+
+            // Add application wide settings here
+            //applicationSettings.Set("Identifier key", "Something something");
+
+            container.RegisterInstance<IApplicationSettings>(applicationSettings);
         }
 
         private static void RegisterEntityFramework(IUnityContainer container)
