@@ -58,9 +58,14 @@ namespace ChronoZoom.Mongo.Models
         public int Order { get; set; }
 
         /// <summary>
+        /// Object containing media type and media source strings
+        /// </summary>
+        public Media MediaObject { get; set; }
+
+        /// <summary>
         /// Inner class used to determine which kind of media type it is and where to find the source
         /// </summary>
-        internal class Media
+        public class Media
         {
             public Media() { }
 
