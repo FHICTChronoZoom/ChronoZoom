@@ -11,5 +11,7 @@ namespace Chronozoom.Business.Repositories
     {
         Task<IEnumerable<Timeline>> GetByCollectionAsync(Guid collectionId);
         Task<IEnumerable<Timeline>> GetByTimelineAsync(Guid timelineId);
+
+        Task<Timeline> GetRootAsync(string superCollection, string collection);
     }
 }
