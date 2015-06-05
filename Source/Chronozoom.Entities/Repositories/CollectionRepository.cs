@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 using Chronozoom.Business.Repositories;
 using System.Data.Entity;
 using Chronozoom.Business.Models;
-<<<<<<< .merge_file_a03988
 using System.Data.Entity;
-=======
->>>>>>> .merge_file_a08400
 
 namespace Chronozoom.Entities.Repositories
 {
@@ -104,7 +101,6 @@ namespace Chronozoom.Entities.Repositories
             var collection = await storage.Collections.FindAsync(timelineId);
             return ToLibraryCollection(collection);
         }
-<<<<<<< .merge_file_a03988
 
 
         public async Task<Business.Models.Collection> FindByNameAsync(string superCollection)
@@ -112,7 +108,5 @@ namespace Chronozoom.Entities.Repositories
             var collection = await storage.Collections.FirstOrDefaultAsync(x => x.SuperCollection.Title == superCollection) ;
             return ToLibraryCollection(collection) ;
         }
-=======
->>>>>>> .merge_file_a08400
     }
 }
