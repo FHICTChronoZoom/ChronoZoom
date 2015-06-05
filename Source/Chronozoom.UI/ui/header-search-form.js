@@ -15,6 +15,8 @@ var CZ;
             function FormHeaderSearch(container, formInfo) {
                 _super.call(this, container, formInfo);
 
+                this.searchToDate = new CZ.UI.DatePicker(container.find(formInfo.searchToDate), true);
+                this.searchFromDate = new CZ.UI.DatePicker(container.find(formInfo.searchFromDate), true);
                 this.searchTextbox = container.find(formInfo.searchTextbox);
                 this.searchScope = $('#scope');
                 this.searchResultsBox = container.find(formInfo.searchResultsBox);
@@ -34,6 +36,8 @@ var CZ;
                 this.clearResultSections();
                 this.hideSearchResults();
                 this.searchTextbox.off();
+                this.searchToDate.editModeYear();
+                this.searchFromDate.editModeYear();
 
                 // populate search scope option choices
                 CZ.Service.getSearchScopeOptions().done(function (response)
@@ -62,9 +66,11 @@ var CZ;
                     {
                         var query = _this.searchTextbox.val();
                         var scope = parseInt(_this.searchScope.find('select').val());
+                        var fromdate = _this.searchFromDate.getDate();
+                        var todate = _this.searchToDate.getDate();
                         query     = _this.escapeSearchQuery(query);
                         _this.showProgressBar();
-                        _this.sendSearchQuery(query, scope).then(function (response)
+                        _this.sendSearchQuery(query, scope, fromdate, todate).then(function (response)
                         {
                             _this.hideProgressBar();
                             _this.searchResults = response;
@@ -76,7 +82,10 @@ var CZ;
                     }, 300);
                 };
 
-                this.searchTextbox.on('input search',        onSearchQueryChanged);
+                this.searchTextbox.on('input search', onSearchQueryChanged);
+                this.searchTextbox.on('input search', onSearchQueryChanged);
+                //this.searchFromDate.on('input search', onSearchQueryChanged);
+                //this.searchToDate.on('input search', onSearchQueryChanged);
                 this.searchScope.find('select').on('change', onSearchQueryChanged);
 
                 // NOTE: Workaround for IE9. IE9 doesn't fire 'input' event on backspace/delete buttons.
@@ -96,9 +105,10 @@ var CZ;
                 }
             };
 
-            FormHeaderSearch.prototype.sendSearchQuery = function (query, scope)
+
+            FormHeaderSearch.prototype.sendSearchQuery = function (query, scope, fromdate, todate)
             {
-                return (query === "") ? $.Deferred().resolve(null).promise() : CZ.Service.getSearch(query, scope);
+                return (query === "") ? $.Deferred().resolve(null).promise() : CZ.Service.getSearch(query, scope, fromdate, todate);
             };
 
             FormHeaderSearch.prototype.updateSearchResults = function () {

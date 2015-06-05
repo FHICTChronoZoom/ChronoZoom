@@ -811,10 +811,15 @@ var CZ;
         Service.getSearchScopeOptions = getSearchScopeOptions;
 
         // .../search?superCollection={superCollection}&collection={collection}&searchTerm={searchTerm}&searchScope={searchScope}
-        function getSearch(query, scope)
+        function getSearch(query, scope, fromdate, todate)
         {
             if (scope !== parseInt(scope))  scope = 1;
             if (scope < 1)                  scope = 1;
+
+            var col = CZ.Service.collectionName;
+            if (CZ.Service.collectionName == null) {
+                col = "";
+            }
 
             CZ.Authoring.resetSessionTimer();
             var request = new Service.Request(_serviceUrl);
@@ -823,7 +828,9 @@ var CZ;
             var data =
             {
                 supercollection:    CZ.Service.superCollectionName,
-                collection:         CZ.Service.collectionName,
+                collection:         col,
+                searchFromDate:     fromdate,
+                searchToDate:       todate,
                 searchTerm:         query,
                 searchScope:        scope
             };

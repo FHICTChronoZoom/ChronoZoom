@@ -2251,6 +2251,11 @@ a.cz-form-preloadedrecord.time-series-link {
   display: block;
   width: 100%;
 }
+.cz-header-search-form .cz-form-search-date .cz-input {
+  width: auto;
+  display: inline-block;
+  float: right;
+}
 .cz-form-progress-bar {
   display: block;
   width: 100%;

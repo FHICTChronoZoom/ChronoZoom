@@ -458,8 +458,15 @@ namespace Chronozoom.UI
         /// Documented under IChronozoomSVC
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        public IEnumerable<SearchResult> Search(string superCollection, string collection, string searchTerm, byte searchScope = 1)
+        public IEnumerable<SearchResult> Search(string superCollection, string collection, string searchFromDate, string searchToDate, string searchTerm, byte searchScope = 1)
         {
+            decimal fromYear = -13800000000;
+            decimal toYear = 9999;
+            if (searchFromDate != "false" && searchToDate != "false")
+            {
+                fromYear = Decimal.Parse(searchFromDate);
+                toYear = Decimal.Parse(searchToDate);
+            }
             // only search if search term provided
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -531,7 +538,11 @@ namespace Chronozoom.UI
                                         (t =>
                                             t.Title.ToUpper().Contains(searchTerm)
                                             && t.Collection.PubliclySearchable
-                                        )
+                                            &&
+                                        (
+                                            t.FromYear >= fromYear &&
+                                            t.ToYear <= toYear
+                                        ))
                                         .Take(_maxSearchLimit)
                                         .OrderBy(t => t.Title)
                                         .ThenByDescending(t => t.Collection.Id == currentCollectionId)
@@ -543,7 +554,12 @@ namespace Chronozoom.UI
                                         (e =>
                                             e.Title.ToUpper().Contains(searchTerm)
                                             && e.Collection.PubliclySearchable
-                                        )
+                                         &&
+                                        (
+                                            e.Year >= fromYear &&
+                                            e.Year <= toYear
+                                        ))
+
                                         .Take(_maxSearchLimit)
                                         .OrderBy(e => e.Title)
                                         .ThenByDescending(e => e.Collection.Id == currentCollectionId)
@@ -558,6 +574,11 @@ namespace Chronozoom.UI
                                                 c.Caption.ToUpper().Contains(searchTerm)
                                             )
                                             && c.Collection.PubliclySearchable
+                                            &&
+                                            (
+                                                 c.Year >= fromYear &&
+                                                 c.Year <= toYear
+                                            )
                                         )
                                         .Take(_maxSearchLimit)
                                         .OrderBy(c => c.Title)
@@ -576,6 +597,11 @@ namespace Chronozoom.UI
                                                 t.Collection.PubliclySearchable ||
                                                 t.Collection.User.Id == user.Id
                                             )
+                                            &&
+                                            (
+                                                t.FromYear >= fromYear &&
+                                                t.ToYear <= toYear
+                                            )
                                         )
                                         .Take(_maxSearchLimit)
                                         .OrderBy(t => t.Title)
@@ -592,6 +618,11 @@ namespace Chronozoom.UI
                                                 e.Collection.PubliclySearchable ||
                                                 e.Collection.User.Id == user.Id
                                             )
+                                        &&
+                                        (
+                                            e.Year >= fromYear &&
+                                            e.Year <= toYear
+                                        )
                                         )
                                         .Take(_maxSearchLimit)
                                         .OrderBy(e => e.Title)
@@ -611,6 +642,11 @@ namespace Chronozoom.UI
                                                 c.Collection.PubliclySearchable ||
                                                 c.Collection.User.Id == user.Id
                                             )
+                                        &&
+                                        (
+                                            c.Year >= fromYear &&
+                                            c.Year <= toYear
+                                        )
                                         )
                                         .Take(_maxSearchLimit)
                                         .OrderBy(c => c.Title)
@@ -625,21 +661,38 @@ namespace Chronozoom.UI
 
                         timelines = storage.Timelines
                                     .Include("Collection.User")
-                                    .Where(t => t.Title.ToUpper().Contains(searchTerm) && t.Collection.User.Id == user.Id)
+                                    .Where
+                                    (t => 
+                                           t.Title.ToUpper().Contains(searchTerm) && 
+                                           t.Collection.User.Id == user.Id
+                                           &&
+                                        (
+                                            t.FromYear >= fromYear &&
+                                            t.ToYear <= toYear
+                                        )
+                                    )
+
                                     .Take(_maxSearchLimit)
                                     .OrderBy(t => t.Title)
                                     .ThenByDescending(t => t.Collection.Id == currentCollectionId)
                                     .ToList();
 
-                        exhibits  = storage.Exhibits
+                        exhibits = storage.Exhibits
                                     .Include("Collection.User")
-                                    .Where(e => e.Title.ToUpper().Contains(searchTerm) && e.Collection.User.Id == user.Id)
+                                    .Where(e => 
+                                        e.Title.ToUpper().Contains(searchTerm) 
+                                        && e.Collection.User.Id == user.Id
+                                        &&
+                                        (
+                                            e.Year >= fromYear &&
+                                            e.Year <= toYear
+                                        ))
                                     .Take(_maxSearchLimit)
                                     .OrderBy(e => e.Title)
                                     .ThenByDescending(e => e.Collection.Id == currentCollectionId)
                                     .ToList();
 
-                        content   = storage.ContentItems
+                        content = storage.ContentItems
                                     .Include("Collection.User")
                                     .Where
                                     (c =>
@@ -648,6 +701,11 @@ namespace Chronozoom.UI
                                             c.Caption.ToUpper().Contains(searchTerm)
                                         )
                                         && c.Collection.User.Id == user.Id
+                                        &&
+                                        (
+                                            c.Year >= fromYear &&
+                                            c.Year <= toYear
+                                        )
                                     )
                                     .Take(_maxSearchLimit)
                                     .OrderBy(c => c.Title)
@@ -658,23 +716,38 @@ namespace Chronozoom.UI
 
                     default: // SearchScope.CurrentCollection
 
-                        timelines = storage.Timelines
+                       timelines = storage.Timelines
                                     .Include("Collection.User")
-                                    .Where(t => t.Title.ToUpper().Contains(searchTerm) && t.Collection.Id == currentCollectionId)
+                                    .Where(t => 
+                                        t.Title.ToUpper().Contains(searchTerm) 
+                                        && t.Collection.Id == currentCollectionId
+                                        &&
+                                        (
+                                            t.FromYear >= fromYear &&
+                                            t.ToYear <= toYear
+                                        )
+                                     )
                                     .Take(_maxSearchLimit)
                                     .OrderBy(t => t.Title)
                                     .ThenByDescending(t => t.Collection.Id == currentCollectionId)
                                     .ToList();
 
-                        exhibits  = storage.Exhibits
+                        exhibits = storage.Exhibits
                                     .Include("Collection.User")
-                                    .Where(e => e.Title.ToUpper().Contains(searchTerm) && e.Collection.Id == currentCollectionId)
+                                    .Where(e => 
+                                        e.Title.ToUpper().Contains(searchTerm) 
+                                        && e.Collection.Id == currentCollectionId
+                                        &&
+                                        (
+                                            e.Year >= fromYear &&
+                                            e.Year <= toYear
+                                        ))
                                     .Take(_maxSearchLimit)
                                     .OrderBy(e => e.Title)
                                     .ThenByDescending(e => e.Collection.Id == currentCollectionId)
                                     .ToList();
 
-                        content   = storage.ContentItems
+                        content = storage.ContentItems
                                     .Include("Collection.User")
                                     .Where
                                     (c =>
@@ -683,6 +756,11 @@ namespace Chronozoom.UI
                                             c.Caption.ToUpper().Contains(searchTerm)
                                         )
                                         && c.Collection.Id == currentCollectionId
+                                        &&
+                                        (
+                                            c.Year >= fromYear &&
+                                            c.Year <= toYear
+                                        )
                                     )
                                     .Take(_maxSearchLimit)
                                     .OrderBy(c => c.Title)

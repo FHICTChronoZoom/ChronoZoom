@@ -159,7 +159,7 @@ namespace Chronozoom.UI
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<SearchResult> Search(string superCollection, string collection, string searchTerm, byte searchScope = 1);
+        IEnumerable<SearchResult> Search(string superCollection, string collection, string searchFromDate, string searchToDate, string searchTerm, byte searchScope = 1);
 
         /// <summary>
         /// Provides a specified tour based on the provided GUID rather than a tour sequence or result ordinal,

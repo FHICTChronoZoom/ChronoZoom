@@ -13,8 +13,23 @@
     <div id="scope">
         <label class="cz-lightgray cz-form-label">Filter by Location</label>
         <select class="cz-input">
-            <option value="1" selected="selected">Only this page</option>
+            <option value="1" selected="">Current Collection</option>
+            <option value="2">All My Collections</option>
+            <option value="3">All Searchable Collections</option>
         </select>
+    </div>
+    <label class="cz-lightgray cz-form-label">Date range(optional)</label>
+    <label class="cz-lightblue cz-form-label">Show</label>
+    <div class="cz-form-search-date">
+        <br />
+        <label class="cz-lightgray cz-form-label">Start Time</label>
+        <div class="cz-form-time-start" style="display: block"></div>
+
+        <br />
+        <label class="cz-lightgray cz-form-label">End Time</label>
+        <div class="cz-form-time-end" style="display: block"></div>
+        <br />
+        <label class="cz-lightblue cz-form-label">Hide</label>
     </div>
     <div class="cz-form-content-box">
         <img class="cz-form-progress-bar" src="/images/loading.gif" alt="searching..." />

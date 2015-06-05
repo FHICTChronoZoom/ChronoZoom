@@ -10501,10 +10501,15 @@ var CZ;
         Service.getSearchScopeOptions = getSearchScopeOptions;
 
         // .../search?superCollection={superCollection}&collection={collection}&searchTerm={searchTerm}&searchScope={searchScope}
-        function getSearch(query, scope)
+        function getSearch(query, scope, fromdate, todate)
         {
             if (scope !== parseInt(scope))  scope = 1;
             if (scope < 1)                  scope = 1;
+
+            var col = CZ.Service.collectionName;
+            if (CZ.Service.collectionName == null) {
+                col = "";
+            }
 
             CZ.Authoring.resetSessionTimer();
             var request = new Service.Request(_serviceUrl);
@@ -10513,7 +10518,9 @@ var CZ;
             var data =
             {
                 supercollection:    CZ.Service.superCollectionName,
-                collection:         CZ.Service.collectionName,
+                collection:         col,
+                searchFromDate:     fromdate,
+                searchToDate:       todate,
                 searchTerm:         query,
                 searchScope:        scope
             };
@@ -13686,7 +13693,7 @@ var CZ;
 (function (CZ) {
     (function (UI) {
         var DatePicker = (function () {
-            function DatePicker(datePicker) {
+            function DatePicker(datePicker, yearOnly) {
                 this.datePicker = datePicker;
                 // Value that represents infinity date
                 this.INFINITY_VALUE = 9999;
@@ -13697,19 +13704,21 @@ var CZ;
 
                 this.coordinate = 0;
 
-                this.initialize();
+                this.initialize(yearOnly);
             }
             /**
             * Creates datepicker based on given JQuery instance of div
             */
-            DatePicker.prototype.initialize = function () {
+            DatePicker.prototype.initialize = function (yearOnly) {
                 var _this = this;
                 this.datePicker.addClass("cz-datepicker");
 
                 this.modeSelector = $("<select class='cz-datepicker-mode cz-input'></select>");
 
-                var optionYear = $("<option value='year'>Year</option>");
+                this.modeSelector = $("<select id='test' class='cz-datepicker-mode cz-input'></select>");
+
                 var optionDate = $("<option value='date'>Date</option>");
+                var optionYear = $("<option value='year'>Year</option>");
 
                 this.modeSelector.change(function (event) {
                     var mode = _this.modeSelector.find(":selected").val();
@@ -13730,8 +13739,13 @@ var CZ;
                     }
                 });
 
-                this.modeSelector.append(optionYear);
-                this.modeSelector.append(optionDate);
+                if (yearOnly) {
+                    this.modeSelector.append(optionYear);
+                }
+                else {
+                    this.modeSelector.append(optionDate);
+                    this.modeSelector.append(optionYear);
+                }
 
                 this.dateContainer = $("<div class='cz-datepicker-container'></div>");
                 this.errorMsg = $("<div class='cz-datepicker-errormsg'></div>");
@@ -13739,8 +13753,6 @@ var CZ;
                 this.datePicker.append(this.dateContainer);
                 this.datePicker.append(this.errorMsg);
 
-                // set "year" mode by default
-                this.editModeYear();
                 this.setDate(this.coordinate, true);
             };
 
@@ -17537,6 +17549,8 @@ var CZ;
             function FormHeaderSearch(container, formInfo) {
                 _super.call(this, container, formInfo);
 
+                this.searchToDate = new CZ.UI.DatePicker(container.find(formInfo.searchToDate), true);
+                this.searchFromDate = new CZ.UI.DatePicker(container.find(formInfo.searchFromDate), true);
                 this.searchTextbox = container.find(formInfo.searchTextbox);
                 this.searchScope = $('#scope');
                 this.searchResultsBox = container.find(formInfo.searchResultsBox);
@@ -17556,6 +17570,8 @@ var CZ;
                 this.clearResultSections();
                 this.hideSearchResults();
                 this.searchTextbox.off();
+                this.searchToDate.editModeYear();
+                this.searchFromDate.editModeYear();
 
                 // populate search scope option choices
                 CZ.Service.getSearchScopeOptions().done(function (response)
@@ -17584,9 +17600,11 @@ var CZ;
                     {
                         var query = _this.searchTextbox.val();
                         var scope = parseInt(_this.searchScope.find('select').val());
+                        var fromdate = _this.searchFromDate.getDate();
+                        var todate = _this.searchToDate.getDate();
                         query     = _this.escapeSearchQuery(query);
                         _this.showProgressBar();
-                        _this.sendSearchQuery(query, scope).then(function (response)
+                        _this.sendSearchQuery(query, scope, fromdate, todate).then(function (response)
                         {
                             _this.hideProgressBar();
                             _this.searchResults = response;
@@ -17598,7 +17616,10 @@ var CZ;
                     }, 300);
                 };
 
-                this.searchTextbox.on('input search',        onSearchQueryChanged);
+                this.searchTextbox.on('input search', onSearchQueryChanged);
+                this.searchTextbox.on('input search', onSearchQueryChanged);
+                //this.searchFromDate.on('input search', onSearchQueryChanged);
+                //this.searchToDate.on('input search', onSearchQueryChanged);
                 this.searchScope.find('select').on('change', onSearchQueryChanged);
 
                 // NOTE: Workaround for IE9. IE9 doesn't fire 'input' event on backspace/delete buttons.
@@ -17618,9 +17639,10 @@ var CZ;
                 }
             };
 
-            FormHeaderSearch.prototype.sendSearchQuery = function (query, scope)
+
+            FormHeaderSearch.prototype.sendSearchQuery = function (query, scope, fromdate, todate)
             {
-                return (query === "") ? $.Deferred().resolve(null).promise() : CZ.Service.getSearch(query, scope);
+                return (query === "") ? $.Deferred().resolve(null).promise() : CZ.Service.getSearch(query, scope, fromdate, todate);
             };
 
             FormHeaderSearch.prototype.updateSearchResults = function () {
@@ -20001,6 +20023,8 @@ var CZ;
                                 closeButton: ".cz-form-close-btn > .cz-form-btn",
                                 titleTextblock: ".cz-form-title",
                                 searchTextbox: ".cz-form-search-input",
+                                searchFromDate: ".cz-form-time-start",
+                                searchToDate: ".cz-form-time-end",
                                 searchResultsBox: ".cz-form-search-results",
                                 progressBar: ".cz-form-progress-bar",
                                 resultSections: ".cz-form-search-results > .cz-form-search-section",

@@ -6,7 +6,7 @@ var CZ;
 (function (CZ) {
     (function (UI) {
         var DatePicker = (function () {
-            function DatePicker(datePicker) {
+            function DatePicker(datePicker, yearOnly) {
                 this.datePicker = datePicker;
                 // Value that represents infinity date
                 this.INFINITY_VALUE = 9999;
@@ -17,19 +17,21 @@ var CZ;
 
                 this.coordinate = 0;
 
-                this.initialize();
+                this.initialize(yearOnly);
             }
             /**
             * Creates datepicker based on given JQuery instance of div
             */
-            DatePicker.prototype.initialize = function () {
+            DatePicker.prototype.initialize = function (yearOnly) {
                 var _this = this;
                 this.datePicker.addClass("cz-datepicker");
 
                 this.modeSelector = $("<select class='cz-datepicker-mode cz-input'></select>");
 
-                var optionYear = $("<option value='year'>Year</option>");
+                this.modeSelector = $("<select id='test' class='cz-datepicker-mode cz-input'></select>");
+
                 var optionDate = $("<option value='date'>Date</option>");
+                var optionYear = $("<option value='year'>Year</option>");
 
                 this.modeSelector.change(function (event) {
                     var mode = _this.modeSelector.find(":selected").val();
@@ -50,8 +52,13 @@ var CZ;
                     }
                 });
 
-                this.modeSelector.append(optionYear);
-                this.modeSelector.append(optionDate);
+                if (yearOnly) {
+                    this.modeSelector.append(optionYear);
+                }
+                else {
+                    this.modeSelector.append(optionDate);
+                    this.modeSelector.append(optionYear);
+                }
 
                 this.dateContainer = $("<div class='cz-datepicker-container'></div>");
                 this.errorMsg = $("<div class='cz-datepicker-errormsg'></div>");
@@ -59,8 +66,6 @@ var CZ;
                 this.datePicker.append(this.dateContainer);
                 this.datePicker.append(this.errorMsg);
 
-                // set "year" mode by default
-                this.editModeYear();
                 this.setDate(this.coordinate, true);
             };
 

@@ -302,6 +302,8 @@ var CZ;
                                 closeButton: ".cz-form-close-btn > .cz-form-btn",
                                 titleTextblock: ".cz-form-title",
                                 searchTextbox: ".cz-form-search-input",
+                                searchFromDate: ".cz-form-time-start",
+                                searchToDate: ".cz-form-time-end",
                                 searchResultsBox: ".cz-form-search-results",
                                 progressBar: ".cz-form-progress-bar",
                                 resultSections: ".cz-form-search-results > .cz-form-search-section",
