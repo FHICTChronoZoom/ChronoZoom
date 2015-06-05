@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Chronozoom.UI
 {
-    public class Constance
+    public class Constants
     {
         public static readonly string _defaultSuperCollectionName = "DefaultSuperCollection";
     }
