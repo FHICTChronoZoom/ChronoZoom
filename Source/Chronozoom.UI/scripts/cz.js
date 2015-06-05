@@ -602,6 +602,14 @@ var CZ;
                         {
                             CZ.Authoring.showSessionForm();
                         }, (CZ.Settings.sessionTime - 60) * 1000);
+                        CZ.Service.getUserFavorites().then(function (response) {
+                            var json = response ? response : [];
+
+                            $.each(json, function (index, item) {
+                                favoriteItemId = item.Link.substring(item.Link.lastIndexOf("/") + 2);
+                                CZ.Settings.favoriteTimelines.push(favoriteItemId);
+                            });
+                        })
                     }
 
                     CZ.Authoring.isEnabled = UserCanEditCollection(data);
