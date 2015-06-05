@@ -61,6 +61,7 @@
     <Compile Include="Services\ExportService.cs" />
     <Compile Include="Services\ImportService.cs" />
     <Compile Include="Services\TimelineService.cs" />
+    <Compile Include="Services\TourService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

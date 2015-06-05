@@ -1,5 +1,6 @@
 ﻿using Chronozoom.Business.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,6 @@ namespace Chronozoom.Business.Repositories
     {
         Task<IEnumerable<Timeline>> GetByCollectionAsync(Guid collectionId);
         Task<IEnumerable<Timeline>> GetByTimelineAsync(Guid timelineId);
-
-        Task<Timeline> GetRootAsync(string superCollection, string collection);
+        Task<IEnumerable<Timeline>> GetRootTimelines(Guid collectionId);
     }
 }

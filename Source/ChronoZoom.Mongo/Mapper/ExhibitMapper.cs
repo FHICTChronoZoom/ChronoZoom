@@ -36,9 +36,13 @@ namespace ChronoZoom.Mongo.Mapper
             return listMappedExhibit;
         }
 
-        public Task<Chronozoom.Business.Models.Exhibit> FindByIdAsync(Guid id)
+        public async Task<Chronozoom.Business.Models.Exhibit> FindByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            Mongo.Models.Exhibit exhibit = await exhibitFactory.FindByIdAsync(id);
+            Chronozoom.Business.Models.User UpdatedBy = await userMapper.FindByIdAsync(exhibit.UpdatedByUser);
+            Chronozoom.Business.Models.Exhibit mappedExhibit = mapExhibit(exhibit, UpdatedBy);
+
+            return mappedExhibit;
         }
 
         public async Task<bool> InsertAsync(Chronozoom.Business.Models.Exhibit item)
@@ -53,9 +57,9 @@ namespace ChronoZoom.Mongo.Mapper
             return await exhibitFactory.UpdateAsync(mappedItem);
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await exhibitFactory.DeleteAsync(id);
         }
 
         //maps a Mongo.Models.ContentItem to a Chronozoom.Business.Models.ContentItem
@@ -71,8 +75,8 @@ namespace ChronoZoom.Mongo.Mapper
                 Uri = contentItem.Uri,
                 Attribution = contentItem.Attribution,
                 Order = short.Parse(contentItem.Order.ToString()),
-                MediaType = (string)contentItem.GetType().GetProperty("type").GetValue(contentItem, null),
-                MediaSource = (string)contentItem.GetType().GetProperty("source").GetValue(contentItem, null)
+                MediaType = contentItem.MediaObject.type,
+                MediaSource = contentItem.MediaObject.source
             };
             return mappedContentItem;
         }
@@ -113,9 +117,12 @@ namespace ChronoZoom.Mongo.Mapper
                 Year = (int)contentItem.Year, //doesn't this need to be decimal?
                 Uri = contentItem.Uri,
                 Attribution = contentItem.Attribution,
-                Order = short.Parse(contentItem.Order.ToString())
-                //why is there an internal class for media type and source?
-                //they still need to be mapped here
+                Order = short.Parse(contentItem.Order.ToString()),
+                MediaObject = new Mongo.Models.ContentItem.Media
+                {
+                    type = contentItem.MediaType,
+                    source = contentItem.MediaSource
+                }
             };
             return mappedContentItem;
         }

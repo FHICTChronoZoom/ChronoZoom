@@ -46,6 +46,6 @@ namespace Chronozoom.Business.Repositories
 
         Task<Collection> FindByTimelineIdAsync(Guid timelineId);
 
-
+        Task<Collection> FindByNameOrDefaultAsync(string superCollection);
     }
 }

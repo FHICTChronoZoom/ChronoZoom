@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Chronozoom.Business.Repositories;
 using System.Data.Entity;
 using Chronozoom.Business.Models;
+using System.Data.Entity;
 
 namespace Chronozoom.Entities.Repositories
 {
@@ -99,6 +100,13 @@ namespace Chronozoom.Entities.Repositories
         {
             var collection = await storage.Collections.FindAsync(timelineId);
             return ToLibraryCollection(collection);
+        }
+
+
+        public async Task<Business.Models.Collection> FindByNameOrDefaultAsync(string superCollection)
+        {
+            var collection = await storage.Collections.FirstOrDefaultAsync(x => x.SuperCollection.Title == superCollection) ;
+            return ToLibraryCollection(collection) ;
         }
     }
 }
