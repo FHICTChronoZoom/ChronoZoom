@@ -141,7 +141,7 @@ namespace Chronozoom.UI
         /// <example><![CDATA[  
         /// HTTP verb: GET
         /// URL: 
-        /// http://{domain}/api/search?superCollection={superCollection}&collection={collection}&searchTerm={searchTerm}&searchScope={searchScope}
+        /// http://{domain}/api/search?superCollection={superCollection}&collection={collection}&searchFromDate={searchFromDate}&searchToDate={searchToDate}&searchTerm={searchTerm}&searchScope={searchScope}
         /// ]]></example>
         /// <param name="superCollection">The currently loaded supercollection.</param>
         /// <param name="collection">The currently loaded collection.</param>
@@ -151,6 +151,8 @@ namespace Chronozoom.UI
         /// Choices include the current collection and all publicly viewable collections.
         /// Use GET SearchScopeOptions to obtain a copy of the enumeration list.
         /// </param>
+        /// <param name="searchFromDate">The start year for the search between 2 periods in time</param>
+        /// <param name="searchToDate">The end year for the search between 2 periods in time</param>
         /// <returns>
         /// A list of search results in JSON format, including the type of result (timeline, exhibit or content item,) it's title, what collection it belongs to,
         /// and sufficient data to navigate to each result. Results are sorted alphabetically within each type of result, with the current collection's results
