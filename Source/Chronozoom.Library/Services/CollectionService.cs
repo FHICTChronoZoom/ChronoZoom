@@ -56,26 +56,12 @@ namespace Chronozoom.Business.Services
             if (string.IsNullOrEmpty(collectionPath))
             {
                 // no collection specified so use default collection for specified supercollection
-                collection =
-                    storage.Collections
-                    .Where
-                    (c =>
-                        c.SuperCollection.Title == superCollectionName &&
-                        c.Default == true
-                    )
-                    .FirstOrDefault();
+                collection = await collectionRepository.FindByNameOrDefaultAsync(superCollectionName);
             }
             else
             {
                 // collection specified so look it up within the specified supercollection
-                collection =
-                    storage.Collections
-                    .Where
-                    (c =>
-                        c.SuperCollection.Title == superCollectionName &&
-                        c.Path == collectionPath
-                    )
-                    .FirstOrDefault();
+                collection = await collectionRepository.FindByNameOrDefaultAsync(superCollectionName);
             }
 
             if (collection == null)

@@ -18,5 +18,10 @@ namespace Chronozoom.Business.Services
             if (timelineRepository == null) throw new ArgumentNullException("timelineRepository");
             this.timelineRepository = timelineRepository;
         }
+
+        public async Task<IEnumerable<Timeline>> GetRootTimelines(Guid collectionId)
+        {
+            return await timelineRepository.GetRootTimelines(collectionId);
+        }
     }
 }

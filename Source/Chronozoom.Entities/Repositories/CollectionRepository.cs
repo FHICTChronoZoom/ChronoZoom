@@ -103,7 +103,7 @@ namespace Chronozoom.Entities.Repositories
         }
 
 
-        public async Task<Business.Models.Collection> FindByNameAsync(string superCollection)
+        public async Task<Business.Models.Collection> FindByNameOrDefaultAsync(string superCollection)
         {
             var collection = await storage.Collections.FirstOrDefaultAsync(x => x.SuperCollection.Title == superCollection) ;
             return ToLibraryCollection(collection) ;

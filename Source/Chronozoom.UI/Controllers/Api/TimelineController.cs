@@ -22,12 +22,16 @@ namespace Chronozoom.UI.Controllers.Api
 
         public async Task<IHttpActionResult> GetRootAsync(string superCollection, string collection)
         {
-            return null;
-            //var collectionId = await collectionService
-            //Guid collectionId = CollectionIdOrDefault(storage, superCollection, collection);
-            //Timeline timeline = storage.GetRootTimelines(collectionId);
-
-            //return timeline == null ? new Guid() : timeline.Id;
+            try
+            {
+                var collectionId = await collectionService.CollectionIdOrDefaultAsync(superCollection, collection);
+                var timelines = await timelineService.GetRootTimelines(collectionId);
+                return Ok(timelines);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

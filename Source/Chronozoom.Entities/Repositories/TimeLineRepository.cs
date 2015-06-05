@@ -21,14 +21,14 @@ namespace Chronozoom.Entities.Repositories
         {
             var timelines = await storage.Timelines.Where(x => x.Id == collectionId).ToListAsync();
 
-            return await MakeTimlineList(timelines);
+            return await MakeTimelineList(timelines);
         }
 
         public async Task<IEnumerable<Business.Models.Timeline>> GetByTimelineAsync(Guid timelineId)
         {
             var timelines = await storage.Timelines.Where(x => x.Id == timelineId).ToListAsync();
 
-            return await MakeTimlineList(timelines);
+            return await MakeTimelineList(timelines);
         }
 
         public async Task<Business.Models.Timeline> FindByIdAsync(Guid id)
@@ -80,7 +80,7 @@ namespace Chronozoom.Entities.Repositories
             return new Timeline { Id = timeline.Id, Title = timeline.Title, Regime = timeline.Regime, FromYear = timeline.FromYear, FromIsCirca = timeline.FromIsCirca, ToYear = timeline.ToYear, ToIsCirca = timeline.ToIsCirca, Height = timeline.Height, BackgroundUrl = timeline.BackgroundUrl, AspectRatio = timeline.AspectRatio };
         }
 
-        private async Task<IEnumerable<Chronozoom.Business.Models.Timeline>> MakeTimlineList(List<Timeline> timelines)
+        private async Task<IEnumerable<Chronozoom.Business.Models.Timeline>> MakeTimelineList(List<Timeline> timelines)
         {
             var listOfTimelines = new List<Chronozoom.Business.Models.Timeline>();
 
@@ -105,6 +105,13 @@ namespace Chronozoom.Entities.Repositories
             }
 
             return listOfTimelines;
+        }
+
+
+        public async Task<IEnumerable<Business.Models.Timeline>> GetRootTimelines(Guid collectionId)
+        {
+            var timelines = await storage.Timelines.Where(x => x.Collection.Id == collectionId).ToListAsync();
+            return await MakeTimelineList(timelines);
         }
     }
 }
