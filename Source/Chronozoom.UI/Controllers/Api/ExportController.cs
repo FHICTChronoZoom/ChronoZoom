@@ -12,8 +12,7 @@ namespace Chronozoom.UI.Controllers.Api
     public class ExportController : ApiController
     {
         private ExportService exportService;
-
-        [CLSCompliant(false)]
+        
         public ExportController(ExportService exportService)
         {
             this.exportService = exportService;
