@@ -109,6 +109,7 @@ namespace Chronozoom.Entities.Repositories
         private Business.Models.Exhibit ToLibraryExhibit(Exhibit exhibit, Guid TimelineId)
         {
             return new Business.Models.Exhibit { Id = exhibit.Id, 
+                //Collection 
                 ContentItems = exhibit.ContentItems.Select(c => new Business.Models.ContentItem { Id = c.Id, Attribution = c.Attribution, Caption = c.Caption, Depth = c.Depth, MediaSource = c.MediaSource, MediaType = c.MediaType, Order = c.Order, Title = c.Title, Uri = c.Uri, Year = c.Year }).ToList(), 
                 Depth = exhibit.Depth,
                 IsCirca = exhibit.IsCirca, 
@@ -120,16 +121,18 @@ namespace Chronozoom.Entities.Repositories
 
         private Exhibit ToEntityExhibit(Business.Models.Exhibit exhibit)
         {
-            return new Exhibit { 
-                Id = exhibit.Id, 
-                ContentItems = exhibit.ContentItems,
-                Depth = exhibit.Depth, 
-                IsCirca = exhibit.IsCirca, 
-                Title = exhibit.Title, 
-                UpdatedTime = exhibit.UpdatedTime, 
-                UpdatedBy = exhibit.UpdatedBy, 
-                Year = exhibit.Year, 
-                TimelineId = timelineId };
+            return new Exhibit
+            {
+                Id = exhibit.Id,
+                ContentItems = new System.Collections.ObjectModel.Collection<ContentItem>(exhibit.ContentItems.Select(c => new ContentItem { Id = c.Id, Attribution = c.Attribution, Caption = c.Caption, Depth = c.Depth, MediaSource = c.MediaSource, MediaType = c.MediaType, Order = c.Order, Title = c.Title, Uri = c.Uri, Year = c.Year }).ToList()),
+                Depth = exhibit.Depth,
+                IsCirca = exhibit.IsCirca,
+                Title = exhibit.Title,
+                UpdatedTime = exhibit.UpdatedTime,
+                UpdatedBy = new Entities.User { Id = exhibit.UpdatedBy.Id, DisplayName = exhibit.UpdatedBy.DisplayName, Email = exhibit.UpdatedBy.Email, IdentityProvider = exhibit.UpdatedBy.IdentityProvider, NameIdentifier = exhibit.UpdatedBy.NameIdentifier },
+                Year = exhibit.Year
+                // TimelineId = timelineId
+            };
         }
     }
 }

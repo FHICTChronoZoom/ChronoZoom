@@ -22,7 +22,7 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         /// </summary>
         /// <param name="timelineId"></param>
         /// <returns></returns>
-        public async Task<List<Exhibit>> FindByTimelineIdAsync(ObjectId timelineId) 
+        public async Task<List<Exhibit>> FindByTimelineIdAsync(Guid timelineId) 
         {
             var collection = MongoFactory.database.GetCollection<Exhibit>(COLLECTION_NAME);
             var exhibit = await collection.Find<Exhibit>(x => x.Id.Equals(timelineId)).ToListAsync();
