@@ -18,5 +18,6 @@ namespace Chronozoom.UI.Controllers.Api
         {
             this.collectionServive = collectionService;
         }
+
     }
 }

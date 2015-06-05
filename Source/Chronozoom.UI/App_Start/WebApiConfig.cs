@@ -32,7 +32,7 @@ namespace Chronozoom.UI
 
             // Add application wide settings here
             //applicationSettings.Set("Identifier key", "Something something");
-
+            applicationSettings.Set("DefaultSuperCollection", ConfigurationManager.AppSettings["DefaultSuperCollection"]);
             container.RegisterInstance<IApplicationSettings>(applicationSettings);
         }
 

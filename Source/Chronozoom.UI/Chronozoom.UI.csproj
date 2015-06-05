@@ -750,9 +750,14 @@
     <Compile Include="api\storagecache.cs" />
     <Compile Include="App_Data\BundleConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Api\CollectionController.cs" />
     <Compile Include="Controllers\Api\ExportController.cs" />
     <Compile Include="Controllers\Api\ImportController.cs" />
+<<<<<<< .merge_file_a08084
+    <Compile Include="Controllers\Api\TimelineController.cs" />
+=======
     <Compile Include="Controllers\Api\SearchController.cs" />
+>>>>>>> .merge_file_a01240
     <Compile Include="default.ashx.cs">
       <DependentUpon>default.ashx</DependentUpon>
     </Compile>

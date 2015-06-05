@@ -12,16 +12,18 @@ namespace Chronozoom.UI.Controllers.Api
 {
     public class TimelineController : ApiController
     {
-        TimelineService timelineService;
+        private TimelineService timelineService;
+        private CollectionService collectionService;
 
-        public TimelineController(ITimelineRepository timelineRepository)
+        public TimelineController(TimelineService timelineService)
         {
-            this.timelineRepository = timelineRepository;
+            this.timelineService = timelineService;
         }
 
         public async Task<IHttpActionResult> GetRootAsync(string superCollection, string collection)
         {
-            
+            return null;
+            //var collectionId = await collectionService
             //Guid collectionId = CollectionIdOrDefault(storage, superCollection, collection);
             //Timeline timeline = storage.GetRootTimelines(collectionId);
 
