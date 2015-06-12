@@ -1,4 +1,5 @@
-﻿using Chronozoom.Business.Repositories;
+﻿using Chronozoom.Business.Models;
+using Chronozoom.Business.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Chronozoom.Business.Services
 {
-    class ExhibitService
+    class ExhibitService : IExhibitRepository
     {
         private IExhibitRepository exhibitRepository;
 
@@ -17,9 +18,27 @@ namespace Chronozoom.Business.Services
             this.exhibitRepository = exhibitRepository;
         }
 
-        public async Task<IEnumerable<Timeline>> GetRootTimelines(Guid collectionId)
+        /// <summary>
+        /// Updates an exhibit. The Id of the exhibit is used to identify the exhibit to be updated.
+        /// </summary>
+        /// <param name="superColletionName">SuperCollection name of the exhibit (unused)</param>
+        /// <param name="exhibitRequest">The updated exhibit</param>
+        /// <returns>Boolean determining whether the update was succesful (true) or not (false)</returns>
+        public async Task<bool> PutExhibit(string superColletionName, Exhibit exhibitRequest)
         {
-            return await timelineRepository.GetRootTimelines(collectionId);
+            return await PutExhibit(superColletionName, "", exhibitRequest);
+        }
+
+        /// <summary>
+        /// Updates an exhibit. The Id of the exhibit is used to identify the exhibit to be updated.
+        /// </summary>
+        /// <param name="superColletionName">SuperCollection name of the exhibit (unused)</param>
+        /// <param name="collectionName">CollectionName of the exhibit (unused)</param>
+        /// <param name="exhibitRequest">The updated exhibit</param>
+        /// <returns>Boolean determining whether the update was succesful (true) or not (false)</returns>
+        public async Task<bool> PutExhibit(string superColletionName, string collectionName, Exhibit exhibitRequest)
+        {
+            return await exhibitRepository.UpdateAsync(exhibitRequest);
         }
     }
 }
