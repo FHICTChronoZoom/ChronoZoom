@@ -23,5 +23,9 @@ namespace Chronozoom.Business.Services
         {
             return await timelineRepository.GetRootTimelines(collectionId);
         }
+
+        public async void DeleteTimeline(string superCollectionName, Timeline timelineRequest) {
+            await timelineRepository.DeleteAsync(timelineRequest.Id);
+        }
     }
 }
