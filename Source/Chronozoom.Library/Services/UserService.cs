@@ -41,12 +41,12 @@ namespace Chronozoom.Business.Services
             return result;
         }
 
-        public async Task UpdateUserAsync(User user)
+        public async Task<bool> UpdateUserAsync(User user)
         {
-            await userRepository.UpdateAsync(user);
+            return await userRepository.UpdateAsync(user);
         }
 
-        public async Task DeleteUserAsync(User user)
+        public async Task<bool> DeleteUserAsync(User user)
         {
             var collections = await collectionRepository.GetByUserAsync(user.Id);
             foreach (var collection in collections)
@@ -54,7 +54,7 @@ namespace Chronozoom.Business.Services
                 await collectionRepository.DeleteAsync(collection.Id);
             }
 
-            await userRepository.DeleteAsync(user.Id);
+            return await userRepository.DeleteAsync(user.Id);
         }
     }
 }
