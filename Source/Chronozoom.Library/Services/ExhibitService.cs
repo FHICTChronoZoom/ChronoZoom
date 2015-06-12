@@ -40,5 +40,28 @@ namespace Chronozoom.Business.Services
         {
             return await exhibitRepository.UpdateAsync(exhibitRequest);
         }
+
+        /// <summary>
+        /// Deletes an exhibit based on the specified Id
+        /// </summary>
+        /// <param name="superCollectionName">The superCollection to remove the exhibit from (unused)</param>
+        /// <param name="exhibitRequest">The exhibit to be deleted</param>
+        /// <returns></returns>
+        public async Task<bool> DeleteExhibit(string superCollectionName, Exhibit exhibitRequest)
+        {
+            return await exhibitRepository.DeleteAsync(exhibitRequest.Id);
+        }
+
+        /// <summary>
+        /// Deletes an exhibit based on the specified Id
+        /// </summary>
+        /// <param name="superCollectionName">The superCollection to remove the exhibit from (unused)</param>
+        /// <param name="collectionName">The collection to remove the exhibit from (unused)</param>
+        /// <param name="exhibitRequest">The exhibit to be deleted</param>
+        /// <returns></returns>
+        public async Task<bool> DeleteExhibit(string superCollectionName, string collectionName, Exhibit exhibitRequest)
+        {
+            return await exhibitRepository.DeleteAsync(exhibitRequest.Id);
+        }
     }
 }
