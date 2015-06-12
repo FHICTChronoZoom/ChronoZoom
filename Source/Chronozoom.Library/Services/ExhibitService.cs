@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Chronozoom.Business.Services
 {
-    class ExhibitService : IExhibitRepository
+    public class ExhibitService : IExhibitRepository
     {
         private IExhibitRepository exhibitRepository;
 
