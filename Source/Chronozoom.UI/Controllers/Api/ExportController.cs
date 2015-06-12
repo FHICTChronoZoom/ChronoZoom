@@ -44,7 +44,7 @@ namespace Chronozoom.UI.Controllers.Api
             }
             else
             {
-                return Ok();
+                return Ok(result);
             }
         }
     }
