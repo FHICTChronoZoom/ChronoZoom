@@ -35,6 +35,12 @@ namespace Chronozoom.Business.Services
             await collectionRepository.InsertAsync(defaultCollection);
         }
 
+        public async Task<User> GetUser(string name)
+        {
+            var result = await userRepository.FindByUsernameAsync(name);
+            return result;
+        }
+
         public async Task UpdateUserAsync(User user)
         {
             await userRepository.UpdateAsync(user);
