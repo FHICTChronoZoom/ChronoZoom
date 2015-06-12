@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Chronozoom.Business.Services
 {
     
-    class TourService
+    public class TourService
     {
         private ITourRepository tourRepository;
 
