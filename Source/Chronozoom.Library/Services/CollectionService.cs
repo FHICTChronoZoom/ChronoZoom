@@ -95,5 +95,12 @@ namespace Chronozoom.Business.Services
         {
             return await collectionRepository.DeleteAsync(collectionPath);
         }
+
+        public async Task<Guid> PutCollection(String superCollectionName, Collection collectionRequest)
+        {
+            return await collectionRepository.UpdateAsync(collectionRequest);
+        }
+
+
     }
 }
