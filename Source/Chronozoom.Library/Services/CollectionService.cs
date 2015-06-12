@@ -98,18 +98,27 @@ namespace Chronozoom.Business.Services
 
         public async Task<Guid> PutCollection(String superCollectionName, Collection collectionRequest)
         {
-            return await collectionRepository.UpdateAsync(collectionRequest);
+            Boolean done = await collectionRepository.UpdateAsync(collectionRequest);
+            if (done)
+            {
+                return collectionRequest.Id;
+            }
         }
 
         public async Task<Guid> PutCollection(String superCollectionName,String collectionName, Collection collectionRequest)
         {
-            return await collectionRepository.UpdateAsync(collectionRequest);
+            Boolean done = await collectionRepository.UpdateAsync(collectionRequest);
+            if (done)
+            {
+                return collectionRequest.Id;
+            }
         }
 
         public async Task<Boolean> PostCollection(String superCollectionPath, String newCollectionPath, Collection newCollectionData)
         {
             return await collectionRepository.InsertAsync(newCollectionData);
         }
+
 
     }
 }
