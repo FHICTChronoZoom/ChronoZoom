@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Chronozoom.Business.Services
 {
@@ -13,10 +14,12 @@ namespace Chronozoom.Business.Services
         private ICollectionRepository collectionRepository;
         private IApplicationSettings appSettings;
 
-        public CollectionService(ICollectionRepository collectionRepository)
+        public CollectionService(ICollectionRepository collectionRepository, IApplicationSettings appSettings)
         {
             if (collectionRepository == null) throw new ArgumentNullException("collectionRepository");
+            if (appSettings == null) throw new ArgumentNullException("appSettings");
             this.collectionRepository = collectionRepository;
+            this.appSettings = appSettings;
         }
 
         public Task<Collection> FindCollectionAsync(Guid id)
@@ -90,5 +93,35 @@ namespace Chronozoom.Business.Services
 
             return collection.Id;
         }
+
+        public async Task<Boolean> DeleteCollection(String superCollectionPath, String collectionPath)
+        {
+            return await collectionRepository.DeleteAsync(collectionPath);
+        }
+
+        public async Task<Guid> PutCollection(String superCollectionName, Collection collectionRequest)
+        {
+            Boolean done = await collectionRepository.UpdateAsync(collectionRequest);
+            if (done)
+            {
+                return collectionRequest.Id;
+            }
+        }
+
+        public async Task<Guid> PutCollection(String superCollectionName,String collectionName, Collection collectionRequest)
+        {
+            Boolean done = await collectionRepository.UpdateAsync(collectionRequest);
+            if (done)
+            {
+                return collectionRequest.Id;
+            }
+        }
+
+        public async Task<Boolean> PostCollection(String superCollectionPath, String newCollectionPath, Collection newCollectionData)
+        {
+            return await collectionRepository.InsertAsync(newCollectionData);
+        }
+
+
     }
 }

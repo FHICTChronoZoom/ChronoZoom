@@ -34,7 +34,7 @@ namespace Chronozoom.UI.Controllers.Api
         }
 
         [HttpGet]
-        [Route("api/v2/export/exhibit/{exhibitId:Guid}")]
+        [Route("~/api/v2/export/exhibit/{exhibitId:Guid}")]
         public async Task<IHttpActionResult> ExportExhibit(Guid exhibitId)
         {
             var result = await exportService.ExportExhibit(exhibitId);
@@ -44,7 +44,7 @@ namespace Chronozoom.UI.Controllers.Api
             }
             else
             {
-                return Ok();
+                return Ok(result);
             }
         }
     }
