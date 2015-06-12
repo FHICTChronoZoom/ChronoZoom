@@ -58,6 +58,8 @@
     <Compile Include="Repositories\ITourRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Services\CollectionService.cs" />
+    <Compile Include="Services\ContentItemService.cs" />
+    <Compile Include="Services\ExhibitService.cs" />
     <Compile Include="Services\ExportService.cs" />
     <Compile Include="Services\ImportService.cs" />
     <Compile Include="Services\TimelineService.cs" />
