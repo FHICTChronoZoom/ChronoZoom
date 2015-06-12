@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Chronozoom.Business.Services
 {
-    class ContentItemService
+    public class ContentItemService 
     {
+        // There is no IContentItemRepository
     }
 }
