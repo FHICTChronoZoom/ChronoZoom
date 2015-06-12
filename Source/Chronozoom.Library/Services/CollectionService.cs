@@ -101,6 +101,15 @@ namespace Chronozoom.Business.Services
             return await collectionRepository.UpdateAsync(collectionRequest);
         }
 
+        public async Task<Guid> PutCollection(String superCollectionName,String collectionName, Collection collectionRequest)
+        {
+            return await collectionRepository.UpdateAsync(collectionRequest);
+        }
+
+        public async Task<Boolean> PostCollection(String superCollectionPath, String newCollectionPath, Collection newCollectionData)
+        {
+            return await collectionRepository.InsertAsync(newCollectionData);
+        }
 
     }
 }
