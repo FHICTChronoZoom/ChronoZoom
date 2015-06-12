@@ -756,6 +756,7 @@
     <Compile Include="Controllers\Api\TimelineController.cs" />
     <Compile Include="Controllers\Api\SearchController.cs" />
     <Compile Include="Controllers\Api\TourController.cs" />
+    <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="default.ashx.cs">
       <DependentUpon>default.ashx</DependentUpon>
     </Compile>
