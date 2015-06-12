@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Chronozoom.Business.Services
 {
@@ -13,10 +14,12 @@ namespace Chronozoom.Business.Services
         private ICollectionRepository collectionRepository;
         private IApplicationSettings appSettings;
 
-        public CollectionService(ICollectionRepository collectionRepository)
+        public CollectionService(ICollectionRepository collectionRepository, IApplicationSettings appSettings)
         {
             if (collectionRepository == null) throw new ArgumentNullException("collectionRepository");
+            if (appSettings == null) throw new ArgumentNullException("appSettings");
             this.collectionRepository = collectionRepository;
+            this.appSettings = appSettings;
         }
 
         public Task<Collection> FindCollectionAsync(Guid id)
@@ -90,5 +93,69 @@ namespace Chronozoom.Business.Services
 
             return collection.Id;
         }
+
+        public async Task<Boolean> DeleteCollection(String superCollectionPath, String collectionPath)
+        {
+            return await collectionRepository.DeleteAsync(collectionPath);
+        }
+
+        public async Task<Guid> PutCollection(String superCollectionName, Collection collectionRequest)
+        {
+            Boolean done = await collectionRepository.UpdateAsync(collectionRequest);
+            if (done)
+            {
+                return collectionRequest.Id;
+            }
+        }
+
+        public async Task<Guid> PutCollection(String superCollectionName,String collectionName, Collection collectionRequest)
+        {
+            Boolean done = await collectionRepository.UpdateAsync(collectionRequest);
+            if (done)
+            {
+                return collectionRequest.Id;
+            }
+        }
+
+        public async Task<Boolean> PostCollection(String superCollectionPath, String newCollectionPath, Collection newCollectionData)
+        {
+            return await collectionRepository.InsertAsync(newCollectionData);
+        }
+
+        /// <summary>
+        /// Checks if a user is a member of the collection and therefore has member priviliges
+        /// 
+        /// WARNING!! This function has too little parameters to actually function. 
+        /// Because of that I hardcoded the user Id parameter.
+        /// Also, the collectionId should be delivered as a Guid in stead of a string.
+        /// </summary>
+        /// <param name="collectionId">The collection to check membership for</param>
+        /// <returns>Boolean - True if the user has membership priviliges, otherwise false</returns>
+        public async Task<bool> UserIsMember(string collectionId)
+        {
+            return await collectionRepository.IsMemberAsync(new Guid(collectionId), new Guid());
+        }
+
+        /// <summary>
+        /// Referencing UserIsMember documentation above. This will not work
+        /// </summary>
+        /// <param name="superCollectionName"></param>
+        /// <returns></returns>
+        public async Task<bool> UserCanEdit(string superCollectionName)
+        {
+            return await UserIsMember(superCollectionName);
+        }
+
+        /// <summary>
+        /// Referencing UserIsMember documentation above. This will not work
+        /// </summary>
+        /// <param name="superCollectionName"></param>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
+        public async Task<bool> UserCanEdit(string superCollectionName, string collectionName)
+        {
+            return await UserIsMember(superCollectionName);
+        }
+
     }
 }

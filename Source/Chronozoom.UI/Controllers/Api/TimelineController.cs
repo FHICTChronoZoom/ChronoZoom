@@ -18,7 +18,7 @@ namespace Chronozoom.UI.Controllers.Api
         public TimelineController(TimelineService timelineService, CollectionService collectionService)
         {
             this.timelineService = timelineService;
-            this.collectionService = collectionService;
+            this.collectionService = collectionService; 
         }
 
         public async Task<IHttpActionResult> GetRootAsync(string superCollection, string collection)

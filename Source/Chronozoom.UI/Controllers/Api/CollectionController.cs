@@ -11,12 +11,13 @@ namespace Chronozoom.UI.Controllers.Api
 {
     public class CollectionController : ApiController
     {
-        CollectionService collectionServive;
-        //TimelineService timelineService;
+        private CollectionService collectionServive;
+        private TimelineService timelineService;
 
-        public CollectionController(CollectionService collectionService)
+        public CollectionController(CollectionService collectionService, TimelineService timelineService)
         {
             this.collectionServive = collectionService;
+            this.timelineService = timelineService;
         }
 
     }

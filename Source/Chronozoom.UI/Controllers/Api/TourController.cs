@@ -23,7 +23,7 @@ namespace Chronozoom.UI.Controllers.Api
             this.collectionService = collectionService;
         }
 
-        [HttpPut]
+        [HttpGet]
         [Route("~/api/v2/tour/{id:Guid}")]
         public async Task<IHttpActionResult> GetTour(Guid id)
         {
