@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Chronozoom.Business.Services
 {
@@ -13,10 +14,12 @@ namespace Chronozoom.Business.Services
         private ICollectionRepository collectionRepository;
         private IApplicationSettings appSettings;
 
-        public CollectionService(ICollectionRepository collectionRepository)
+        public CollectionService(ICollectionRepository collectionRepository, IApplicationSettings appSettings)
         {
             if (collectionRepository == null) throw new ArgumentNullException("collectionRepository");
+            if (appSettings == null) throw new ArgumentNullException("appSettings");
             this.collectionRepository = collectionRepository;
+            this.appSettings = appSettings;
         }
 
         public Task<Collection> FindCollectionAsync(Guid id)
