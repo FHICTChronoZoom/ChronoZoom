@@ -17,9 +17,10 @@ namespace Chronozoom.UI.Controllers.Api
         private ImportService importService;
         private SecurityService securityService;
         
-        public ImportController(ImportService importService)
+        public ImportController(ImportService importService, SecurityService securityService)
         {
             this.importService = importService;
+            this.securityService = securityService;
         }
 
         [HttpPut]

@@ -12,7 +12,7 @@ namespace Chronozoom.UI.Controllers.Api
     public class CollectionController : ApiController
     {
         CollectionService collectionServive;
-        TimelineService timelineService;
+        //TimelineService timelineService;
 
         public CollectionController(CollectionService collectionService)
         {

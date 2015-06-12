@@ -1,15 +1,17 @@
 ﻿using Chronozoom.Business.Models;
+using Chronozoom.Business.Models.Compability;
 using Chronozoom.Business.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Chronozoom.Business.Services
 {
     
-    class TourService
+    public class TourService
     {
         private ITourRepository tourRepository;
 
@@ -19,9 +21,26 @@ namespace Chronozoom.Business.Services
             this.tourRepository = tourRepository;
         }
 
+        
+
         public Task<Tour> GetTourAsync(Guid id)
         {
             return tourRepository.FindByIdAsync(id);
+        }
+
+        public Task<IEnumerable<Tour>> GetDefaultTours()
+        {
+            return tourRepository.GetDefaultTours();
+        }
+
+        public Task<IEnumerable<Tour>> GetToursAsync(User superCollection)
+        {
+            return tourRepository.GetTours(superCollection);
+        }
+
+        public Task<IEnumerable<Tour>> GetToursAsync(User superCollection, Guid collection)
+        {
+            return tourRepository.GetTours(superCollection, collection);
         }
     }
 }
