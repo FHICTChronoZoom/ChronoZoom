@@ -26,6 +26,8 @@ namespace Chronozoom.Business.Services
         /// <returns>Boolean determining whether the update was succesful (true) or not (false)</returns>
         public async Task<bool> PutExhibit(string superColletionName, Exhibit exhibitRequest)
         {
+            // There's extended logic in the original WCF implementation which cannot be implemented due to the missing
+            // ContentItemRepository
             return await PutExhibit(superColletionName, "", exhibitRequest);
         }
 
@@ -38,6 +40,8 @@ namespace Chronozoom.Business.Services
         /// <returns>Boolean determining whether the update was succesful (true) or not (false)</returns>
         public async Task<bool> PutExhibit(string superColletionName, string collectionName, Exhibit exhibitRequest)
         {
+            // There's extended logic in the original WCF implementation which cannot be implemented due to the missing
+            // ContentItemRepository
             return await exhibitRepository.UpdateAsync(exhibitRequest);
         }
 

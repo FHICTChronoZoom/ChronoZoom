@@ -136,5 +136,26 @@ namespace Chronozoom.Business.Services
             return await collectionRepository.IsMemberAsync(new Guid(collectionId), new Guid());
         }
 
+        /// <summary>
+        /// Referencing UserIsMember documentation above. This will not work
+        /// </summary>
+        /// <param name="superCollectionName"></param>
+        /// <returns></returns>
+        public async Task<bool> UserCanEdit(string superCollectionName)
+        {
+            return await UserIsMember(superCollectionName);
+        }
+
+        /// <summary>
+        /// Referencing UserIsMember documentation above. This will not work
+        /// </summary>
+        /// <param name="superCollectionName"></param>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
+        public async Task<bool> UserCanEdit(string superCollectionName, string collectionName)
+        {
+            return await UserIsMember(superCollectionName);
+        }
+
     }
 }
