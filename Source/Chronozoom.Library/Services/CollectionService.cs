@@ -94,7 +94,7 @@ namespace Chronozoom.Business.Services
             return collection.Id;
         }
 
-        public async Task<Boolean> DeleteCollection(String superCollectionPath, String collectionPath)
+        public async Task<bool> DeleteCollection(String superCollectionPath, String collectionPath)
         {
             return await collectionRepository.DeleteAsync(collectionPath);
         }

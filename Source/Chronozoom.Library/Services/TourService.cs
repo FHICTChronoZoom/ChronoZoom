@@ -21,8 +21,6 @@ namespace Chronozoom.Business.Services
             this.tourRepository = tourRepository;
         }
 
-        
-
         public Task<Tour> GetTourAsync(Guid id)
         {
             return tourRepository.FindByIdAsync(id);
