@@ -14,6 +14,8 @@ namespace Chronozoom.Business.Repositories
 
         Task<IEnumerable<Business.Models.Tour>> GetTours(User superCollection);
 
-        Task<IEnumerable<Business.Models.Tour>> GetTours(User superCollection, Guid collection);
+        Task<IEnumerable<Business.Models.Tour>> GetTours(User superCollection, string collection);
+
+        Task<Boolean> PutTour(string superCollection, Business.Models.Tour tourRequest);
     }
 }

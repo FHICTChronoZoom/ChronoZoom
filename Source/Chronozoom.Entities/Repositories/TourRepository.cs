@@ -55,7 +55,7 @@ namespace Chronozoom.Entities.Repositories
 
         private Tour ToEntityTour(Business.Models.Tour tour)
         {
-            return new Tour { Id = tour.Id, AudioBlobUrl = tour.AudioBlobUrl, Category = tour.Category, Description = tour.Description, Name = tour.Name, Sequence = tour.Sequence, UniqueId = tour.UniqueId };
+            return new Entities.Tour { Id = tour.Id, AudioBlobUrl = tour.AudioBlobUrl, Category = tour.Category, Description = tour.Description, Name = tour.Name, Sequence = tour.Sequence, UniqueId = tour.UniqueId };
         }
 
         public async Task<IEnumerable<Business.Models.Tour>> GetDefaultTours()
@@ -77,20 +77,41 @@ namespace Chronozoom.Entities.Repositories
             return toursCollection;
         }
 
-        public async Task<IEnumerable<Business.Models.Tour>> GetTours(Business.Models.User superCollection, Guid collection)
+        public async Task<IEnumerable<Business.Models.Tour>> GetTours(Business.Models.User superCollection, string collection)
         {
+            Guid collectionId = await collectionService.CollectionIdOrDefaultAsync(superCollection.NameIdentifier, collection);
             List<Business.Models.Tour> toursCollection = new List<Business.Models.Tour>();
             var collections = (IEnumerable<Business.Models.Collection>)storage.Collections.Where(candidate => candidate.SuperCollection.Id == superCollection.Id);
             foreach (Business.Models.Collection c in collections)
             {
-                if (c.Id == collection)
+                if (c.Id == collectionId)
                 {
-                    var tours = (IEnumerable<Business.Models.Tour>)storage.Tours.Where(candidate => candidate.Collection.Id == collection);
+                    var tours = (IEnumerable<Business.Models.Tour>)storage.Tours.Where(candidate => candidate.Collection.Id == collectionId);
                     toursCollection.AddRange(tours);
                 }
             }
             return toursCollection;
         }
+
+        public Task<Boolean> PutTour(string superCollection, Business.Models.Tour tourRequest)
+        {
+            var collection = storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollection).FirstOrDefault();
+            
+            if (collection == null)
+            {
+                return new Task<Boolean>(false);
+            }
+            storage.Tours.Add(ToTour(tourRequest));
+            storage.SaveChangesAsync();
+            return new Task<Boolean>(true);
+        }
+
+        private Entities.Tour ToTour(Business.Models.Tour tourModel)
+        {
+            return new Entities.Tour { Id = tourModel.Id, Name = tourModel.Name, Description = tourModel.Description, UniqueId = tourModel.UniqueId, AudioBlobUrl = tourModel.AudioBlobUrl, Category = tourModel.Category, Sequence = tourModel.Sequence };
+        }
+
+
 
     }
 }

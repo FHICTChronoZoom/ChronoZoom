@@ -23,14 +23,14 @@ namespace Chronozoom.UI.Controllers.Api
             this.collectionService = collectionService;
         }
 
-        [HttpGet]
+        [HttpPut]
         [Route("~/api/v2/tour/{id:Guid}")]
         public async Task<IHttpActionResult> GetTour(Guid id)
         {
             try
             {
-                await tourService.GetTourAsync(id);
-                return Ok();
+                var tour = await tourService.GetTourAsync(id);
+                return Ok(tour);
             }
             catch (Exception ex)
             {
@@ -44,8 +44,8 @@ namespace Chronozoom.UI.Controllers.Api
         {
             try
             {
-                await tourService.GetDefaultTours();
-                return Ok();
+                var tours = await tourService.GetDefaultTours();
+                return Ok(tours);
             }
 
             catch (Exception ex)
@@ -61,8 +61,8 @@ namespace Chronozoom.UI.Controllers.Api
             try
             {
                 var user = await securityService.GetUserAsync(User.Identity);
-                await tourService.GetToursAsync(user);
-                return Ok();
+                var tour = await tourService.GetToursAsync(user);
+                return Ok(tour);
             }
 
             catch (Exception ex)
@@ -71,15 +71,18 @@ namespace Chronozoom.UI.Controllers.Api
             }
         }
 
+
+        //TODO:
+        //Needs to be fixed to retrieve correct user
         [HttpPut]
         [Route("~/api/v2/tours/{superCollection:Guid}/{collection:Guid}")]
-        public async Task<IHttpActionResult> GetTours(Guid superCollection, Guid collection)
+        public async Task<IHttpActionResult> GetTours(string superCollection, string collection)
         {
             try
             {
                 var user = await securityService.GetUserAsync(User.Identity);
-                await tourService.GetToursAsync(user, collection);
-                return Ok();
+                var tour = await tourService.GetToursAsync(user, collection);
+                return Ok(tour);
             }
 
             catch (Exception ex)
@@ -87,7 +90,11 @@ namespace Chronozoom.UI.Controllers.Api
                 return InternalServerError(ex);
             }
         }
+
+        public async Task<IHttpActionResult> PutTour(string superCollection, Business.Models.Tour tourRequest)
+        {
+            var success = await tourService.PutTour(superCollection, tourRequest);
+            return Ok(success);
+        }
     }
-
-
 }

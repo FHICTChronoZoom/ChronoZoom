@@ -157,5 +157,6 @@ namespace Chronozoom.Business.Services
             return await UserIsMember(superCollectionName);
         }
 
+
     }
 }
