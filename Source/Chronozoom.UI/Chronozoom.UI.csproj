@@ -752,6 +752,7 @@
     <Compile Include="App_Data\BundleConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Api\CollectionController.cs" />
+    <Compile Include="Controllers\Api\ExhibitController.cs" />
     <Compile Include="Controllers\Api\ExportController.cs" />
     <Compile Include="Controllers\Api\ImportController.cs" />
     <Compile Include="Controllers\Api\TimelineController.cs" />
