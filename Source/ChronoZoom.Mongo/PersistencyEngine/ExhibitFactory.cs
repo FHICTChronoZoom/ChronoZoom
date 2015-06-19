@@ -25,12 +25,8 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         public async Task<List<Exhibit>> FindByTimelineIdAsync(Guid timelineId) 
         {
             //does not get by timeline id
-            //TODO 
-            //make it so that this method returns exhibits based on timeline id
-            var collection = MongoFactory.database.GetCollection<Exhibit>(COLLECTION_NAME);
-            var exhibit = await collection.Find<Exhibit>(x => x.Id.Equals(timelineId)).ToListAsync();
-
-            return exhibit;
+            //TODO : make it so that this method returns exhibits based on timeline id
+            throw new NotImplementedException();
         }
 
         /// <summary>

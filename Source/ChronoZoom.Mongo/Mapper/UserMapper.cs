@@ -98,5 +98,10 @@ namespace ChronoZoom.Mongo.Mapper
 
             return success;
         }
+
+        public async Task<IEnumerable<Chronozoom.Business.Models.User>> FindUsersAsync(string partialName)
+        {
+            IEnumerable<Mongo.Models.User> listUser = await factory.FindUsersAsync(partialName);
+        }
     }
 }
