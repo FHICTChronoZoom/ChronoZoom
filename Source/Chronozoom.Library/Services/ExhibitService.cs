@@ -67,5 +67,13 @@ namespace Chronozoom.Business.Services
         {
             return await exhibitRepository.DeleteAsync(exhibitRequest.Id);
         }
+
+        public async Task<string> GetExhibitLastUpdate(string exhibitId)
+        {
+            Guid exhibitGuid = new Guid(exhibitId);
+            Exhibit exhibit = await exhibitRepository.FindByIdAsync(exhibitGuid);
+            string strLastUpdated = exhibit.UpdatedTime.ToString("yyyy/MM/dd HH:mm:ss") + (exhibit.UpdatedBy != null ? "|" + exhibit.UpdatedBy.DisplayName : "");
+            return strLastUpdated;
+        }
     }
 }
