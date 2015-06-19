@@ -93,14 +93,17 @@ namespace Chronozoom.UI.Controllers.Api
 
         public async Task<IHttpActionResult> PutTour(string superCollection, Business.Models.Tour tourRequest)
         {
-            //var success = await tourService.PutTour(superCollection, tourRequest);
+            var user = await securityService.GetUserAsync(User.Identity);
+            var success = await tourService.PutTour(user, tourRequest);
             return Ok(success);
         }
 
 
         public async Task<IHttpActionResult> PutTour(string superCollection, string collection, Business.Models.Tour tourRequest)
         {
-           //var success = await tourService.PutTour(superCollection, collection, tourRequest);
+            var user = await securityService.GetUserAsync(User.Identity);
+            Guid collectionId = await collectionService.CollectionIdOrDefaultAsync(superCollection, collection);
+            var success = await tourService.PutTour(user, collectionId, tourRequest);
             return Ok(success);
         }
 
@@ -108,8 +111,10 @@ namespace Chronozoom.UI.Controllers.Api
         [Route("~/api/v2/posttour/{superCollection:Guid}/{collection:Guid}")]
         public async Task<IHttpActionResult> PostTour(string superCollection, string collection, Business.Models.Tour tourRequest)
         {
+            var user = await securityService.GetUserAsync(User.Identity);
             Guid collectionId = await collectionService.CollectionIdOrDefaultAsync(superCollection, collection);
-            tourService.PostTour(superCollection, collection, tourRequest);
+            var success = tourService.PostTour(user, collectionId, tourRequest);
+            return Ok(success);
         }
     }
 }

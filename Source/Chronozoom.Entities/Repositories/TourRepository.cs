@@ -92,7 +92,7 @@ namespace Chronozoom.Entities.Repositories
             return toursCollection;
         }
 
-        public Task<Boolean> PutTour(User superCollection, Business.Models.Tour tourRequest)
+        public async Task<Boolean> PutTour(User superCollection, Business.Models.Tour tourRequest)
         {
             var collection = storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollection.NameIdentifier).FirstOrDefault();            
 
@@ -101,7 +101,7 @@ namespace Chronozoom.Entities.Repositories
                 return new Task<Boolean>(false);
             }
 
-            PutTour(superCollection, collection, tourRequest);
+            await PutTour(superCollection, collection, tourRequest);
             return new Task<Boolean>(true);
         }
 
