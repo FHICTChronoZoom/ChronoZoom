@@ -39,6 +39,21 @@ namespace Chronozoom.UI.Controllers.Api
         }
 
         [HttpPut]
+        [Route("~/api/v2/tour/{id:Guid}")]
+        public async Task<IHttpActionResult> GetTour(string superCollection, string collection, Guid guid)
+        {
+            try
+            {
+                var tour = await tourService.GetTourAsync(superCollection, collection, guid);
+                return Ok(tour);
+            }catch(Exception ex)
+            {
+                return InternalServerError();
+            }
+        }
+
+
+        [HttpPut]
         [Route("~/api/v2/defaulttours")]
         public async Task<IHttpActionResult> GetDefaultTours()
         {

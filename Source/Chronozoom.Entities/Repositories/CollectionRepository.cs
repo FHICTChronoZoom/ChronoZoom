@@ -77,6 +77,15 @@ namespace Chronozoom.Entities.Repositories
         public async Task<bool> DeleteAsync(Guid id)
         {
             var collection = await storage.Collections.FindAsync(id);
+            var tours = await storage.Tours.Where(x => x.Collection.Id == id).ToListAsync();
+            foreach (Tour t in tours)
+            {
+                foreach (Bookmark b in t.Bookmarks)
+                {
+                    storage.Bookmarks.Remove(b);
+                }
+                storage.Tours.Remove(t);
+            }
             storage.Collections.Remove(collection);
             return await storage.SaveChangesAsync() > 0;
         }

@@ -12,13 +12,16 @@ namespace Chronozoom.Business.Services
     public class CollectionService
     {
         private ICollectionRepository collectionRepository;
+        private ITourRepository tourRepository;
         private IApplicationSettings appSettings;
 
-        public CollectionService(ICollectionRepository collectionRepository, IApplicationSettings appSettings)
+        public CollectionService(ICollectionRepository collectionRepository, ITourRepository tourRepository, IApplicationSettings appSettings)
         {
             if (collectionRepository == null) throw new ArgumentNullException("collectionRepository");
+            if (tourRepository == null) throw new ArgumentNullException("tourRepository");
             if (appSettings == null) throw new ArgumentNullException("appSettings");
             this.collectionRepository = collectionRepository;
+            this.tourRepository = tourRepository;
             this.appSettings = appSettings;
         }
 
@@ -94,27 +97,29 @@ namespace Chronozoom.Business.Services
             return collection.Id;
         }
 
-        public async Task<bool> DeleteCollection(String superCollectionPath, String collectionPath)
+        public async Task<bool> DeleteCollection(String superCollectionPath, String collectionPath, User user)
         {
-            return await collectionRepository.DeleteAsync(collectionPath);
+            Guid collectionId = await CollectionIdOrDefaultAsync(superCollectionPath, collectionPath);
+            return await collectionRepository.DeleteAsync(collectionId);
         }
 
         public async Task<Guid> PutCollection(String superCollectionName, Collection collectionRequest)
         {
             Boolean done = await collectionRepository.UpdateAsync(collectionRequest);
             if (done)
-            {
                 return collectionRequest.Id;
-            }
+            else
+                return Guid.Empty;
+
         }
 
         public async Task<Guid> PutCollection(String superCollectionName,String collectionName, Collection collectionRequest)
         {
             Boolean done = await collectionRepository.UpdateAsync(collectionRequest);
             if (done)
-            {
                 return collectionRequest.Id;
-            }
+            else
+                return Guid.Empty;
         }
 
         public async Task<Boolean> PostCollection(String superCollectionPath, String newCollectionPath, Collection newCollectionData)
