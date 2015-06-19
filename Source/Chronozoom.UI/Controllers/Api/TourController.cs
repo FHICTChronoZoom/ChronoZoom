@@ -25,13 +25,27 @@ namespace Chronozoom.UI.Controllers.Api
             this.userService = userService;
         }
 
-        [HttpPut]
-        [Route("~/api/v2/tour/{id:Guid}")]
-        public async Task<IHttpActionResult> GetTour(Guid id)
+        [HttpGet]
+        [Route("~/api/v2/tour")]
+        public Task<IHttpActionResult> GetTour(Guid guid)
+        {
+            return GetTour(string.Empty, string.Empty, guid);
+        }
+
+        [HttpGet]
+        [Route("~/api/v2/{superCollection}/tour")]
+        public Task<IHttpActionResult> GetTour(string superCollection, Guid guid)
+        {
+            return GetTour(superCollection, string.Empty, guid);
+        }
+
+        [HttpGet]
+        [Route("~/api/v2/{superCollection}/[Collection}/tour")]
+        public async Task<IHttpActionResult> GetTour(string superCollection, string collection, Guid guid)
         {
             try
             {
-                var tour = await tourService.GetTourAsync(id);
+                var tour = await tourService.GetTourAsync(superCollection, collection, guid);
                 return Ok(tour);
             }
             catch (Exception ex)
@@ -39,24 +53,9 @@ namespace Chronozoom.UI.Controllers.Api
                 return InternalServerError(ex);
             }
         }
-
-        [HttpPut]
-        [Route("~/api/v2/tour/{id:Guid}")]
-        public async Task<IHttpActionResult> GetTour(string superCollection, string collection, Guid guid)
-        {
-            try
-            {
-                var tour = await tourService.GetTourAsync(superCollection, collection, guid);
-                return Ok(tour);
-            }catch(Exception ex)
-            {
-                return InternalServerError();
-            }
-        }
-
-
-        [HttpPut]
-        [Route("~/api/v2/defaulttours")]
+        
+        [HttpGet]
+        [Route("~/api/v2/tours")]
         public async Task<IHttpActionResult> GetDefaultTours()
         {
             try
@@ -64,15 +63,14 @@ namespace Chronozoom.UI.Controllers.Api
                 var tours = await tourService.GetDefaultTours();
                 return Ok(tours);
             }
-
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
         }
 
-        [HttpPut]
-        [Route("~/api/v2/tours/{user:String}")]
+        [HttpGet]
+        [Route("~/api/v2/tours/{superCollection}")]
         public async Task<IHttpActionResult> GetTours(string superCollection)
         {
             try
@@ -81,15 +79,14 @@ namespace Chronozoom.UI.Controllers.Api
                 var tour = await tourService.GetToursAsync(user);
                 return Ok(tour);
             }
-
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
         }
 
-        [HttpPut]
-        [Route("~/api/v2/tours/{superCollection:Guid}/{collection:Guid}")]
+        [HttpGet]
+        [Route("~/api/v2/tours/{superCollection}/{collection}")]
         public async Task<IHttpActionResult> GetTours(string superCollection, string collection)
         {
             try
@@ -98,7 +95,6 @@ namespace Chronozoom.UI.Controllers.Api
                 var tour = await tourService.GetToursAsync(user, collection);
                 return Ok(tour);
             }
-
             catch (Exception ex)
             {
                 return InternalServerError(ex);
@@ -106,7 +102,7 @@ namespace Chronozoom.UI.Controllers.Api
         }
 
         [HttpPut]
-        [Route("~/api/v2/puttour/{superCollection:Guid}")]
+        [Route("~/api/v2/puttour/{superCollection}")]
         public async Task<IHttpActionResult> PutTour(string superCollection, Business.Models.Tour tourRequest)
         {
             var user = await userService.GetUser(superCollection);
@@ -115,7 +111,7 @@ namespace Chronozoom.UI.Controllers.Api
         }
 
         [HttpPut]
-        [Route("~/api/v2/puttour/{superCollection:Guid}/{collection:Guid}")]
+        [Route("~/api/v2/puttour/{superCollection}/{collection}")]
         public async Task<IHttpActionResult> PutTour(string superCollection, string collection, Business.Models.Tour tourRequest)
         {
             var user = await userService.GetUser(superCollection);
@@ -125,7 +121,7 @@ namespace Chronozoom.UI.Controllers.Api
         }
 
         [HttpPut]
-        [Route("~/api/v2/posttour/{superCollection:Guid}/{collection:Guid}")]
+        [Route("~/api/v2/posttour/{superCollection}/{collection}")]
         public async Task<IHttpActionResult> PostTour(string superCollection, string collection, Business.Models.Tour tourRequest)
         {
             var user = await userService.GetUser(superCollection);
@@ -139,6 +135,7 @@ namespace Chronozoom.UI.Controllers.Api
             await tourService.DeleteTour(superCollectionName, null, tourRequest);
             return Ok();
         }
+
         [Route("~/api/v2/deletetour")]
         public async Task<IHttpActionResult> DeleteTour(string superCollectionName, string collectionName, Business.Models.Tour tourRequest)
         {
