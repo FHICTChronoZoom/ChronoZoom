@@ -55,5 +55,15 @@ namespace Chronozoom.Business.Services
         {
             return tourRepository.PostTour(superCollection, collection, tourRequest);
         }
+
+        public Task DeleteTour(string superCollectionName, Tour tourRequest)
+        {
+            return tourRepository.DeleteTour(superCollectionName, tourRequest);
+        }
+
+        public Task DeleteTour(string superCollectionName, string collectionName, Tour tourRequest)
+        {
+            return tourRepository.DeleteTour(superCollectionName, collectionName, tourRequest);
+        }
     }
 }

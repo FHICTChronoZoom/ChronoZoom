@@ -85,7 +85,7 @@ namespace Chronozoom.Entities.Repositories
             {
                 if (c.Id == collection)
                 {
-                    var tours = (IEnumerable<Business.Models.Tour>)storage.Tours.Where(candidate => candidate.Collection.Id == collectionId);
+                    var tours = (IEnumerable<Business.Models.Tour>)storage.Tours.Where(candidate => candidate.Collection.Id == collection);
                     toursCollection.AddRange(tours);
                 }
             }
