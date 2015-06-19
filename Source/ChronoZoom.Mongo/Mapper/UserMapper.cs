@@ -5,6 +5,7 @@ using System.Text;
 using Chronozoom.Business.Repositories;
 using System.Threading.Tasks;
 using ChronoZoom.Mongo.PersistencyEngine;
+using Chronozoom.Business.Models;
 
 namespace ChronoZoom.Mongo.Mapper
 {
@@ -122,6 +123,11 @@ namespace ChronoZoom.Mongo.Mapper
                     NameIdentifier = "none"
                 };
             return cUser;
+        }
+
+        public Task<User> FindByUserIdentifierAsync(string nameIdentifier)
+        {
+            throw new NotImplementedException();
         }
     }
 }

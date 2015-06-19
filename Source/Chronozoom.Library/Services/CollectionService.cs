@@ -133,9 +133,9 @@ namespace Chronozoom.Business.Services
         /// </summary>
         /// <param name="collectionId">The collection to check membership for</param>
         /// <returns>Boolean - True if the user has membership priviliges, otherwise false</returns>
-        public async Task<bool> UserIsMember(string collectionId)
+        public async Task<bool> UserIsMember(Guid collectionId, User user)
         {
-            return await collectionRepository.IsMemberAsync(new Guid(collectionId), new Guid());
+            return await collectionRepository.IsMemberAsync(collectionId, user.Id);
         }
 
         /// <summary>
@@ -143,9 +143,12 @@ namespace Chronozoom.Business.Services
         /// </summary>
         /// <param name="superCollectionName"></param>
         /// <returns></returns>
-        public async Task<bool> UserCanEdit(string superCollectionName)
+        public async Task<bool> UserCanEdit(string superCollectionName, User user)
         {
-            return await UserIsMember(superCollectionName);
+            // 1. Find collection by name and user
+            // 2. Check if user is member
+            //return await UserIsMember(superCollectionName); <-- Not correct
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -154,9 +157,11 @@ namespace Chronozoom.Business.Services
         /// <param name="superCollectionName"></param>
         /// <param name="collectionName"></param>
         /// <returns></returns>
-        public async Task<bool> UserCanEdit(string superCollectionName, string collectionName)
+        public async Task<bool> UserCanEdit(string superCollectionName, string collectionName, User user)
         {
-            return await UserIsMember(superCollectionName);
+            // 1. Find collection by name and superCollectionName (= username of another user(?))
+            // 2. Check if user is member
+            throw new NotImplementedException();
         }
 
 

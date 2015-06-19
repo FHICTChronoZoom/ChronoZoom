@@ -7,6 +7,7 @@ using Chronozoom.Business.Repositories;
 using System.Data.Entity;
 using Chronozoom.Business.Models.Compability;
 using Chronozoom.Business.Services;
+using Chronozoom.Business.Models;
 
 namespace Chronozoom.Entities.Repositories
 {
@@ -98,26 +99,24 @@ namespace Chronozoom.Entities.Repositories
 
             if (collection == null)
             {
-                return new Task<Boolean>(false);
+                return false;
             }
 
             await PutTour(superCollection, collection, tourRequest);
-            return new Task<Boolean>(true);
+            return true;
         }
 
         public async Task<Boolean> PutTour(User superCollection, Entities.Collection collection, Business.Models.Tour tourRequest)
         {
-
             if (collection == null)
             {
-                return new Task<Boolean>(false);
+                return false;
             }
 
             var existingTour = await storage.Tours.FindAsync(tourRequest.Id);
-
             if (existingTour == null)
             {
-                return new Task<Boolean>(false);
+                return false;
             }
 
             existingTour.Id = tourRequest.Id;
@@ -129,43 +128,40 @@ namespace Chronozoom.Entities.Repositories
             existingTour.Sequence = tourRequest.Sequence;
 
             await storage.SaveChangesAsync();
-            return new Task<Boolean>(true);
+            return true;
         }
 
-        public Task<Boolean> PostTour (User superCollection, Guid collection, Business.Models.Tour tourRequest)
+        public async Task<Boolean> PostTour (User superCollection, Guid collection, Business.Models.Tour tourRequest)
         {
             if (collection == null)
             {
-                return new Task<Boolean>(false);
+                return false;
             }
 
             storage.Tours.Add(ToTour(tourRequest));
-            storage.SaveChangesAsync();
-            return new Task<Boolean>(true);
+            return await storage.SaveChangesAsync() > 0;
         }
 
-        public Task DeleteTour(string superCollectionName, Business.Models.Tour tourRequest)
+        public async Task DeleteTour(string superCollectionName, Business.Models.Tour tourRequest)
         {
-            var collection = storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollectionName).FirstOrDefault();
+            var collection = storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollectionName).FirstOrDefaultAsync();
 
             if (collection != null)
             {
                 storage.Tours.Remove(ToTour(tourRequest));
-                storage.SaveChangesAsync();
+                await storage.SaveChangesAsync();
             }
-            return new Task();
         }
 
-        public Task DeleteTour(string superCollectionName, string collectionName, Business.Models.Tour tourRequest)
+        public async Task DeleteTour(string superCollectionName, string collectionName, Business.Models.Tour tourRequest)
         {
-            var collection = storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollectionName).FirstOrDefault();
+            var collection = await storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollectionName).FirstOrDefaultAsync();
 
             if (collection != null)
             {
                 storage.Tours.Remove(ToTour(tourRequest));
-                storage.SaveChangesAsync();
+                await storage.SaveChangesAsync();
             }
-            return new Task();
         }
 
         private Entities.Tour ToTour(Business.Models.Tour tourModel)
@@ -173,7 +169,24 @@ namespace Chronozoom.Entities.Repositories
             return new Entities.Tour { Id = tourModel.Id, Name = tourModel.Name, Description = tourModel.Description, UniqueId = tourModel.UniqueId, AudioBlobUrl = tourModel.AudioBlobUrl, Category = tourModel.Category, Sequence = tourModel.Sequence };
         }
 
+        public Task<IEnumerable<Business.Models.Tour>> GetTours(Business.Models.User superCollection, string collection)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<bool> PostTour(Business.Models.User superCollection, Guid collection, Business.Models.Tour tourRequest)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<bool> PutTour(Business.Models.User superCollection, Business.Models.Tour tourRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> PutTour(Business.Models.User superCollection, Guid collection, Business.Models.Tour tourRequest)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

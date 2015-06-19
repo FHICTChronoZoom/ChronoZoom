@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Chronozoom.Business.Repositories;
 using System.Data.Entity;
+using Chronozoom.Business.Models;
 
 namespace Chronozoom.Entities.Repositories
 {
@@ -81,6 +82,11 @@ namespace Chronozoom.Entities.Repositories
             var user = await storage.Users.FindAsync(id);
             return ToLibraryUser(user);
 
+        }
+
+        public Task<IEnumerable<Business.Models.User>> FindUsersAsync(string partialName)
+        {
+            throw new NotImplementedException();
         }
     }
 }
