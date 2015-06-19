@@ -20,7 +20,7 @@ namespace Chronozoom.Business.Models
 
         public string Category {get; set;}
 
-        public int Sequence { get; set; }
+        public int? Sequence { get; set; }
 
         public Tour()
         {

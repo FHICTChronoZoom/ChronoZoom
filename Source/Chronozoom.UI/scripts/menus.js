@@ -216,6 +216,13 @@ var CZ;
              * Menu Item Hooks *
              *******************/
 
+            $('#mnuViewHome').clicktouch(function (event) {
+                event.stopPropagation();
+                // show tours list pane (hide edit options)
+                CZ.HomePageViewModel.closeAllForms();
+                CZ.Overlay.Show(false);
+            });
+
             $('#mnuViewTours').clicktouch(function (event)
             {
                 event.stopPropagation();
