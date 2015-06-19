@@ -24,7 +24,7 @@ namespace Chronozoom.UI.Controllers.Api
         }
 
         [HttpPut]
-        [Route("~/api/v2//import/timeline/{intoTimelineId:Guid}")]
+        [Route("~/api/v2/import/timeline/{intoTimelineId:Guid}")]
         public async Task<IHttpActionResult> ImportTimelines(Guid intoTimelineId, List<FlatTimeline> importContent)
         {
             var user = await securityService.GetUserAsync(User.Identity);

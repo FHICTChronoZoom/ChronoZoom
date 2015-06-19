@@ -40,7 +40,7 @@ namespace Chronozoom.UI.Controllers.Api
         }
 
         [HttpGet]
-        [Route("~/api/v2/{superCollection}/[Collection}/tour")]
+        [Route("~/api/v2/{superCollection}/{Collection}/tour")]
         public async Task<IHttpActionResult> GetTour(string superCollection, string collection, Guid guid)
         {
             try
