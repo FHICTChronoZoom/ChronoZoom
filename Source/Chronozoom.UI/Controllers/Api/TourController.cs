@@ -121,10 +121,10 @@ namespace Chronozoom.UI.Controllers.Api
 
         public async Task<IHttpActionResult> DeleteTour(string superCollectionName, Business.Models.Tour tourRequest)
         {
-            await tourService.DeleteTour(superCollectionName, tourRequest);
+            await tourService.DeleteTour(superCollectionName, null, tourRequest);
             return Ok();
         }
-
+        [Route("~/api/v2/deletetour")]
         public async Task<IHttpActionResult> DeleteTour(string superCollectionName, string collectionName, Business.Models.Tour tourRequest)
         {
             await tourService.DeleteTour(superCollectionName, collectionName, tourRequest);

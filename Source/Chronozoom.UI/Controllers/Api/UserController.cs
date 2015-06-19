@@ -57,8 +57,8 @@ namespace Chronozoom.UI.Controllers.Api
         /// </summary>
         /// <param name="partialName">Part of a User's DisplayName.</param>
         /// <returns></returns>
-        [HttpPost]
-        [Route("~/api/v2/users?partialname={partialName}")]
+        [HttpGet]
+        [Route("~/api/v2/find/users?partial={partialName}")]
         public async Task<IHttpActionResult> FindUsers(string partialName)
         {
             var users = await userService.FindByUsernameAsync(partialName);
