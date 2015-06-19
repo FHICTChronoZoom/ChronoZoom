@@ -101,7 +101,27 @@ namespace ChronoZoom.Mongo.Mapper
 
         public async Task<IEnumerable<Chronozoom.Business.Models.User>> FindUsersAsync(string partialName)
         {
+            List<Chronozoom.Business.Models.User> listMappedUsers = new List<Chronozoom.Business.Models.User>();
             IEnumerable<Mongo.Models.User> listUser = await factory.FindUsersAsync(partialName);
+            foreach (Mongo.Models.User user in listUser) {
+                Chronozoom.Business.Models.User mappedUser = mapUser(user);
+                listMappedUsers.Add(mappedUser);
+            }
+            return listMappedUsers;
+
+        }
+
+        private Chronozoom.Business.Models.User mapUser(Mongo.Models.User user)
+        {
+            Chronozoom.Business.Models.User cUser = new Chronozoom.Business.Models.User
+                {
+                    Email = user.Email,
+                    DisplayName = user.Name,
+                    Id = user.Id,
+                    IdentityProvider = "none",
+                    NameIdentifier = "none"
+                };
+            return cUser;
         }
     }
 }
