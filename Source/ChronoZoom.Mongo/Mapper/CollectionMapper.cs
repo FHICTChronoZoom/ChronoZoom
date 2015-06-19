@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Chronozoom.Business.Models;
 using Chronozoom.Business.Repositories;
 using ChronoZoom.Mongo.PersistencyEngine;
 
@@ -145,6 +146,11 @@ namespace ChronoZoom.Mongo.Mapper
             };
 
             return cCollection;
+        }
+
+        public Task<Collection> FindByNameOrDefaultAsync(string superCollection)
+        {
+            throw new NotImplementedException();
         }
     }
 }

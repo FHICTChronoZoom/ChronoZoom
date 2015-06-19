@@ -15,12 +15,14 @@ namespace Chronozoom.UI.Controllers.Api
         private TourService tourService;
         private SecurityService securityService;
         private CollectionService collectionService;
+        private UserService userService;
 
-        public TourController(TourService tourService, SecurityService securityService, CollectionService collectionService)
+        public TourController(TourService tourService, SecurityService securityService, CollectionService collectionService, UserService userService)
         {
             this.tourService = tourService;
             this.securityService = securityService;
             this.collectionService = collectionService;
+            this.userService = userService;
         }
 
         [HttpPut]
@@ -75,7 +77,7 @@ namespace Chronozoom.UI.Controllers.Api
         {
             try
             {
-                var user = await securityService.GetUserAsync(User.Identity);
+                var user = await userService.GetUser(superCollection);
                 var tour = await tourService.GetToursAsync(user);
                 return Ok(tour);
             }
@@ -86,16 +88,13 @@ namespace Chronozoom.UI.Controllers.Api
             }
         }
 
-
-        //TODO:
-        //Needs to be fixed to retrieve correct user
         [HttpPut]
         [Route("~/api/v2/tours/{superCollection:Guid}/{collection:Guid}")]
         public async Task<IHttpActionResult> GetTours(string superCollection, string collection)
         {
             try
             {
-                var user = await securityService.GetUserAsync(User.Identity);
+                var user = await userService.GetUser(superCollection);
                 var tour = await tourService.GetToursAsync(user, collection);
                 return Ok(tour);
             }
@@ -106,10 +105,45 @@ namespace Chronozoom.UI.Controllers.Api
             }
         }
 
+        [HttpPut]
+        [Route("~/api/v2/puttour/{superCollection:Guid}")]
         public async Task<IHttpActionResult> PutTour(string superCollection, Business.Models.Tour tourRequest)
         {
-            var success = await tourService.PutTour(superCollection, tourRequest);
+            var user = await userService.GetUser(superCollection);
+            var success = await tourService.PutTour(user, tourRequest);
             return Ok(success);
+        }
+
+        [HttpPut]
+        [Route("~/api/v2/puttour/{superCollection:Guid}/{collection:Guid}")]
+        public async Task<IHttpActionResult> PutTour(string superCollection, string collection, Business.Models.Tour tourRequest)
+        {
+            var user = await userService.GetUser(superCollection);
+            Guid collectionId = await collectionService.CollectionIdOrDefaultAsync(superCollection, collection);
+            var success = await tourService.PutTour(user, collectionId, tourRequest);
+            return Ok(success);
+        }
+
+        [HttpPut]
+        [Route("~/api/v2/posttour/{superCollection:Guid}/{collection:Guid}")]
+        public async Task<IHttpActionResult> PostTour(string superCollection, string collection, Business.Models.Tour tourRequest)
+        {
+            var user = await userService.GetUser(superCollection);
+            Guid collectionId = await collectionService.CollectionIdOrDefaultAsync(superCollection, collection);
+            var success = tourService.PostTour(user, collectionId, tourRequest);
+            return Ok(success);
+        }
+
+        public async Task<IHttpActionResult> DeleteTour(string superCollectionName, Business.Models.Tour tourRequest)
+        {
+            await tourService.DeleteTour(superCollectionName, null, tourRequest);
+            return Ok();
+        }
+        [Route("~/api/v2/deletetour")]
+        public async Task<IHttpActionResult> DeleteTour(string superCollectionName, string collectionName, Business.Models.Tour tourRequest)
+        {
+            await tourService.DeleteTour(superCollectionName, collectionName, tourRequest);
+            return Ok();
         }
     }
 }

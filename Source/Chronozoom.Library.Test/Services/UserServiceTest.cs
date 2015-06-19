@@ -15,14 +15,13 @@ namespace Chronozoom.Business.Test.Services
         public void Initialize()
         {
             var userRepositoryMock = new Mock<IUserRepository>();
-            userRepositoryMock
         }
 
 
         [TestMethod]
         public void CreateUserAsync_Test()
         {
-            var userRepository = new Mock<IUserRepository>().
+            
         }
     }
 }
