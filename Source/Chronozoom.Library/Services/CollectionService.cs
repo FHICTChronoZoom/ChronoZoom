@@ -146,7 +146,7 @@ namespace Chronozoom.Business.Services
         /// </summary>
         /// <param name="superCollectionName"></param>
         /// <returns></returns>
-        public async Task<bool> UserCanEdit(string superCollectionName)
+        public Task<bool> UserCanEdit(string superCollectionName)
         {
             throw new NotImplementedException();
             //return await UserIsMember(superCollectionName);
@@ -158,7 +158,7 @@ namespace Chronozoom.Business.Services
         /// <param name="superCollectionName"></param>
         /// <param name="collectionName"></param>
         /// <returns></returns>
-        public async Task<bool> UserCanEdit(string superCollectionName, string collectionName)
+        public Task<bool> UserCanEdit(string superCollectionName, string collectionName)
         {
             throw new NotImplementedException();
             //return await UserIsMember(superCollectionName);
