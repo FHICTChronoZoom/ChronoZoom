@@ -57,9 +57,12 @@ namespace Chronozoom.UI.Controllers.Api
         /// </summary>
         /// <param name="partialName">Part of a User's DisplayName.</param>
         /// <returns></returns>
-        public Task<IEnumerable<User>> FindUsers(string partialName)
+        [HttpPost]
+        [Route("~/api/v2/users?partialname={partialName}")]
+        public async Task<IHttpActionResult> FindUsers(string partialName)
         {
-            return userService.FindByUsernameAsync(partialName);
+            var users = await userService.FindByUsernameAsync(partialName);
+            return Ok(users);
         }
     }
 }
