@@ -48,7 +48,16 @@ namespace Chronozoom.UI.Controllers.Api
         [Route("~/api/v2/user")]
         public async Task<IHttpActionResult> PutUser(User userRequest)
         {
-            await userService.CreateUserAsync(userRequest);
+            IEnumerable<User> updateUser = await userService.FindByUsernameAsync(userRequest.DisplayName);
+            User user = updateUser.FirstOrDefault();
+            if (userRequest.Id == Guid.Empty && user == null)
+            {
+                await userService.CreateUserAsync(userRequest);
+            }
+            else
+            {
+                await userService.UpdateUserAsync(userRequest);
+            }
             return Ok();
         }
 
