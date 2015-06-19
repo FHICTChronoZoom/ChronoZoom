@@ -101,5 +101,11 @@ namespace ChronoZoom.Mongo.PersistencyEngine
 
             return true;
         }
+
+        //TODO: see public IEnumerable<User> FindUsers(string partialName)
+        public async Task<IEnumerable<User>> FindUsersAsync(string partialName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

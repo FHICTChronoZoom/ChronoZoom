@@ -116,5 +116,17 @@ namespace Chronozoom.UI.Controllers.Api
             var success = tourService.PostTour(user, collectionId, tourRequest);
             return Ok(success);
         }
+
+        public async Task<IHttpActionResult> DeleteTour(string superCollectionName, Business.Models.Tour tourRequest)
+        {
+            await tourService.DeleteTour(superCollectionName, tourRequest);
+            return Ok();
+        }
+
+        public async Task<IHttpActionResult> DeleteTour(string superCollectionName, string collectionName, Business.Models.Tour tourRequest)
+        {
+            await tourService.DeleteTour(superCollectionName, collectionName, tourRequest);
+            return Ok();
+        }
     }
 }

@@ -144,6 +144,30 @@ namespace Chronozoom.Entities.Repositories
             return new Task<Boolean>(true);
         }
 
+        public Task DeleteTour(string superCollectionName, Business.Models.Tour tourRequest)
+        {
+            var collection = storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollectionName).FirstOrDefault();
+
+            if (collection != null)
+            {
+                storage.Tours.Remove(ToTour(tourRequest));
+                storage.SaveChangesAsync();
+            }
+            return new Task();
+        }
+
+        public Task DeleteTour(string superCollectionName, string collectionName, Business.Models.Tour tourRequest)
+        {
+            var collection = storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollectionName).FirstOrDefault();
+
+            if (collection != null)
+            {
+                storage.Tours.Remove(ToTour(tourRequest));
+                storage.SaveChangesAsync();
+            }
+            return new Task();
+        }
+
         private Entities.Tour ToTour(Business.Models.Tour tourModel)
         {
             return new Entities.Tour { Id = tourModel.Id, Name = tourModel.Name, Description = tourModel.Description, UniqueId = tourModel.UniqueId, AudioBlobUrl = tourModel.AudioBlobUrl, Category = tourModel.Category, Sequence = tourModel.Sequence };

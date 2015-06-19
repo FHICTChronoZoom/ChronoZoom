@@ -21,5 +21,9 @@ namespace Chronozoom.Business.Repositories
         Task<Boolean> PutTour(User superCollection, Business.Models.Tour tourRequest);
 
         Task<Boolean> PutTour(User superCollection, Guid collection, Business.Models.Tour tourRequest);
+
+        Task DeleteTour(string superCollectionName, Business.Models.Tour tourRequest);
+
+        Task DeleteTour(string superCollectionName, string collectionName, Business.Models.Tour tourRequest);
     }
 }

@@ -12,5 +12,6 @@ namespace Chronozoom.Business.Repositories
         Task<User> FindByUsernameAsync(string username);
         Task<User> FindByEmailAsync(string email);
         Task<User> FindByUserIdentifierAsync(string nameIdentifier);
+        Task<IEnumerable<User>> FindUsersAsync(string partialName);
     }
 }
