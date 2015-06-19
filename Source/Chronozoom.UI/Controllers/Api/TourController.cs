@@ -73,9 +73,6 @@ namespace Chronozoom.UI.Controllers.Api
             }
         }
 
-
-        //TODO:
-        //Needs to be fixed to retrieve correct user
         [HttpPut]
         [Route("~/api/v2/tours/{superCollection:Guid}/{collection:Guid}")]
         public async Task<IHttpActionResult> GetTours(string superCollection, string collection)
@@ -93,6 +90,8 @@ namespace Chronozoom.UI.Controllers.Api
             }
         }
 
+        [HttpPut]
+        [Route("~/api/v2/puttour/{superCollection:Guid}")]
         public async Task<IHttpActionResult> PutTour(string superCollection, Business.Models.Tour tourRequest)
         {
             var user = await userService.GetUser(superCollection);
@@ -100,7 +99,8 @@ namespace Chronozoom.UI.Controllers.Api
             return Ok(success);
         }
 
-
+        [HttpPut]
+        [Route("~/api/v2/puttour/{superCollection:Guid}/{collection:Guid}")]
         public async Task<IHttpActionResult> PutTour(string superCollection, string collection, Business.Models.Tour tourRequest)
         {
             var user = await userService.GetUser(superCollection);
