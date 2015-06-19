@@ -13,6 +13,11 @@ namespace Chronozoom.UI.Controllers.Api
     {
         private ExhibitService exhibitService;
 
+        public ExhibitController(ExhibitService exhibitService)
+        {
+            this.exhibitService = exhibitService;
+        }
+
         [HttpGet]
         [Route("~/api/v2/exhibit/{exhibitId}/lastupdate")]
         public async Task<IHttpActionResult> GetExhibitLastUpdate(string exhibitId)

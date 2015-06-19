@@ -50,7 +50,7 @@ namespace Chronozoom.UI.Controllers.Api
                 return Ok(tour);
             }catch(Exception ex)
             {
-                return InternalServerError();
+                return InternalServerError(ex);
             }
         }
 
