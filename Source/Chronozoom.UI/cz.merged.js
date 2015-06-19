@@ -13073,6 +13073,13 @@ var CZ;
              * Menu Item Hooks *
              *******************/
 
+            $('#mnuViewHome').clicktouch(function (event) {
+                event.stopPropagation();
+                // show tours list pane (hide edit options)
+                CZ.HomePageViewModel.closeAllForms();
+                CZ.Overlay.Show(false);
+            });
+
             $('#mnuViewTours').clicktouch(function (event)
             {
                 event.stopPropagation();
@@ -14543,7 +14550,8 @@ var CZ;
                     'Search',
                     'Bing Search',
                     mediaType
-                ]);
+                ]);
+
                 this.searchResultsBox.empty();
                 this.showProgressBar();
 
@@ -19919,11 +19927,11 @@ var CZ;
             CZ.Common.initialize();
 
             // hook logo click
-            $('.header-logo').click(function ()
-            {
+            //$('.header-logo').click(function ()
+            //{
                 //window.location.href = '/';
-                CZ.Overlay.Show(false);  // false = home page overlay
-            });
+            //    CZ.Overlay.Show(false);  // false = home page overlay
+            //});
 
             // ensure we have a supercollection for getCanEdit and other API calls.
             if (typeof CZ.Service.superCollectionName === 'undefined' && CZ.Common.isInCosmos()) CZ.Service.superCollectionName = 'chronozoom';
