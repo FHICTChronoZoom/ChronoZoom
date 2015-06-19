@@ -94,7 +94,7 @@ namespace Chronozoom.Business.Services
             return collection.Id;
         }
 
-        public async Task<Boolean> DeleteCollection(String superCollectionPath, String collectionPath)
+        public async Task<bool> DeleteCollection(String superCollectionPath, String collectionPath)
         {
             return await collectionRepository.DeleteAsync(collectionPath);
         }
@@ -106,6 +106,7 @@ namespace Chronozoom.Business.Services
             {
                 return collectionRequest.Id;
             }
+            return Guid.Empty;
         }
 
         public async Task<Guid> PutCollection(String superCollectionName,String collectionName, Collection collectionRequest)
@@ -115,6 +116,7 @@ namespace Chronozoom.Business.Services
             {
                 return collectionRequest.Id;
             }
+            return Guid.Empty;
         }
 
         public async Task<Boolean> PostCollection(String superCollectionPath, String newCollectionPath, Collection newCollectionData)

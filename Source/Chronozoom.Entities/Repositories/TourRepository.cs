@@ -77,33 +77,95 @@ namespace Chronozoom.Entities.Repositories
             return toursCollection;
         }
 
-        public async Task<IEnumerable<Business.Models.Tour>> GetTours(Business.Models.User superCollection, string collection)
+        public async Task<IEnumerable<Business.Models.Tour>> GetTours(Business.Models.User superCollection, Guid collection)
         {
-            Guid collectionId = await collectionService.CollectionIdOrDefaultAsync(superCollection.NameIdentifier, collection);
             List<Business.Models.Tour> toursCollection = new List<Business.Models.Tour>();
             var collections = (IEnumerable<Business.Models.Collection>)storage.Collections.Where(candidate => candidate.SuperCollection.Id == superCollection.Id);
             foreach (Business.Models.Collection c in collections)
             {
-                if (c.Id == collectionId)
+                if (c.Id == collection)
                 {
-                    var tours = (IEnumerable<Business.Models.Tour>)storage.Tours.Where(candidate => candidate.Collection.Id == collectionId);
+                    var tours = (IEnumerable<Business.Models.Tour>)storage.Tours.Where(candidate => candidate.Collection.Id == collection);
                     toursCollection.AddRange(tours);
                 }
             }
             return toursCollection;
         }
 
-        public Task<Boolean> PutTour(string superCollection, Business.Models.Tour tourRequest)
+        public async Task<Boolean> PutTour(User superCollection, Business.Models.Tour tourRequest)
         {
-            var collection = storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollection).FirstOrDefault();
-            
+            var collection = storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollection.NameIdentifier).FirstOrDefault();            
+
             if (collection == null)
             {
                 return new Task<Boolean>(false);
             }
+
+            await PutTour(superCollection, collection, tourRequest);
+            return new Task<Boolean>(true);
+        }
+
+        public async Task<Boolean> PutTour(User superCollection, Entities.Collection collection, Business.Models.Tour tourRequest)
+        {
+
+            if (collection == null)
+            {
+                return new Task<Boolean>(false);
+            }
+
+            var existingTour = await storage.Tours.FindAsync(tourRequest.Id);
+
+            if (existingTour == null)
+            {
+                return new Task<Boolean>(false);
+            }
+
+            existingTour.Id = tourRequest.Id;
+            existingTour.Name = tourRequest.Name;
+            existingTour.Description = tourRequest.Description;
+            existingTour.UniqueId = tourRequest.UniqueId;
+            existingTour.AudioBlobUrl = tourRequest.AudioBlobUrl;
+            existingTour.Category = tourRequest.Category;
+            existingTour.Sequence = tourRequest.Sequence;
+
+            await storage.SaveChangesAsync();
+            return new Task<Boolean>(true);
+        }
+
+        public Task<Boolean> PostTour (User superCollection, Guid collection, Business.Models.Tour tourRequest)
+        {
+            if (collection == null)
+            {
+                return new Task<Boolean>(false);
+            }
+
             storage.Tours.Add(ToTour(tourRequest));
             storage.SaveChangesAsync();
             return new Task<Boolean>(true);
+        }
+
+        public Task DeleteTour(string superCollectionName, Business.Models.Tour tourRequest)
+        {
+            var collection = storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollectionName).FirstOrDefault();
+
+            if (collection != null)
+            {
+                storage.Tours.Remove(ToTour(tourRequest));
+                storage.SaveChangesAsync();
+            }
+            return new Task();
+        }
+
+        public Task DeleteTour(string superCollectionName, string collectionName, Business.Models.Tour tourRequest)
+        {
+            var collection = storage.Collections.Where(candidate => candidate.SuperCollection.Title == superCollectionName).FirstOrDefault();
+
+            if (collection != null)
+            {
+                storage.Tours.Remove(ToTour(tourRequest));
+                storage.SaveChangesAsync();
+            }
+            return new Task();
         }
 
         private Entities.Tour ToTour(Business.Models.Tour tourModel)

@@ -21,8 +21,6 @@ namespace Chronozoom.Business.Services
             this.tourRepository = tourRepository;
         }
 
-        
-
         public Task<Tour> GetTourAsync(Guid id)
         {
             return tourRepository.FindByIdAsync(id);
@@ -43,9 +41,29 @@ namespace Chronozoom.Business.Services
             return tourRepository.GetTours(superCollection, collection);
         }
 
-        public Task<Boolean> PutTour(string superCollection, Business.Models.Tour tourRequest)
+        public Task<Boolean> PutTour(User superCollection, Business.Models.Tour tourRequest)
         {
             return tourRepository.PutTour(superCollection, tourRequest);
+        }
+
+        public Task<Boolean> PutTour(User superCollection, Guid collection, Business.Models.Tour tourRequest)
+        {
+            return tourRepository.PutTour(superCollection, collection, tourRequest);
+        }
+
+        public Task<Boolean> PostTour(User superCollection, Guid collection, Business.Models.Tour tourRequest)
+        {
+            return tourRepository.PostTour(superCollection, collection, tourRequest);
+        }
+
+        public Task DeleteTour(string superCollectionName, Tour tourRequest)
+        {
+            return tourRepository.DeleteTour(superCollectionName, tourRequest);
+        }
+
+        public Task DeleteTour(string superCollectionName, string collectionName, Tour tourRequest)
+        {
+            return tourRepository.DeleteTour(superCollectionName, collectionName, tourRequest);
         }
     }
 }

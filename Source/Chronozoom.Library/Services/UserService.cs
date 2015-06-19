@@ -56,5 +56,10 @@ namespace Chronozoom.Business.Services
 
             return await userRepository.DeleteAsync(user.Id);
         }
+
+        public async Task<IEnumerable<User>> FindByUsernameAsync(String partialName)
+        {
+            return await userRepository.FindUsersAsync(partialName);
+        }
     }
 }
