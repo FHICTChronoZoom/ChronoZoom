@@ -40,6 +40,7 @@ namespace Chronozoom.UI.Controllers.Api
         [Route("~/api/v2/user")]
         public async Task<IHttpActionResult> DeleteUser(User userRequest)
         {
+            // don't forget to delete your collectino and more.
             await userService.DeleteUserAsync(userRequest);
             return Ok();
         }
