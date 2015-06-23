@@ -1429,16 +1429,16 @@ footer {
 }
 .footer-links {
   height: 25px;
-  width: 600px;
+  width: 800px;
   color: #aaa;
   bottom: 1px;
 }
 .footer-credits {
   height: 25px;
-  width: calc(100% - 600px);
-  width: -moz-calc(100% - 600px);
-  width: -webkit-calc(100% - 600px);
-  width: -o-calc(100% - 600px);
+  width: calc(100% - 800px);
+  width: -moz-calc(100% - 800px);
+  width: -webkit-calc(100% - 800px);
+  width: -o-calc(100% - 800px);
   color: #aaa;
   bottom: 1px;
 }
