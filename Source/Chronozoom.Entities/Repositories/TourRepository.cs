@@ -59,6 +59,29 @@ namespace Chronozoom.Entities.Repositories
             return new Entities.Tour { Id = tour.Id, AudioBlobUrl = tour.AudioBlobUrl, Category = tour.Category, Description = tour.Description, Name = tour.Name, Sequence = tour.Sequence, UniqueId = tour.UniqueId };
         }
 
+        public async Task<Tour> GetTour(string superCollection, string collection, Guid guid)
+        {
+            var tour = new Tour();
+            var query = storage.Tours.AsQueryable();
+
+            if(collection != null)
+            {
+                query = query.Where(x => x.Collection.Title == collection);
+            }
+
+            if(superCollection !=null)
+            {
+                query = query.Where(x => x.Collection.User.DisplayName == superCollection);
+            }
+            if (guid != null)
+            {
+                query = query.Where(x => x.Id == guid);
+            }
+
+            tour = await query.FirstOrDefaultAsync();
+            return tour;
+        }
+
         public async Task<IEnumerable<Business.Models.Tour>> GetDefaultTours()
         {
             Guid defaultId = await collectionService.CollectionIdOrDefaultAsync("", "");
