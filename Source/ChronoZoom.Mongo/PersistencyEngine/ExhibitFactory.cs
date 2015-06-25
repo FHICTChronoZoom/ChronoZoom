@@ -30,6 +30,13 @@ namespace ChronoZoom.Mongo.PersistencyEngine
             return exhibit;
         }
 
+        internal Task<List<Exhibit>> FindByTimelineIdAsync(Guid timelineId)
+        {
+            // TODO : Implement this method for MongoDB (Blame rik for not communicating this and letter the error stay).
+            throw new NotImplementedException();
+        }
+
+
         /// <summary>
         /// Insert an exhibit
         /// </summary>
