@@ -101,19 +101,10 @@ namespace Chronozoom.Entities.Repositories
             return toursCollection;
         }
 
-        public async Task<IEnumerable<Business.Models.Tour>> GetTours(Business.Models.User superCollection, Guid collection)
+        public async Task<IEnumerable<Business.Models.Tour>> GetTours(Business.Models.User superCollection, Guid collectionId)
         {
-            List<Business.Models.Tour> toursCollection = new List<Business.Models.Tour>();
-            var collections = (IEnumerable<Business.Models.Collection>)storage.Collections.Where(candidate => candidate.SuperCollection.Id == superCollection.Id);
-            foreach (Business.Models.Collection c in collections)
-            {
-                if (c.Id == collection)
-                {
-                    var tours = (IEnumerable<Business.Models.Tour>)storage.Tours.Where(candidate => candidate.Collection.Id == collection);
-                    toursCollection.AddRange(tours);
-                }
-            }
-            return toursCollection;
+            var tours = await storage.Tours.Where(x => x.Collection.Id == collectionId).ToListAsync();
+            return tours.ConvertAll(ToModel);
         }
 
         public async Task<Boolean> PutTour(User superCollection, Business.Models.Tour tourRequest)
@@ -210,6 +201,20 @@ namespace Chronozoom.Entities.Repositories
         public Task<bool> PutTour(Business.Models.User superCollection, Guid collection, Business.Models.Tour tourRequest)
         {
             throw new NotImplementedException();
+        }
+
+        private Business.Models.Tour ToModel(Entities.Tour entity)
+        {
+            return new Business.Models.Tour
+            {
+                Id = entity.Id,
+                AudioBlobUrl = entity.AudioBlobUrl,
+                Category = entity.Category,
+                Description = entity.Description,
+                Name = entity.Name,
+                Sequence = entity.Sequence,
+                UniqueId = entity.UniqueId
+            };
         }
     }
 }

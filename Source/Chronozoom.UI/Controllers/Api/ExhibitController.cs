@@ -19,8 +19,8 @@ namespace Chronozoom.UI.Controllers.Api
         }
 
         [HttpGet]
-        [Route("~/api/v2/exhibit/{exhibitId}/lastupdate")]
-        public async Task<IHttpActionResult> GetExhibitLastUpdate(string exhibitId)
+        [Route("~/api/v2/exhibit/{exhibitId:Guid}/lastupdate")]
+        public async Task<IHttpActionResult> GetExhibitLastUpdate(Guid exhibitId)
         {
             var lastUpdated = await exhibitService.GetExhibitLastUpdate(exhibitId);
             return Ok(lastUpdated);

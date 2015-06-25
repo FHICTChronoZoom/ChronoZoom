@@ -722,7 +722,7 @@ iframe[sutra=picker] + div {
 /* The top margin of the bref.adcrumbs area */
 /* The breadcrumbs scroller area */
 /* The height of the page footer */
-/* The width of the footers links area */
+/* The width of the footers links area 350 original*/
 html,
 body {
   margin: 0;
@@ -840,7 +840,6 @@ div.preview {
   background-position: center;
   background-image: url('/images/chronozoom.png');
   margin-left: 3px;
-  cursor: pointer;
   z-index: 1;
 }
 .header-regimes {
@@ -1430,16 +1429,16 @@ footer {
 }
 .footer-links {
   height: 25px;
-  width: 350px;
+  width: 800px;
   color: #aaa;
   bottom: 1px;
 }
 .footer-credits {
   height: 25px;
-  width: calc(100% - 350px);
-  width: -moz-calc(100% - 350px);
-  width: -webkit-calc(100% - 350px);
-  width: -o-calc(100% - 350px);
+  width: calc(100% - 800px);
+  width: -moz-calc(100% - 800px);
+  width: -webkit-calc(100% - 800px);
+  width: -o-calc(100% - 800px);
   color: #aaa;
   bottom: 1px;
 }

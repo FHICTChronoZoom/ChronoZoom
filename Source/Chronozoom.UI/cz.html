@@ -189,7 +189,7 @@
 </head>
 <body>
     <header>
-        <div class="fleft navigation header-logo" title="View Home Screen"></div>
+        <div class="fleft navigation header-logo"></div>
         <div class="fleft navigation header-regimes">
             <ul>
                 <li class="fleft">
@@ -226,27 +226,25 @@
                 </ul>
             </li>
             -->
-            <li id="mnuView" class="active">View
-                <ul>
-                    <li id="mnuViewTours">Guided Tours</li>
-                    <li id="mnuViewSeries" title="Time Series Charts">Time Series</li>
-                </ul>
-            </li>
+            <li id="mnuViewHome" title="View Home Screen"> Home </li>
+            <li id="mnuViewTours">View guided tours</li>
+            <li id="mnuViewSeries" title="Time Series Charts">View Time Series</li>
+
             <li id="mnuCurate" class="active">Create
                 <ul>
-                    <li id="mnuCreateCollection">Create Collection</li>
-                    <li id="mnuCreateTimeline">Create Timeline</li>
-                    <li id="mnuCreateExhibit">Create Exhibit</li>
-                    <li id="mnuCreateTour">Create Tour</li>
-                    <li id="mnuEditTours">Edit   Tours</li>
-                    <li id="mnuExportAbout"      title="What's included in exports" class="hr">About Exports</li>
-                    <li id="mnuExportCollection" title="Backup collection to file"            >Export Collection</li>
-                    <li id="mnuImportCollection" title="Restore collection from file"         >Import Collection</li>
+                    <li id="mnuCreateCollection">Create collection</li>
+                    <li id="mnuCreateTimeline">Create timeline</li>
+                    <li id="mnuCreateExhibit">Create exhibit</li>
+                    <li id="mnuCreateTour">Create tour</li>
+                    <li id="mnuEditTours">Edit   tours</li>
+                    <li id="mnuExportAbout"      title="What's included in exports" class="hr">About exports</li>
+                    <li id="mnuExportCollection" title="Backup collection to file"            >Export collection</li>
+                    <li id="mnuImportCollection" title="Restore collection from file"         >Import collection</li>
                 </ul>
             </li>
-            <li id="mnuMine">My Collections</li>
-            <li id="mnuSearch"  title="Search ChronoZoom" ><img src="/images/search-icon.png"  alt="" /></li>
-            <li id="mnuProfile" title="Register / Sign In"><img src="/images/profile-icon.png" alt="" /></li>
+            <li id="mnuMine">My collections</li>
+            <li id="mnuSearch"  title="Search ChronoZoom" > Search collections <img src="/images/search-icon.png"  alt="" /></li>
+            <li id="mnuProfile" title="Register / Sign In"> Login <img src="/images/profile-icon.png" alt="" /></li>
         </ul>
         <div id="mnuFile">
             <input id="mnuFileJSON" type="file" accept=".json,application/json" value="" />
@@ -349,10 +347,23 @@
                         <img src="/images/credits/github.png" border="0" />
                     </a>
                 </li>
+                <li class="fleft">
+                    <a class="footer-link-credits elements-kiosk-disable" target="_blank" href="http://fontys.edu/Bachelors-masters/Bachelors/Information-Communication-Technology/Bachelor-ICT-Software.htm">
+                        <img src="/images/credits/fontys white small.png" border="0" />
+                    </a>
+                </li>
+                <li class="fleft">
+                    <a class="footer-link-credits elements-kiosk-disable" target="_blank" href="http://www.axiell-alm.com/">
+                        <img src="/images/credits/axiell white small.png" border="0" />
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="fright navigation footer-links elements-kiosk-hide">
             <ul>
+                <li class="fright">
+                    <a class="footer-link" target="_blank" href="https://github.com/alterm4nn/ChronoZoom/wiki/Project_How-to-Contribute">Become a developer</a>
+                </li> <!-- the url of becoming a developer has to change in the future when there is a seperatate site for becoming a dev -->
                 <li class="fright">
                     <a class="footer-link" target="_blank" href="https://github.com/alterm4nn/ChronoZoom/wiki/Project_How-to-Contribute">Developers</a>
                 </li>
@@ -363,7 +374,7 @@
                     <a class="footer-link" id="maillist"   href="mailto:mail@list?subject=Feedback">Feedback</a>
                 </li>
                 <li class="fright">
-                    <a class="footer-link" target="_blank" href="https://github.com/alterm4nn/ChronoZoom/wiki">Help</a>
+                    <a class="footer-link" target="_blank" href="https://github.com/alterm4nn/ChronoZoom/wiki">Help documentation</a>
                 </li>
             </ul>
         </div>

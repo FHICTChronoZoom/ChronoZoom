@@ -220,11 +220,11 @@ var CZ;
             CZ.Common.initialize();
 
             // hook logo click
-            $('.header-logo').click(function ()
-            {
+            //$('.header-logo').click(function ()
+            //{
                 //window.location.href = '/';
-                CZ.Overlay.Show(false);  // false = home page overlay
-            });
+            //    CZ.Overlay.Show(false);  // false = home page overlay
+            //});
 
             // ensure we have a supercollection for getCanEdit and other API calls.
             if (typeof CZ.Service.superCollectionName === 'undefined' && CZ.Common.isInCosmos()) CZ.Service.superCollectionName = 'chronozoom';

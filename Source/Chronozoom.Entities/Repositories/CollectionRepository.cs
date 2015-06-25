@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Chronozoom.Business.Repositories;
 using System.Data.Entity;
 using Chronozoom.Business.Models;
-using System.Data.Entity;
 
 namespace Chronozoom.Entities.Repositories
 {
@@ -22,24 +21,25 @@ namespace Chronozoom.Entities.Repositories
         public async Task<IEnumerable<Business.Models.Collection>> GetPublicCollectionsAsync()
         {
             var collection = await storage.Collections.Where(x => x.PubliclySearchable).ToListAsync();
-            return collection.ConvertAll(x => new Business.Models.Collection { Id = x.Id, Default = x.Default, IsPublicSearchable = x.PubliclySearchable, Theme = x.Theme, Title = x.Title });
+            return collection.ConvertAll(ToModel);
         }
 
         public async Task<IEnumerable<Business.Models.Collection>> GetByUserAsync(Guid userId)
         {
             var collection = await storage.Collections.Where(x => x.User.Id == userId).ToListAsync();
-            return collection.ConvertAll(x => new Business.Models.Collection { Id = x.Id, Default = x.Default, IsPublicSearchable = x.PubliclySearchable, Title = x.Title, Theme = x.Theme });
+            return collection.ConvertAll(ToModel);
         }
 
         public async Task<Business.Models.Collection> GetUserDefaultAsync(Guid userId)
         {
             var collection = await storage.Collections.FirstOrDefaultAsync(x => x.User.Id == userId && x.Default);
-            if (collection == null ) {
+            if (collection == null)
+            {
                 // TODO: ensure personal collection (Make a new default collection that is empty)
                 return null;
             }
             else
-                return ToLibraryCollection(collection);
+                return ToModel(collection);
         }
 
         public async Task<bool> IsMemberAsync(Guid collectionId, Guid userId)
@@ -54,12 +54,12 @@ namespace Chronozoom.Entities.Repositories
         public async Task<Business.Models.Collection> FindByIdAsync(Guid id)
         {
             var collection = await storage.Collections.FindAsync(id);
-            return ToLibraryCollection(collection);
+            return ToModel(collection);
         }
 
         public async Task<bool> InsertAsync(Business.Models.Collection item)
         {
-            var collection = ToEntityCollection(item);
+            var collection = ToEntity(item);
             storage.Collections.Add(collection);
             return await storage.SaveChangesAsync() > 0;
         }
@@ -92,30 +92,35 @@ namespace Chronozoom.Entities.Repositories
 
         public async Task<Business.Models.Collection> GetByUserAndNameAsync(Guid userId, string collectionName)
         {
-            throw new NotImplementedException();
-        }
-
-        private Business.Models.Collection ToLibraryCollection(Collection col)
-        {
-            return new Business.Models.Collection { Id = col.Id, Default = col.Default, IsPublicSearchable = col.PubliclySearchable, Theme = col.Theme, Title = col.Title };    
-        }
-        
-        private Collection ToEntityCollection(Business.Models.Collection col)
-        {
-            return new Collection { Id = col.Id, Default = col.Default, PubliclySearchable = col.IsPublicSearchable, Theme = col.Theme, Title = col.Title };
+            var collection = await storage.Collections.FirstOrDefaultAsync(x => x.User.Id == userId && x.Title == collectionName);
+            return collection == null ? null : ToModel(collection);
         }
 
         public async Task<Business.Models.Collection> FindByTimelineIdAsync(Guid timelineId)
         {
-            var collection = await storage.Collections.FindAsync(timelineId);
-            return ToLibraryCollection(collection);
+            var collection = await storage.Timelines.Where(x => x.Id == timelineId).Select(x => x.Collection).FirstOrDefaultAsync();
+            return ToModel(collection);
         }
-
 
         public async Task<Business.Models.Collection> FindByNameOrDefaultAsync(string superCollection)
         {
-            var collection = await storage.Collections.FirstOrDefaultAsync(x => x.SuperCollection.Title == superCollection) ;
-            return ToLibraryCollection(collection) ;
+            var collection = await storage.Collections.FirstOrDefaultAsync(x => x.SuperCollection.Title == superCollection);
+            if(collection ==null)
+            {
+                collection = await storage.Collections.Where(x => x.Default).FirstOrDefaultAsync();
+            }
+
+            return ToModel(collection);
+        }
+
+        private Business.Models.Collection ToModel(Collection col)
+        {
+            return new Business.Models.Collection { Id = col.Id, Default = col.Default, IsPublicSearchable = col.PubliclySearchable, Theme = col.Theme, Title = col.Title };
+        }
+
+        private Collection ToEntity(Business.Models.Collection col)
+        {
+            return new Collection { Id = col.Id, Default = col.Default, PubliclySearchable = col.IsPublicSearchable, Theme = col.Theme, Title = col.Title };
         }
     }
 }
