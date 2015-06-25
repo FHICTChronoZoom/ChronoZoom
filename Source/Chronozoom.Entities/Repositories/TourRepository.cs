@@ -82,6 +82,11 @@ namespace Chronozoom.Entities.Repositories
             return tour;
         }
 
+        public async Task<IEnumerable<Bookmark>> GetBookmarks(Tour tour, string collection, string supercollection)
+        {
+            throw new NotImplementedException();
+        } 
+
         public async Task<IEnumerable<Business.Models.Tour>> GetDefaultTours()
         {
             Guid defaultId = await collectionService.CollectionIdOrDefaultAsync("", "");

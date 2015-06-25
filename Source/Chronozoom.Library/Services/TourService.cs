@@ -27,45 +27,16 @@ namespace Chronozoom.Business.Services
         public async Task<Tour> GetTourAsync(string superCollection, string collection, Guid guid)
         {
             var tour = await tourRepository.GetTour(superCollection, collection, guid);
+            if (tour != null)
+            {
+                var bookmarks = await tourRepository.GetBookmarks(tour, collection, superCollection); /// not yet implemented
+                if (bookmarks != null)
+                {
+                    // Tour needs a Bookmark variable, not yet implemented
+                }
+            }
 
             return tour;
-            //    if (rv != null)
-            //    {
-            //        // would've been so much easier to prived sorted bookmarks if could reference tour from bookmark...
-
-            //        var bookmarks = storage.Tours
-            //            .Include("Bookmarks")
-            //            .Where
-            //            (t =>
-            //                t.Id == guid
-            //                &&
-            //                (
-            //                    t.Collection.Path == Collection.ToLower() ||
-            //                    (t.Collection.Default && Collection == "")
-            //                )
-            //                &&
-            //                (
-            //                    t.Collection.SuperCollection.Title.ToLower() == superCollection.ToLower() ||
-            //                    (t.Collection.SuperCollection.Title == _defaultSuperCollectionName && superCollection == "")
-            //                )
-            //            )
-            //            .Select(t => t.Bookmarks)
-            //            .ToList();
-
-            //        IEnumerable<Bookmark> sorted = bookmarks[0].ToList()
-            //            .OrderBy(b => b.SequenceId)
-            //            .ThenBy(b => b.LapseTime);
-
-            //        Collection<Bookmark> inserts = new Collection<Bookmark>();
-            //        foreach (Bookmark bookmark in sorted)
-            //        {
-            //            inserts.Add(bookmark);
-            //        }
-
-            //        rv.Bookmarks = inserts;
-            //    }
-
-            //    return rv;
         }
 
         public Task<IEnumerable<Tour>> GetDefaultTours()

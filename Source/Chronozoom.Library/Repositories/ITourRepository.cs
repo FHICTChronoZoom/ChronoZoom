@@ -27,5 +27,7 @@ namespace Chronozoom.Business.Repositories
         Task DeleteTour(string superCollectionName, Business.Models.Tour tourRequest);
 
         Task DeleteTour(string superCollectionName, string collectionName, Business.Models.Tour tourRequest);
+
+        Task<IEnumerable<Business.Models.Bookmark>> GetBookmarks(Tour tour, string collection, string superCollection);
     }
 }
