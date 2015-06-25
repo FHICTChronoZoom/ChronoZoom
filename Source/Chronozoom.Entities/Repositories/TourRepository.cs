@@ -193,5 +193,34 @@ namespace Chronozoom.Entities.Repositories
                 UniqueId = entity.UniqueId
             };
         }
+
+
+        public async Task<Business.Models.Tour> GetTour(string superCollection, string collection, Guid guid)
+        {
+            var tour = new Tour();
+            var query = storage.Tours.AsQueryable();
+
+            if (collection != null)
+            {
+                query = query.Where(x => x.Collection.Title == collection);
+            }
+
+            if (superCollection != null)
+            {
+                query = query.Where(x => x.Collection.User.DisplayName == superCollection);
+            }
+            if (guid != null)
+            {
+                query = query.Where(x => x.Id == guid);
+            }
+
+            tour = await query.FirstOrDefaultAsync();
+            return ToLibraryTour(tour);
+        }
+
+        public Task<IEnumerable<Business.Models.Bookmark>> GetBookmarks(Business.Models.Tour tour, string collection, string superCollection)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

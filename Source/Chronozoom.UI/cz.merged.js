@@ -14550,8 +14550,7 @@ var CZ;
                     'Search',
                     'Bing Search',
                     mediaType
-                ]);
-
+                ]);
                 this.searchResultsBox.empty();
                 this.showProgressBar();
 

@@ -18,18 +18,6 @@ namespace ChronoZoom.Mongo.PersistencyEngine
         public ExhibitFactory() { }
 
         /// <summary>
-        /// Find an exhibit by it's timeline id
-        /// </summary>
-        /// <param name="timelineId"></param>
-        /// <returns></returns>
-        public async Task<List<Exhibit>> FindByTimelineIdAsync(Guid timelineId) 
-        {
-            //does not get by timeline id
-            //TODO : make it so that this method returns exhibits based on timeline id
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Find an exhibit by it's id
         /// </summary>
         /// <param name="exhibitId"></param>

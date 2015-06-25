@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="IApplicationSettings.cs" />
+    <Compile Include="Models\Bookmark.cs" />
     <Compile Include="Models\Collection.cs" />
     <Compile Include="Models\Compability\FlatTimeline.cs" />
     <Compile Include="Models\ContentItem.cs" />
