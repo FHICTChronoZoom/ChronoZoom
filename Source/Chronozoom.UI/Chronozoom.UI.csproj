@@ -118,6 +118,8 @@
     <Content Include="images\add-hover.png" />
     <Content Include="images\add.png" />
     <Content Include="images\copy.svg" />
+    <Content Include="images\credits\axiell white small.png" />
+    <Content Include="images\credits\fontys white small.png" />
     <Content Include="images\icon_facebook.svg" />
     <Content Include="images\icon_twitter.svg" />
     <Content Include="images\icon_twitter_canvas.svg" />
@@ -532,6 +534,7 @@
     </Content>
     <Content Include="dumps\cz.cosmos.json" />
     <Content Include="dumps\cz.aidstimeline.json" />
+    <None Include="Properties\PublishProfiles\chronozoom-axiel.pubxml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
